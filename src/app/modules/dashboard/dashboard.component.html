@@ -1,0 +1,41 @@
+<section class="dashboard">
+        
+    <div class="dashboard-header">
+
+        <div class="account">
+
+            <div class="account-header">
+                Boa tarde, <label><br> <b>Renan Godoy Silva!</b> </label>
+            </div>
+            
+            <div class="account-content">
+    
+                <div class="account-card receita">
+                    <div class="card-info">
+                        <label>Receita</label>
+                        <p>R$ 00,00</p>
+                    </div>
+                    <div class="card-icon" (click)="addReceita()">
+                        <i class='bx bx-plus-circle' ></i>
+                    </div>
+                </div>
+
+                <div class="account-card despesa">
+                    <div class="card-info">
+                        <label>Despesa</label>
+                        <p>R$ 00,00</p>
+                    </div>
+                    <div class="card-icon" routerLink="/despesa" (click)="addDespesa()">
+                        <i class='bx bx-minus-circle' ></i>
+                    </div>
+                </div>
+    
+            </div>
+    
+        </div>
+
+    </div>
+
+    <app-despesa-list></app-despesa-list>
+
+</section>

@@ -1,0 +1,37 @@
+.navbar {
+    width: 100%;
+    background-color: #16C64F;
+    height: var(--navbar-height);
+}
+
+.navbar .wrapper {
+    max-width: var(--main-maxwidth);
+    height: var(--navbar-height);
+    margin: 0 auto;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar .wrapper .nav-item a{
+    color: white;
+    text-decoration: none;
+}
+
+.navbar .wrapper .nav-option i {
+    font-size: 35px;
+    color: white;
+}
+
+.navbar .wrapper .nav-logo {
+    color: white;
+}
+
+.active {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 -3px 0 #fff;
+}

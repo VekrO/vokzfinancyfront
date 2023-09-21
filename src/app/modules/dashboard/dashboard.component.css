@@ -1,0 +1,80 @@
+.dashboard .dashboard-header {
+    
+    display: flex;
+    padding: 15px;
+    background-color: white;
+    box-shadow: var(--card-shadow);
+
+}
+
+.dashboard .dashboard-header .account {
+    gap: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard .dashboard-header .account .account-header {
+    width: 100%;
+
+}
+.dashboard .dashboard-header .account .account-header label {
+    font-size: 20px;
+}
+
+.dashboard .dashboard-header .account .account-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+    
+.dashboard .dashboard-header .account .account-content .account-card {
+    box-shadow: var(--card-shadow);
+    width: 250px;
+    padding: 15px;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+}
+.dashboard .dashboard-header .account .account-content .account-card .card-info {
+    text-align: start;
+}
+
+.dashboard .dashboard-header .account .account-content .account-card p {
+    font-size: 20px;
+}
+
+.dashboard .dashboard-header .account .account-content .account-card.receita p{
+    color: var(--color-receita);
+}
+
+.dashboard .dashboard-header .account .account-content .account-card.despesa p{
+    color: var(--color-despesa);
+}
+
+.card-icon {
+    cursor: pointer;
+}
+
+.card-icon > i.bx-plus-circle:hover {
+    color: var(--color-receita-hover);
+}
+
+.card-icon > i.bx-minus-circle:hover {
+    color: var(--color-despesa-hover);
+}
+
+.card-icon i {
+    font-size: 40px;
+}
+
+.card-icon i.bx-plus-circle {
+    color: var(--color-receita);
+}
+
+.card-icon i.bx-minus-circle {
+    color: var(--color-despesa);
+}

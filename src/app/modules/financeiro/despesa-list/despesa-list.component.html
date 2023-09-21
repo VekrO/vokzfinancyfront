@@ -1,0 +1,36 @@
+<!-- <table *ngIf="(items | async)?.length">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Valor</th>
+            <th>Vencimento</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of (items | async)">
+            <td>{{ item.titulo }}</td>
+            <td>{{ item.valor | currency: 'BRL'}}</td>
+            <td>{{ item.vencimento | date: 'dd/MM/YYYY' }}</td>
+        </tr>
+    </tbody>
+</table> -->
+
+<!-- <h5 class="item-title">{{ item.valor | currency: 'BRL' }}</h5>
+<h5 class="item-title">{{ item.vencimento | date: 'dd/MM/YYYY' }}</h5> -->
+
+<div class="table">
+
+    <div class="table-header">
+        <p>Despesas</p>
+    </div>
+    <div *ngFor="let item of (items | async)" class="item" (click)="ver(item)">
+        <p class="title">{{ item.titulo }}</p>
+        <p class="valor">{{ item.valor | currency: 'BRL' }}</p>
+    </div>
+    
+    <div class="table-footer">
+        <p><b>Total</b></p>
+        <p>{{ valorTotal | currency: 'BRL' }}</p>
+    </div>
+
+</div>

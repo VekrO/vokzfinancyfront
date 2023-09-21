@@ -1,1 +1,110 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700&family=Lato:wght@100;300;400;700;900&family=Montserrat:wght@100;300;400;500;700&family=Roboto&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+:root {
+
+    --color-despesa: red;
+    --color-receita: rgb(14, 204, 14);
+
+    --color-despesa-hover: rgb(224, 5, 5);
+    --color-receita-hover: rgb(12, 170, 12);
+
+    --color-button-submit: rgb(23, 177, 23);
+    --color-button-submit-hover: rgb(28, 201, 28);
+    --color-button-submit-disabled: rgb(23, 177, 23, .1);
+
+    --color-button-back: rgb(194, 194, 194);
+    --color-button-back-hover: rgb(214, 214, 214);
+
+    --navbar-height: 50px;
+    --main-height: 100vh;
+
+    --main-maxwidth: 1440px;
+
+    --card-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    --card-wrapper-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+
+    --color-icon-close: red;
+    --color-icon-close-hover: rgb(224, 5, 5);
+
+    /* FORMS */
+    --label-color: #A5A7A1;
+    --input-border: #EBEBEB;
+    --input-border-radius: 5px;
+
+}
+
+
+body {
+    background-color: rgb(247, 247, 247);
+}
+
+.main-content {
+    max-width: var(--main-maxwidth);
+    margin: 0 auto;
+    height: calc(var(--main-height) - var(--navbar-height));
+}
+
+.button {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.currency-field {
+    position: relative;
+}
+
+.currency-field small {
+    position: absolute;   
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.currency-field input {
+    width: 100% !important;
+    padding: 0 25px !important;
+}
+
+.btn-submit {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    cursor: pointer;
+    background-color: var(--color-button-submit);
+    border: 0;
+    border-radius: 5px;
+    height: 35px;
+    transition: 0.3s ease all;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: var(--color-button-submit-hover);
+}
+
+.btn-back {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    cursor: pointer;
+    background-color: var(--color-button-back);
+    border: 0;
+    border-radius: 5px;
+    height: 35px;
+    transition: 0.3s ease all;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+.btn-back:hover {
+    background-color: var(--color-button-back-hover);
+}
+
+.btn-submit:disabled {
+    background-color: var(--color-button-submit-disabled);
+}
