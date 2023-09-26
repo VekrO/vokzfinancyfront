@@ -1,0 +1,14 @@
+.container {
+    background-color: white;
+}
+
+.container .footer {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.container .footer button {
+    flex: 1;
+}

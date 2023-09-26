@@ -5,6 +5,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FinanceiroModule } from '../financeiro/financeiro.module';
+import { SharedModule } from '../shared.module';
 
 @NgModule({
   declarations: [  
@@ -12,9 +13,10 @@ import { FinanceiroModule } from '../financeiro/financeiro.module';
     NavbarComponent,
   ],
   imports: [
+    SharedModule,
     CommonModule,
+    FinanceiroModule,
     DashboardRoutingModule,
-    FinanceiroModule
   ],
   exports: [
     NavbarComponent

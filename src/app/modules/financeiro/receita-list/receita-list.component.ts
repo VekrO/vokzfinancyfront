@@ -1,25 +1,25 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
-import { Despesa } from "src/app/interfaces/Despesa.interface";
+import { Receita } from "src/app/interfaces/Receita.interface";
 import { Usuario } from "src/app/interfaces/Usuario.interface";
 import { AuthenticationService } from "src/app/services/authentication.service";
-import { DespesaService } from "src/app/services/despesa.service";
+import { ReceitaService } from "src/app/services/receita.service";
 
 @Component({
-    selector: 'app-despesa-list',
-    templateUrl: './despesa-list.component.html',
-    styleUrls: ['./despesa-list.component.css']
+    selector: 'app-receita-list',
+    templateUrl: './receita-list.component.html',
+    styleUrls: ['./receita-list.component.css']
 })
-export class DespesaListComponent implements OnInit {
+export class ReceitaListComponent implements OnInit {
 
 
     private usuario!: Usuario;
-    public items: BehaviorSubject<Despesa[]> = new BehaviorSubject<Despesa[]>([]);
+    public items: BehaviorSubject<Receita[]> = new BehaviorSubject<Receita[]>([]);
     public valorTotal: number = 0;
     public visible: boolean = false;
 
-    constructor(public service: DespesaService, private authService: AuthenticationService, private router: Router) {}
+    constructor(public service: ReceitaService, private authService: AuthenticationService, private router: Router) {}
     
     ngOnInit(): void {
 
@@ -41,8 +41,8 @@ export class DespesaListComponent implements OnInit {
 
     }
 
-    editar(item: Despesa) {
-        this.router.navigate(['despesa', { id: item.id }])
+    editar(item: Receita) {
+        this.router.navigate(['receita', { id: item.id }])
     }
 
 }

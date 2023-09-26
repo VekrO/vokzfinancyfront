@@ -11,9 +11,11 @@
 
     --color-despesa: red;
     --color-receita: rgb(14, 204, 14);
+    --color-saldo: rgb(32, 152, 233);
 
     --color-despesa-hover: rgb(224, 5, 5);
     --color-receita-hover: rgb(12, 170, 12);
+    --color-saldo-hover: rgb(22, 135, 211);
 
     --color-button-submit: rgb(23, 177, 23);
     --color-button-submit-hover: rgb(28, 201, 28);
@@ -21,6 +23,9 @@
 
     --color-button-back: rgb(194, 194, 194);
     --color-button-back-hover: rgb(214, 214, 214);
+
+    --color-button-excluir: red;
+    --color-button-excluir-hover: rgb(224, 5, 5);
 
     --navbar-height: 50px;
     --main-height: 100vh;
@@ -38,6 +43,11 @@
     --input-border: #EBEBEB;
     --input-border-radius: 5px;
 
+    --color-button-edit: #949494;
+    --color-button-trash: #cf1616;
+
+    --hover: rgb(28, 201, 28);
+
 }
 
 
@@ -48,7 +58,11 @@ body {
 .main-content {
     max-width: var(--main-maxwidth);
     margin: 0 auto;
-    height: calc(var(--main-height) - var(--navbar-height));
+}
+
+.max-width {
+    max-width: var(--main-maxwidth);
+    margin: 0 auto;
 }
 
 .button {
@@ -101,10 +115,56 @@ body {
     color: white;
 }
 
+.btn-excluir {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    cursor: pointer;
+    background-color: var(--color-button-excluir);
+    border: 0;
+    border-radius: 5px;
+    height: 35px;
+    transition: 0.3s ease all;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
 .btn-back:hover {
     background-color: var(--color-button-back-hover);
 }
 
+.btn-excluir:hover {
+    background-color: var(--color-button-excluir-hover);
+}
+
 .btn-submit:disabled {
     background-color: var(--color-button-submit-disabled);
+}
+
+.btn-text {
+    background: transparent;
+    border: 0;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: 0.3s all ease;
+}
+
+.btn-text:hover {
+    color: var(--hover);
+}
+
+button.edit {
+    color: var(--color-button-edit);
+}
+
+button.trash {
+    color: var(--color-button-trash);
+}
+
+.modal-panel {
+    background-color: white;
+    border-radius: 8px;
+    padding: 24px;
 }

@@ -1,0 +1,7 @@
+<div class="modal-container" [style]="{width: width, height: height}">
+    <h3 class="modal-header">{{ title }}</h3>
+    <ng-content></ng-content>
+</div>
+
+<div class="modal-backdrop" (click)="close($event)"></div>
+

@@ -4,6 +4,7 @@
     padding: 15px;
     background-color: white;
     box-shadow: var(--card-shadow);
+    margin: 5px 0;
 
 }
 
@@ -47,6 +48,10 @@
     font-size: 20px;
 }
 
+.dashboard .dashboard-header .account .account-content .account-card.saldo p{
+    color: var(--color-saldo);
+}
+
 .dashboard .dashboard-header .account .account-content .account-card.receita p{
     color: var(--color-receita);
 }
@@ -55,8 +60,21 @@
     color: var(--color-despesa);
 }
 
+.dashboard .dashboard-content {
+    display: flex;
+    gap: 5px;
+}
+
+.dashboard .dashboard-content .content-item {
+    flex: 1;
+}
+
 .card-icon {
     cursor: pointer;
+}
+
+.card-icon > i.bxs-bank:hover {
+    color: var(--color-saldo-hover);
 }
 
 .card-icon > i.bx-plus-circle:hover {
@@ -69,6 +87,10 @@
 
 .card-icon i {
     font-size: 40px;
+}
+
+.card-icon i.bxs-bank {
+    color: var(--color-saldo);
 }
 
 .card-icon i.bx-plus-circle {

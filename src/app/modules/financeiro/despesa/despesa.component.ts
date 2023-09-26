@@ -1,12 +1,17 @@
 import { CurrencyPipe, Location } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { ChangeDetectorRef, Component, Inject, Injectable, Input, OnInit, Optional } from "@angular/core";
+import { FormGroup, FormControl, Validators, FormControlStatus } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from "@angular/router";
+import { NotifierService } from "angular-notifier";
 import * as moment from "moment";
+import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
+import { ModalComponent } from "src/app/components/modal/modal.component";
 import { Despesa } from "src/app/interfaces/Despesa.interface";
 import { Usuario } from "src/app/interfaces/Usuario.interface";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { DespesaService } from "src/app/services/despesa.service";
+import { DynamicDialogConfig } from "src/app/services/dynamicDialog.service";
+import { ModalService } from "src/app/services/modal.service";
 import { UtilService } from "src/app/util.service";
 
 @Component({
@@ -16,19 +21,32 @@ import { UtilService } from "src/app/util.service";
     providers: [CurrencyPipe]
 })
 export class DespesaComponent implements OnInit {
-    
+
     public formulario!: FormGroup;
     public registro!: Despesa;
     public processando: boolean = false;
 
     private usuario!: Usuario;
 
-    constructor(public utilService: UtilService, private service: DespesaService, private location: Location, private route: ActivatedRoute, private authService: AuthenticationService) {}
+    constructor(
+        public utilService: UtilService, 
+        private service: DespesaService, 
+        private location: Location, 
+        private route: ActivatedRoute, 
+        private authService: AuthenticationService,
+        private notifier: NotifierService,
+        private modalService: ModalService,
+        private config: DynamicDialogConfig
+    ) {}
 
     ngOnInit(): void {
 
         this.usuario = this.authService.getUsuario();
         console.log('usuario: ', this.usuario);
+        
+        if(this.config.data) {
+            console.log('TEM CONFIG DATA: ', this.config.data);
+        }
 
         this.configurarFormulario();
         
@@ -43,14 +61,16 @@ export class DespesaComponent implements OnInit {
     }
 
     configurarFormulario() {
+        
         this.formulario = new FormGroup({
-            id: new FormControl(0, [Validators.required]),
+            id: new FormControl(0),
             usuarioId: new FormControl(this.usuario.id, [Validators.required]),
             titulo: new FormControl('', [Validators.required]),
             descricao: new FormControl(''),
             valor: new FormControl(0, [Validators.required]),
             vencimento: new FormControl('', [Validators.required])
         });
+
     }
 
     popularFormulario(data: Despesa) {
@@ -72,6 +92,7 @@ export class DespesaComponent implements OnInit {
 
         this.service.getByIdAsync(id).subscribe({
             next: (despesa: Despesa) => {
+                this.registro = despesa;
                 this.popularFormulario(despesa);
                 this.processando = false;
             },
@@ -106,10 +127,12 @@ export class DespesaComponent implements OnInit {
                 console.log('DESPESA: ', despesa);
                 this.popularFormulario(despesa);
                 this.processando = false;
+                this.notifier.notify('success', 'Nova despesa criada!');
             },
             error: (err) => {
                 console.log('erro: ', err);
                 this.processando = false;
+                this.notifier.notify('error', err.error.message);
             }
         });
 
@@ -132,6 +155,30 @@ export class DespesaComponent implements OnInit {
             error: (err) => {
                 console.log('erro: ', err);
                 this.processando = false;
+            }
+        });
+
+    }
+
+    excluir(id: number) {
+
+        this.modalService.open(ConfirmacaoComponent, {data: {
+            id: id,
+            message: 'Deseja excluir esse registro de ID: ' + id
+        }, title: 'Excluir Registro', width: '50%' }).subscribe({
+            next: (res) => {
+                if(res && res == 'OK') {
+                    this.service.delete(id, this.usuario.id).subscribe({
+                        next: (res) => {
+                            this.notifier.notify('success', 'Registro excluído com sucesso!');
+                            this.voltar();
+                        },
+                        error: (err) => {
+                            console.log('erro : ', err);
+                            this.notifier.notify('error', err.error.message);
+                        }
+                    });
+                }
             }
         });
 

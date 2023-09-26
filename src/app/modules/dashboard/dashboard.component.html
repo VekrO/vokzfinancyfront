@@ -9,13 +9,23 @@
             </div>
             
             <div class="account-content">
-    
+                
+                <div class="account-card saldo">
+                    <div class="card-info">
+                        <label>Saldo</label>
+                        <p>{{ (saldoAtual | async) | currency: 'BRL' }}</p>
+                    </div>
+                    <div class="card-icon">
+                        <i class='bx bxs-bank' ></i>
+                    </div>
+                </div>
+
                 <div class="account-card receita">
                     <div class="card-info">
                         <label>Receita</label>
-                        <p>R$ 00,00</p>
+                        <p>{{ receitaAtual | currency: 'BRL' }}</p>
                     </div>
-                    <div class="card-icon" (click)="addReceita()">
+                    <div class="card-icon" routerLink="/receita" (click)="addReceita()">
                         <i class='bx bx-plus-circle' ></i>
                     </div>
                 </div>
@@ -23,7 +33,7 @@
                 <div class="account-card despesa">
                     <div class="card-info">
                         <label>Despesa</label>
-                        <p>R$ 00,00</p>
+                        <p>{{ despesaAtual | currency: 'BRL' }}</p>
                     </div>
                     <div class="card-icon" routerLink="/despesa" (click)="addDespesa()">
                         <i class='bx bx-minus-circle' ></i>
@@ -35,7 +45,14 @@
         </div>
 
     </div>
-
-    <app-despesa-list></app-despesa-list>
+    
+    <div class="dashboard-content">
+        <div class="content-item">
+            <app-receita-list></app-receita-list>
+        </div>
+        <div class="content-item">
+            <app-despesa-list></app-despesa-list>
+        </div>
+    </div>
 
 </section>
