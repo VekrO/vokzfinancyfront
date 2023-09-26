@@ -43,10 +43,6 @@ export class DespesaComponent implements OnInit {
 
         this.usuario = this.authService.getUsuario();
         console.log('usuario: ', this.usuario);
-        
-        if(this.config.data) {
-            console.log('TEM CONFIG DATA: ', this.config.data);
-        }
 
         this.configurarFormulario();
         
@@ -75,6 +71,7 @@ export class DespesaComponent implements OnInit {
 
     popularFormulario(data: Despesa) {
         if(data) {
+            this.registro = data;
             if(moment(data.vencimento).isValid()) {
                 data.vencimento = moment(data.vencimento).format('YYYY-MM-DD');
             }
@@ -169,7 +166,7 @@ export class DespesaComponent implements OnInit {
             next: (res) => {
                 if(res && res == 'OK') {
                     this.service.delete(id, this.usuario.id).subscribe({
-                        next: (res) => {
+                        next: () => {
                             this.notifier.notify('success', 'Registro excluído com sucesso!');
                             this.voltar();
                         },

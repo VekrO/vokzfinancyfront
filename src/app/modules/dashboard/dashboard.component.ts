@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/interfaces/Usuario.interface';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UtilService } from 'src/app/util.service';
 import { BehaviorSubject } from 'rxjs';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,7 @@ export class DashboardComponent implements OnInit {
   public despesaAtual: number = 0;
   public saldoAtual: BehaviorSubject<number> = new BehaviorSubject(0);
 
-  constructor(private authService: AuthenticationService, private receitaService: ReceitaService, private despesaService: DespesaService) {}
+  constructor(private authService: AuthenticationService, private usuarioService: UsuarioService, private receitaService: ReceitaService, private despesaService: DespesaService) {}
 
   ngOnInit(): void {
     
@@ -27,6 +28,7 @@ export class DashboardComponent implements OnInit {
 
     this.getValorReceita(this.usuario.id)
     this.getValorDespesa(this.usuario.id);
+    this.getSaldoAtual(this.usuario.id);
 
   }
 
@@ -34,7 +36,6 @@ export class DashboardComponent implements OnInit {
     this.receitaService.getValorByIdUsuarioAsync(idUsuario).subscribe({
       next: (valor: number) => {
         this.receitaAtual = valor;
-        this.saldoAtual.next(valor);
       },
       error: (err) => {
         console.log('ERRO: ', err);
@@ -46,7 +47,19 @@ export class DashboardComponent implements OnInit {
     this.despesaService.getValorByIdUsuarioAsync(idUsuario).subscribe({
       next: (valor: number) => {
         this.despesaAtual = valor;
-        this.saldoAtual.next(this.saldoAtual.getValue() - valor);
+      },
+      error: (err) => {
+        console.log('ERRO: ', err);
+      }
+    });
+  }
+
+  getSaldoAtual(idUsuario: number) {
+    this.usuarioService.getSaldoAtual(idUsuario).subscribe({
+      next: (valor: number) => {
+        console.log('saldo atual : ', valor);
+        
+        this.saldoAtual.next(valor);
       },
       error: (err) => {
         console.log('ERRO: ', err);

@@ -2,10 +2,13 @@ import { CurrencyPipe, Location } from "@angular/common";
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators, FormControlStatus } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from "@angular/router";
+import { NotifierService } from "angular-notifier";
 import * as moment from "moment";
+import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
 import { Receita } from "src/app/interfaces/Receita.interface";
 import { Usuario } from "src/app/interfaces/Usuario.interface";
 import { AuthenticationService } from "src/app/services/authentication.service";
+import { ModalService } from "src/app/services/modal.service";
 import { ReceitaService } from "src/app/services/receita.service";
 import { UtilService } from "src/app/util.service";
 
@@ -28,7 +31,9 @@ export class ReceitaComponent implements OnInit {
         private service: ReceitaService, 
         private location: Location, 
         private route: ActivatedRoute, 
-        private authService: AuthenticationService
+        private authService: AuthenticationService,
+        private modalService: ModalService,
+        private notifier: NotifierService
         ) {}
 
     ngOnInit(): void {
@@ -63,6 +68,7 @@ export class ReceitaComponent implements OnInit {
 
     popularFormulario(data: Receita) {
         if(data) {
+            this.registro = data;
             if(moment(data.data).isValid()) {
                 data.data = moment(data.data).format('YYYY-MM-DD');
             }
@@ -79,8 +85,8 @@ export class ReceitaComponent implements OnInit {
         this.processando = true;
 
         this.service.getByIdAsync(id).subscribe({
-            next: (Receita: Receita) => {
-                this.popularFormulario(Receita);
+            next: (receita: Receita) => {
+                this.popularFormulario(receita);
                 this.processando = false;
             },
             error: (err) => {
@@ -140,6 +146,30 @@ export class ReceitaComponent implements OnInit {
             error: (err) => {
                 console.log('erro: ', err);
                 this.processando = false;
+            }
+        });
+
+    }
+
+    excluir(id: number) {
+
+        this.modalService.open(ConfirmacaoComponent, {data: {
+            id: id,
+            message: 'Deseja excluir esse registro de ID: ' + id
+        }, title: 'Excluir Registro', width: '50%' }).subscribe({
+            next: (res) => {
+                if(res && res == 'OK') {
+                    this.service.delete(id, this.usuario.id).subscribe({
+                        next: () => {
+                            this.notifier.notify('success', 'Registro excluído com sucesso!');
+                            this.voltar();
+                        },
+                        error: (err) => {
+                            console.log('erro : ', err);
+                            this.notifier.notify('error', err.error.message);
+                        }
+                    });
+                }
             }
         });
 

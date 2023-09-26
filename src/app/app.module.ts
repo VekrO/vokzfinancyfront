@@ -71,7 +71,8 @@ registerLocaleData(localePt);
       
       },
       behaviour: {
-        autoHide: 5000
+        autoHide: 5000,
+        stacking: false
       }
     })
   ],

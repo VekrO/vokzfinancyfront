@@ -31,4 +31,8 @@ export class ReceitaService {
         return this._http.put<Receita>(APP.api+ 'receita/' + receita.id, receita);
     }
 
+    delete(id: number, idUsuario: number): Observable<any> {
+        return this._http.delete(APP.api+ 'receita/' + id + '/usuario/' + idUsuario);
+    }
+
 }

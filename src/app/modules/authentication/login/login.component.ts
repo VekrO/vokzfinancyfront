@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { NotifierService } from "angular-notifier";
 import { UsuarioLogin } from "src/app/interfaces/UsuarioLogin.interface";
 import { UsuarioToken } from "src/app/interfaces/UsuarioToken.interface";
 import { AuthenticationService } from "src/app/services/authentication.service";
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
     public formulario!: FormGroup;
     public processando: boolean = false;
 
-    constructor(private service: AuthenticationService, private router: Router) {}
+    constructor(private service: AuthenticationService, private router: Router, private notifierService: NotifierService) {}
 
     ngOnInit(): void {
 
@@ -42,13 +43,14 @@ export class LoginComponent implements OnInit {
 
         this.service.login(registro).subscribe({
             next: (res: UsuarioToken) => {
-                console.log('resposta do login: ', res);
                 this.service.setToken(res.token);
                 this.router.navigate(['dashboard']);
+                this.notifierService.notify('success', 'Sucesso, você foi redirecionado!');
                 this.processando = false;
             },
             error: (err) => {
                 console.log('Erro: ', err);
+                this.notifierService.notify('error', err.error.message);
                 this.processando = false;
             }
         });
