@@ -1,4 +1,11 @@
 import { Component } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { NotifierService } from "angular-notifier";
+import { Usuario } from "src/app/interfaces/Usuario.interface";
+import { UsuarioRegistro } from "src/app/interfaces/UsuarioRegistro.interface";
+import { UsuarioToken } from "src/app/interfaces/UsuarioToken.interface";
+import { AuthenticationService } from "src/app/services/authentication.service";
 
 @Component({
     selector: 'app-register',
@@ -7,6 +14,50 @@ import { Component } from "@angular/core";
 })
 export class RegisterComponent {
 
+    public formulario!: FormGroup;
+    public processando: boolean = false;
+
+    constructor(private service: AuthenticationService, private router: Router, private notifierService: NotifierService) {}
+
+    ngOnInit(): void {
+
+        this.configurarFormulario();
+
+    }
+
+    configurarFormulario() {
+        this.formulario = new FormGroup({
+            name: new FormControl('', [Validators.required]),
+            email: new FormControl('', [Validators.required, Validators.email]),
+            password: new FormControl('', [Validators.required])
+        });
+    }
     
+    onSubmit() {
+
+        if(this.processando) {
+            return;
+        }
+
+        this.processando = true;
+
+        const registro = Object.assign({}, this.formulario.value as UsuarioRegistro);
+
+        console.log('registro para enviar: ', registro);
+
+        this.service.register(registro).subscribe({
+            next: () => {
+                this.router.navigate(['']);
+                this.notifierService.notify('success', 'Sucesso, você foi redirecionado o login!');
+                this.processando = false;
+            },
+            error: (err) => {
+                console.log('Erro: ', err);
+                this.notifierService.notify('error', err.error.message);
+                this.processando = false;
+            }
+        });
+        
+    }
 
 }

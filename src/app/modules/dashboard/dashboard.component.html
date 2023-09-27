@@ -5,7 +5,7 @@
         <div class="account">
 
             <div class="account-header">
-                Boa tarde, <label><br> <b>Renan Godoy Silva!</b> </label>
+                {{ cumprimento }}, <label><br> <b>{{ usuario.nome }}</b> </label>
             </div>
             
             <div class="account-content">
@@ -25,7 +25,7 @@
                         <label>Receita</label>
                         <p>{{ receitaAtual | currency: 'BRL' }}</p>
                     </div>
-                    <div class="card-icon" routerLink="/receita" (click)="addReceita()">
+                    <div class="card-icon" routerLink="/receita">
                         <i class='bx bx-plus-circle' ></i>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                         <label>Despesa</label>
                         <p>{{ despesaAtual | currency: 'BRL' }}</p>
                     </div>
-                    <div class="card-icon" routerLink="/despesa" (click)="addDespesa()">
+                    <div class="card-icon" routerLink="/despesa">
                         <i class='bx bx-minus-circle' ></i>
                     </div>
                 </div>

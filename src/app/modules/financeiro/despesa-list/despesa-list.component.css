@@ -3,7 +3,11 @@
     background-color: white;
     padding: 20px;
 }
-
+.table .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .table .table-header, .table .table-footer {
     padding: 10px;
 }
@@ -35,4 +39,20 @@
 
 .table .item:hover {
     background-color: #c7f3d6;
+}
+
+.table .item p.title {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.select-filtro {
+    width: 150px;
+    height: 35px;
+    border-radius: 5px;
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+    padding-left: 10px;
 }

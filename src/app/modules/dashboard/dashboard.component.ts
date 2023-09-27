@@ -6,6 +6,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UtilService } from 'src/app/util.service';
 import { BehaviorSubject } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { NotifierService } from 'angular-notifier';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,13 +21,14 @@ export class DashboardComponent implements OnInit {
   public receitaAtual: number = 0;
   public despesaAtual: number = 0;
   public saldoAtual: BehaviorSubject<number> = new BehaviorSubject(0);
+  public cumprimento: string = '';
 
-  constructor(private authService: AuthenticationService, private usuarioService: UsuarioService, private receitaService: ReceitaService, private despesaService: DespesaService) {}
+  constructor(private authService: AuthenticationService, private usuarioService: UsuarioService, private receitaService: ReceitaService, private despesaService: DespesaService, private notifierService: NotifierService) {}
 
   ngOnInit(): void {
     
     this.usuario = this.authService.getUsuario();
-
+    this.getCumprimento();
     this.getValorReceita(this.usuario.id)
     this.getValorDespesa(this.usuario.id);
     this.getSaldoAtual(this.usuario.id);
@@ -50,6 +53,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (err) => {
         console.log('ERRO: ', err);
+        this.notifierService.notify('error', err.error.message);
       }
     });
   }
@@ -58,21 +62,26 @@ export class DashboardComponent implements OnInit {
     this.usuarioService.getSaldoAtual(idUsuario).subscribe({
       next: (valor: number) => {
         console.log('saldo atual : ', valor);
-        
         this.saldoAtual.next(valor);
       },
       error: (err) => {
         console.log('ERRO: ', err);
+        this.notifierService.notify('error', err.error.message);
       }
     });
   }
 
-  addDespesa() {
-    
-  }
-  
-  addReceita() {
-   
+  getCumprimento() {
+
+    const horaAtual = moment();
+    const horaBomDia = moment('00:00:00', 'HH:mm:ss');
+    const horaBoaTarde = moment('12:00:00', 'HH:mm:ss');
+    const horaBoaNoite = moment('18:00:00', 'HH:mm:ss');
+
+    if(moment(horaAtual).isAfter(horaBomDia)) { this.cumprimento = 'Bom Dia'}
+    if(moment(horaAtual).isAfter(horaBoaTarde)) { this.cumprimento = 'Boa Tarde' }
+    if(moment(horaAtual).isAfter(horaBoaNoite)) { this.cumprimento = 'Boa Noite'}
+
   }
 
 }

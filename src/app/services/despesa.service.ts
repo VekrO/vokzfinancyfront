@@ -19,6 +19,10 @@ export class DespesaService {
         return this._http.get<Despesa[]>(APP.api + 'despesa/usuario/' + idUsuario);
     }
 
+    getVencidoByIdUsuarioAsync(idUsuario: number): Observable<Despesa[]> {
+        return this._http.get<Despesa[]>(APP.api + 'despesa/usuario/' + idUsuario + '/vencido');
+    }
+
     getValorByIdUsuarioAsync(idUsuario: number): Observable<number> {
         return this._http.get<number>(APP.api + 'despesa/usuario/' + idUsuario + '/valor');
     }

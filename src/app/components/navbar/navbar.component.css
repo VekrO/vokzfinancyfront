@@ -14,17 +14,50 @@
     justify-content: space-between;
 }
 
+.navbar .wrapper .option-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    height: 100%;
+}
+
 .navbar .wrapper .nav-item a{
     color: white;
     text-decoration: none;
 }
 
-.navbar .wrapper .nav-option i {
+.navbar .wrapper .nav-option button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.navbar .wrapper .nav-option button i {
     font-size: 35px;
     color: white;
+    cursor: pointer;
 }
 
 .navbar .wrapper .nav-logo {
+    color: white;
+}
+
+.navbar .wrapper .nav-item.register {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.navbar .wrapper .nav-item.register a {
+    color: var(--color-receita);
+}
+
+.navbar .wrapper .nav-item.register:hover {
+    background-color: var(--color-receita-hover);
+}
+.navbar .wrapper .nav-item.register:hover > a {
     color: white;
 }
 

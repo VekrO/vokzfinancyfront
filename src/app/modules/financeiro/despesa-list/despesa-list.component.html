@@ -2,9 +2,16 @@
 
     <div class="table-header">
         <p>Despesas</p>
+        <select class="select-filtro" [(ngModel)]="filtro" (change)="getDespesasAsync()">
+            <option value="todas">Todas</option>
+            <option value="vencidos">Vencidas</option>
+        </select>
     </div>
-    <div *ngFor="let item of (items | async)" class="item" (click)="editar(item)">
-        <p class="title">{{ item.titulo }}</p>
+    <div *ngFor="let item of (items | async)" class="item" (click)="editar(item, $event)">
+        <p class="title">
+            <i title="Marcar como {{ item.paga ? 'não pago' : 'pago'}}" (click)="marcarPago(item, $event)" class="bx bxs-{{ item.paga ? 'like' : 'dislike' }} {{ item.paga ? 'paga-sim' : 'paga-não' }}"></i>
+            {{ item.titulo }}
+        </p>
         <p class="valor">{{ item.valor | currency: 'BRL' }}</p>
     </div>
     

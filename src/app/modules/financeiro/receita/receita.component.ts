@@ -33,7 +33,7 @@ export class ReceitaComponent implements OnInit {
         private route: ActivatedRoute, 
         private authService: AuthenticationService,
         private modalService: ModalService,
-        private notifier: NotifierService
+        private notifierService: NotifierService
         ) {}
 
     ngOnInit(): void {
@@ -161,12 +161,12 @@ export class ReceitaComponent implements OnInit {
                 if(res && res == 'OK') {
                     this.service.delete(id, this.usuario.id).subscribe({
                         next: () => {
-                            this.notifier.notify('success', 'Registro excluído com sucesso!');
+                            this.notifierService.notify('success', 'Registro excluído com sucesso!');
                             this.voltar();
                         },
                         error: (err) => {
                             console.log('erro : ', err);
-                            this.notifier.notify('error', err.error.message);
+                            this.notifierService.notify('error', err.error.message);
                         }
                     });
                 }

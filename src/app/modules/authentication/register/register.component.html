@@ -1,0 +1,22 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+        <label for="name">Nome</label>
+        <input id="name" type="text" autofocus formControlName="name" />
+    </div>
+
+    <div class="form-group">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" formControlName="email" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Senha</label>
+        <input id="password" type="password" formControlName="password" />
+    </div>
+
+    <div class="button-group">
+        <button type="submit" class="btn-submit" [disabled]="formulario.invalid || processando">Entrar</button>
+    </div>
+
+</form>

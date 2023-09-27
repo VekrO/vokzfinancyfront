@@ -5,6 +5,7 @@ export interface Despesa {
     titulo: string;
     descricao: string;
     valor: number;
+    paga: boolean;
     vencimento: Date | string;
 
 }

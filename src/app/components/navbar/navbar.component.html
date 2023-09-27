@@ -4,11 +4,30 @@
         <div class="nav-logo">
             <h3>Vokz Financy</h3>
         </div>
-        <div class="nav-item active">
-            <a href="">Visão Geral</a>
+        <div class="option-wrapper" *ngIf="isAuthenticated">
+            <div class="nav-item {{ '/dashboard' == activeRoute ? 'active' : 'inative' }}">
+                <a routerLink="dashboard">Painel</a>
+            </div>
+            <div class="nav-item {{ '/receitas' == activeRoute ? 'active' : 'inative' }}">
+                <a routerLink="receitas">Receitas</a>
+            </div>
+            <div class="nav-item {{ '/despesas' == activeRoute ? 'active' : 'inative' }}">
+                <a routerLink="despesas">Despesas</a>
+            </div>
         </div>
-        <div class="nav-option">
-            <i class='bx bxs-user-circle'></i>
+        <div class="option-wrapper" *ngIf="!isAuthenticated">
+            <div class="nav-item login">
+                <a routerLink="">Login</a>
+            </div>
+            <div class="nav-item register button">
+                <a routerLink="register">Criar Conta</a>
+            </div>
+        </div>
+        <div class="nav-option" *ngIf="isAuthenticated">
+            <!-- <i class='bx bxs-user-circle'></i> -->
+            <button (click)="desconectar()">
+                <i title="Desconectar" class='bx bx-log-out-circle' ></i>
+            </button>
         </div>
     </div>
 

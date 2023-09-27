@@ -34,7 +34,7 @@ export class DespesaComponent implements OnInit {
         private location: Location, 
         private route: ActivatedRoute, 
         private authService: AuthenticationService,
-        private notifier: NotifierService,
+        private notifierService: NotifierService,
         private modalService: ModalService,
         private config: DynamicDialogConfig
     ) {}
@@ -64,6 +64,7 @@ export class DespesaComponent implements OnInit {
             titulo: new FormControl('', [Validators.required]),
             descricao: new FormControl(''),
             valor: new FormControl(0, [Validators.required]),
+            paga: new FormControl(false, [Validators.required]),
             vencimento: new FormControl('', [Validators.required])
         });
 
@@ -124,12 +125,12 @@ export class DespesaComponent implements OnInit {
                 console.log('DESPESA: ', despesa);
                 this.popularFormulario(despesa);
                 this.processando = false;
-                this.notifier.notify('success', 'Nova despesa criada!');
+                this.notifierService.notify('success', 'Nova despesa criada!');
             },
             error: (err) => {
                 console.log('erro: ', err);
                 this.processando = false;
-                this.notifier.notify('error', err.error.message);
+                this.notifierService.notify('error', err.error.message);
             }
         });
 
@@ -167,12 +168,12 @@ export class DespesaComponent implements OnInit {
                 if(res && res == 'OK') {
                     this.service.delete(id, this.usuario.id).subscribe({
                         next: () => {
-                            this.notifier.notify('success', 'Registro excluído com sucesso!');
+                            this.notifierService.notify('success', 'Registro excluído com sucesso!');
                             this.voltar();
                         },
                         error: (err) => {
                             console.log('erro : ', err);
-                            this.notifier.notify('error', err.error.message);
+                            this.notifierService.notify('error', err.error.message);
                         }
                     });
                 }
