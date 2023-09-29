@@ -46,7 +46,7 @@ export class AuthenticationService {
         return {
             id: Number(decoded['id']),
             email: decoded['email'],
-            nome: decoded['nome']
+            name: decoded['name']
         } as Usuario;
     }
 

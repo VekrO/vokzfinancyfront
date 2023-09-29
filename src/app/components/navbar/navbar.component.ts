@@ -5,6 +5,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ConfirmacaoComponent } from '../confirmacao/confirmacao.component';
 import { ModalService } from 'src/app/services/modal.service';
 import { NotifierService } from 'angular-notifier';
+import { Usuario } from 'src/app/interfaces/Usuario.interface';
+import { PerfilComponent } from 'src/app/modules/authentication/perfil/perfil.component';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +17,7 @@ export class NavbarComponent implements OnInit {
 
   public isAuthenticated: boolean = false;
   public activeRoute: string = '';
+  private usuario!: Usuario;
 
   constructor(private authService: AuthenticationService, private router: Router, private modalService: ModalService, private notiferService: NotifierService) {}
 
@@ -23,6 +26,9 @@ export class NavbarComponent implements OnInit {
     this.authService.isAuthenticated.subscribe((isAuthenticated) => {
       console.log('tá autenticado: ', isAuthenticated);
       this.isAuthenticated = isAuthenticated;
+      if(isAuthenticated) {
+        this.usuario = this.authService.getUsuario();
+      }
     });
 
     this.router.events.pipe(filter(c => c instanceof NavigationEnd)).subscribe({
@@ -30,6 +36,20 @@ export class NavbarComponent implements OnInit {
         this.activeRoute = event.url;
       }
     });
+
+  }
+
+  perfil() {
+
+    this.modalService.open(PerfilComponent, {
+      data: {},
+      width: '30%'
+    }).subscribe({
+      next: (res) => {
+        console.log('resposta: ', res);
+        
+      }
+    })
 
   }
 

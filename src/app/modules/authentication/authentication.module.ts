@@ -3,11 +3,13 @@ import { SharedModule } from "../shared.module";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { AuthenticationRoutingModule } from "./authentication-routing.module";
+import { PerfilComponent } from "./perfil/perfil.component";
 
 @NgModule({
     declarations: [
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        PerfilComponent
     ],
     imports: [
         SharedModule,

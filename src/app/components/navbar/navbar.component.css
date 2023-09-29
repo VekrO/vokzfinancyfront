@@ -26,6 +26,11 @@
     text-decoration: none;
 }
 
+.navbar .wrapper .nav-option {
+    display: flex;
+    gap: 5px;
+}
+
 .navbar .wrapper .nav-option button {
     background: transparent;
     border: 0;

@@ -3,7 +3,6 @@ import { DespesaService } from 'src/app/services/despesa.service';
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/interfaces/Usuario.interface';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UtilService } from 'src/app/util.service';
 import { BehaviorSubject } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { NotifierService } from 'angular-notifier';

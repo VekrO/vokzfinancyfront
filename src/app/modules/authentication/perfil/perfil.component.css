@@ -1,0 +1,40 @@
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 768px;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+form .form-group label {
+    font-size: 15px;
+    font-weight: bold;  
+    color: var(--label-color);  
+}
+
+form .form-group input {
+    height: 35px;
+    padding: 0 5px;
+    border-radius: var(--input-border-radius);
+    border: 1px solid var(--input-border);
+    outline: 0;
+}
+
+form .form-group input:read-only {
+    opacity: 0.5;
+}
+
+form .button-group {
+    display: flex;
+    gap: 5px;
+}
+
+form .button-group button {
+    flex: 1;
+}

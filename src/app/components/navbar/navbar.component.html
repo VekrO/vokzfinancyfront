@@ -24,7 +24,9 @@
             </div>
         </div>
         <div class="nav-option" *ngIf="isAuthenticated">
-            <!-- <i class='bx bxs-user-circle'></i> -->
+            <button (click)="perfil()">
+                <i class='bx bxs-user-circle'></i>
+            </button>
             <button (click)="desconectar()">
                 <i title="Desconectar" class='bx bx-log-out-circle' ></i>
             </button>
