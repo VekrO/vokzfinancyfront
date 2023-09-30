@@ -7,6 +7,8 @@ import jwtDecode, { JwtPayload } from "jwt-decode";
 import { Router } from "@angular/router";
 import { Usuario } from "../interfaces/Usuario.interface";
 import { UsuarioRegistro } from "../interfaces/UsuarioRegistro.interface";
+import { UsuarioPasswordReset } from "../interfaces/UsuarioPasswordReset.interface";
+import { UsuarioPasswordForgot } from "../interfaces/UsuarioPasswordForgot.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +29,14 @@ export class AuthenticationService {
         return this._http.post(APP.api + 'authentication/register', dados);
     }
 
-    
+    resetPassword(dados: UsuarioPasswordReset): Observable<any> {
+        return this._http.post(APP.api + 'authentication/reset-password', dados);
+    }
+
+    forgotPassword(dados: UsuarioPasswordForgot): Observable<any> {
+        return this._http.post(APP.api + 'authentication/forgot-password', dados);
+    }
+
     setToken(token: string) {
         localStorage.setItem('token', token);
     }

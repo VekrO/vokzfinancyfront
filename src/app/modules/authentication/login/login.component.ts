@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
             },
             error: (err) => {
                 console.log('Erro: ', err);
-                this.notifierService.notify('error', err.error.message);
+                this.notifierService.notify('error', err.error);
                 this.processando = false;
             }
         });
