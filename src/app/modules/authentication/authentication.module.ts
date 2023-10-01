@@ -6,6 +6,7 @@ import { AuthenticationRoutingModule } from "./authentication-routing.module";
 import { PerfilComponent } from "./perfil/perfil.component";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
+import { VerifyComponent } from "./verify/verify.component";
 
 @NgModule({
     declarations: [
@@ -13,7 +14,8 @@ import { ForgotPasswordComponent } from "./forgot-password/forgot-password.compo
         RegisterComponent,
         PerfilComponent,
         ResetPasswordComponent,
-        ForgotPasswordComponent
+        ForgotPasswordComponent,
+        VerifyComponent
     ],
     imports: [
         SharedModule,

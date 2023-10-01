@@ -1,0 +1,8 @@
+<form (ngSubmit)="onSubmit()">
+
+    <h3>Ativação de Conta</h3>
+    <p>Confirme sua conta dando um clique no botão abaixo!</p>
+
+    <button type="submit" class="btn-submit" [disabled]="processando || !token">Ativar Conta</button>    
+
+</form>

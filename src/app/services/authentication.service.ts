@@ -37,6 +37,10 @@ export class AuthenticationService {
         return this._http.post(APP.api + 'authentication/forgot-password', dados);
     }
 
+    verify(token: string): Observable<any> {
+        return this._http.post(APP.api + 'authentication/verify?token=' + token, {token: token});
+    }
+
     setToken(token: string) {
         localStorage.setItem('token', token);
     }
