@@ -1,6 +1,6 @@
 import { CurrencyPipe, Location } from "@angular/common";
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators, FormControlStatus } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { NotifierService } from "angular-notifier";
 import * as moment from "moment";
@@ -117,18 +117,19 @@ export class ReceitaComponent implements OnInit {
 
         this.service.insert(this.registro).subscribe({
             next: (receita: Receita) => {
-                console.log('receita: ', receita);
+                this.notifierService.notify('success', 'Receita criada com sucesso!');
                 this.popularFormulario(receita);
                 this.processando = false;
             },
             error: (err) => {
                 console.log('erro: ', err);
+                this.notifierService.notify('error', err.error);
                 this.processando = false;
             }
         });
-
+        
     }
-
+    
     update() {
 
         if(this.processando) {
@@ -136,15 +137,16 @@ export class ReceitaComponent implements OnInit {
         }
 
         this.processando = true;
-
+        
         this.service.update(this.registro).subscribe({
             next: (Receita: Receita) => {
-                console.log('Receita: ', Receita);
+                this.notifierService.notify('success', 'Receita atualizada com sucesso!');
                 this.popularFormulario(Receita);
                 this.processando = false;
             },
             error: (err) => {
                 console.log('erro: ', err);
+                this.notifierService.notify('error', err.error);
                 this.processando = false;
             }
         });
