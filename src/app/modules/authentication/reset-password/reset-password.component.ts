@@ -55,7 +55,7 @@ export class ResetPasswordComponent implements OnInit {
 
     formataRegistro() {
         this.reg = Object.assign({}, this.formulario.value as UsuarioPasswordReset);
-        this.reg.token = this.route.snapshot.paramMap.get('token') ?? '';
+        this.reg.token = this.route.snapshot.queryParamMap.get("token") ?? '';
     }
 
     onSubmit() {
