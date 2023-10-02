@@ -73,7 +73,7 @@ export class PerfilComponent implements OnInit {
             },
             error: (err) => {
                 console.log('ERR: ', err);
-                this.notifierService.notify('error', err.error.message);
+                this.notifierService.notify('error', err.error);
             }
         });
     }

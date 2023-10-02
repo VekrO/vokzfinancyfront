@@ -20,7 +20,7 @@ export class ResetPasswordComponent implements OnInit {
 
     ngOnInit(): void {
 
-        if(!this.route.snapshot.paramMap.get("token")) {
+        if(!this.route.snapshot.queryParamMap.get("token")) {
             this.router.navigate(['']);
             this.notifierService.notify('error', 'Por favor, informe um token para alteração de senha!');
             return;

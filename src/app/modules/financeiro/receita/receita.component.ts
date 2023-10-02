@@ -166,7 +166,7 @@ export class ReceitaComponent implements OnInit {
                         },
                         error: (err) => {
                             console.log('erro : ', err);
-                            this.notifierService.notify('error', err.error.message);
+                            this.notifierService.notify('error', err.error);
                         }
                     });
                 }

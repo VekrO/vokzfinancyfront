@@ -50,7 +50,7 @@ export class DespesaListComponent implements OnInit {
                 },
                 error: (err) => {
                     console.log('ERRO: ', err);
-                    this.notifierService.notify('error', err.error.message);
+                    this.notifierService.notify('error', err.error);
                 }
             });
         } else if(this.filtro == 'vencidos') {
@@ -63,7 +63,7 @@ export class DespesaListComponent implements OnInit {
                 },
                 error: (err) => {
                     console.log('ERRO: ', err); 
-                    this.notifierService.notify('error', err.error.message);
+                    this.notifierService.notify('error', err.error);
                 }
             });
         }
@@ -97,7 +97,7 @@ export class DespesaListComponent implements OnInit {
                 this.processando = false;
             }, 
             error: (err) => {
-                this.notifierService.notify('error', err.error.message);
+                this.notifierService.notify('error', err.error);
                 item.paga = !item.paga;
                 this.processando = false;
             }

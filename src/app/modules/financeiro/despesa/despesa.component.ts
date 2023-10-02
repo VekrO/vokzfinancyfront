@@ -130,7 +130,7 @@ export class DespesaComponent implements OnInit {
             error: (err) => {
                 console.log('erro: ', err);
                 this.processando = false;
-                this.notifierService.notify('error', err.error.message);
+                this.notifierService.notify('error', err.error);
             }
         });
 
@@ -173,7 +173,7 @@ export class DespesaComponent implements OnInit {
                         },
                         error: (err) => {
                             console.log('erro : ', err);
-                            this.notifierService.notify('error', err.error.message);
+                            this.notifierService.notify('error', err.error);
                         }
                     });
                 }

@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (err) => {
         console.log('ERRO: ', err);
-        this.notifierService.notify('error', err.error.message);
+        this.notifierService.notify('error', err.error);
       }
     });
   }
@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (err) => {
         console.log('ERRO: ', err);
-        this.notifierService.notify('error', err.error.message);
+        this.notifierService.notify('error', err.error);
       }
     });
   }
