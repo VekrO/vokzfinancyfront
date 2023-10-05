@@ -11,6 +11,12 @@
             <input id="valor" currencyMask formControlName="valor" [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
         </div>
     </div>
+    <div *ngIf="(contas | async)?.length" class="form-group">
+        <label for="vencimento">Conta</label>
+        <select class="select-conta" formControlName="idConta">
+            <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
+        </select>
+    </div>
     <div class="form-group">
         <label for="data">Data</label>
         <input id="data" type="date" formControlName="data" />

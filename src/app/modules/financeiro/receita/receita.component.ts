@@ -4,10 +4,13 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { NotifierService } from "angular-notifier";
 import * as moment from "moment";
+import { BehaviorSubject } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
+import { Conta } from "src/app/interfaces/Conta.interface";
 import { Receita } from "src/app/interfaces/Receita.interface";
 import { Usuario } from "src/app/interfaces/Usuario.interface";
 import { AuthenticationService } from "src/app/services/authentication.service";
+import { ContaService } from "src/app/services/conta.service";
 import { ModalService } from "src/app/services/modal.service";
 import { ReceitaService } from "src/app/services/receita.service";
 import { UtilService } from "src/app/util.service";
@@ -23,6 +26,7 @@ export class ReceitaComponent implements OnInit {
     public formulario!: FormGroup;
     public registro!: Receita;
     public processando: boolean = false;
+    public contas: BehaviorSubject<Conta[]> = new BehaviorSubject<Conta[]>([]);
 
     private usuario!: Usuario;
 
@@ -30,6 +34,7 @@ export class ReceitaComponent implements OnInit {
         public utilService: UtilService, 
         private service: ReceitaService, 
         private location: Location, 
+        private contaService: ContaService,
         private route: ActivatedRoute, 
         private authService: AuthenticationService,
         private modalService: ModalService,
@@ -41,6 +46,7 @@ export class ReceitaComponent implements OnInit {
         this.usuario = this.authService.getUsuario();
 
         this.configurarFormulario();
+        this.getContasByUsuario();
         
         this.route.paramMap.subscribe({
             next: (params: ParamMap) => {
@@ -56,7 +62,7 @@ export class ReceitaComponent implements OnInit {
         
         this.formulario = new FormGroup({
             id: new FormControl(0),
-            idConta: new FormControl(this.usuario.id, [Validators.required]),
+            idConta: new FormControl(0, [Validators.required]),
             titulo: new FormControl('', [Validators.required]),
             descricao: new FormControl(''),
             valor: new FormControl(0, [Validators.required]),
@@ -96,6 +102,20 @@ export class ReceitaComponent implements OnInit {
 
     }
 
+    getContasByUsuario() {
+
+        this.contaService.getAllByIdUsuario(this.usuario.id).subscribe({
+            next: (contas) => {
+                console.log('CONTAS: ', contas);
+                this.contas.next(contas);
+                this.formulario.controls['idConta'].setValue(contas[0].id);
+            },
+            error: (err) => {
+                console.log('ERRO: ', err);
+            }
+        });
+
+    }
     
     onSubmit() {
         this.registro = Object.assign({}, this.formulario.value as Receita);

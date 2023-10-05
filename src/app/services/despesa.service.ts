@@ -24,7 +24,7 @@ export class DespesaService {
     }
 
     getValorByIdContaAsync(idConta: number): Observable<number> {
-        return this._http.get<number>(APP.api + 'despesa/conta/' + idConta + '/valor');
+        return this._http.get<number>(APP.api + 'despesa/conta/' + idConta + '/despesas/valor');
     }
 
     post(despesa: Despesa): Observable<Despesa> {

@@ -48,9 +48,8 @@ export class DespesaComponent implements OnInit {
 
         this.usuario = this.authService.getUsuario();
         
-        this.getContasByUsuario();
-
         this.configurarFormulario();
+        this.getContasByUsuario();
         
         this.route.paramMap.subscribe({
             next: (params: ParamMap) => {
@@ -66,7 +65,7 @@ export class DespesaComponent implements OnInit {
         
         this.formulario = new FormGroup({
             id: new FormControl(0),
-            idConta: new FormControl(this.usuario.id, [Validators.required]),
+            idConta: new FormControl(0, [Validators.required]),
             titulo: new FormControl('', [Validators.required]),
             descricao: new FormControl(''),
             valor: new FormControl(0, [Validators.required]),
@@ -92,6 +91,7 @@ export class DespesaComponent implements OnInit {
             next: (contas) => {
                 console.log('CONTAS: ', contas);
                 this.contas.next(contas);
+                this.formulario.controls['idConta'].setValue(contas[0].id);
             },
             error: (err) => {
                 console.log('ERRO: ', err);
@@ -141,8 +141,7 @@ export class DespesaComponent implements OnInit {
         this.processando = true;
 
         console.log('registro: ', this.registro);
-        this.registro.idConta = Number(this.registro.idConta);
-        
+
         this.service.post(this.registro).subscribe({
             next: (despesa: Despesa) => {
                 console.log('DESPESA: ', despesa);

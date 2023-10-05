@@ -20,7 +20,7 @@ export class ReceitaService {
     }
 
     getValorByIdContaAsync(idConta: number): Observable<number> {
-        return this._http.get<number>(APP.api + 'receita/conta/' + idConta + '/valor');
+        return this._http.get<number>(APP.api + 'receita/conta/' + idConta + '/receitas/valor');
     }
 
     post(receita: Receita): Observable<Receita> {

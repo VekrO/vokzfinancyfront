@@ -30,11 +30,14 @@ export class DashboardComponent implements OnInit {
     console.log('USUARIO: ', this.usuario);
 
     this.getCumprimento();
+    this.getValorReceitasByIdUsuarioAsync();
+    this.getValorDespesasByIdUsuarioAsync();
+    this.getSaldo(this.usuario.id);
 
   }
 
-  getValorReceita(idConta: number) {
-    this.receitaService.getValorByIdContaAsync(idConta).subscribe({
+  getValorReceitasByIdUsuarioAsync() {
+    this.usuarioService.getValorReceitasByIdUsuarioAsync(this.usuario.id).subscribe({
       next: (valor: number) => {
         this.receitaAtual = valor;
       },
@@ -44,8 +47,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getValorDespesa(idConta: number) {
-    this.despesaService.getValorByIdContaAsync(idConta).subscribe({
+  getValorDespesasByIdUsuarioAsync() {
+    this.usuarioService.getValorDespesasByIdUsuarioAsync(this.usuario.id).subscribe({
       next: (valor: number) => {
         this.despesaAtual = valor;
       },
@@ -56,8 +59,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getSaldoAtual(idConta: number) {
-    this.usuarioService.getSaldoAtual(idConta).subscribe({
+  getSaldo(idUsuario: number) {
+    this.usuarioService.getSaldo(idUsuario).subscribe({
       next: (valor: number) => {
         console.log('saldo atual : ', valor);
         this.saldoAtual.next(valor);

@@ -91,7 +91,7 @@ export class DespesaListComponent implements OnInit {
             next: (despesa: Despesa) => {
                 console.log('item alterado: ', despesa);
                 if(this.dashboardComponent) {
-                    this.dashboardComponent.getSaldoAtual(this.usuario.id);
+                    this.dashboardComponent.getSaldo(this.usuario.id);
                 }
                 item = despesa;
                 this.processando = false;

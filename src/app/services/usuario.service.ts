@@ -11,10 +11,6 @@ export class UsuarioService {
 
     constructor(private _http: HttpClient) {}
 
-    getSaldoAtual(idUsuario: number): Observable<number> {
-        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/saldo');
-    }
-
     get(id: number): Observable<Usuario> {
         return this._http.get<Usuario>(APP.api + 'usuario/' + id);
     }
@@ -26,5 +22,18 @@ export class UsuarioService {
     patch(dados: Usuario): Observable<Usuario> {
         return this._http.patch<Usuario>(APP.api + 'usuario/' + dados.id + '/perfil', dados);
     }
+
+    getSaldo(idUsuario: number): Observable<number> {
+        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/saldo');
+    }
+
+    getValorReceitasByIdUsuarioAsync(idUsuario: number): Observable<number> {
+        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/receitas/valor');
+    }
+
+    getValorDespesasByIdUsuarioAsync(idUsuario: number): Observable<number> {
+        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/despesas/valor');
+    }
+
 
 }

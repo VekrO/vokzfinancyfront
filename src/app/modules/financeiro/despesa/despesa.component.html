@@ -13,8 +13,8 @@
     </div>
     <div *ngIf="(contas | async)?.length" class="form-group">
         <label for="vencimento">Conta</label>
-        <select class="select-filtro" formControlName="idConta">
-            <option *ngFor="let conta of (contas | async)" [value]="conta.id">{{ conta.nome }}</option>
+        <select class="select-conta" formControlName="idConta">
+            <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
         </select>
     </div>
     <div class="form-group">
