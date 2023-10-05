@@ -1,0 +1,190 @@
+
+.main-content {
+    max-width: var(--main-maxwidth);
+    margin: 0 auto;
+}
+
+.max-width {
+    max-width: var(--main-maxwidth);
+    margin: 0 auto;
+}
+
+.button {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.currency-field {
+    position: relative;
+}
+
+.currency-field small {
+    position: absolute;   
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.currency-field input {
+    width: 100% !important;
+    padding: 0 25px !important;
+}
+
+.btn-submit {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    cursor: pointer;
+    background-color: var(--color-button-submit);
+    border: 0;
+    border-radius: 5px;
+    height: 35px;
+    transition: 0.3s ease all;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: var(--color-button-submit-hover);
+}
+
+.btn-back {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    cursor: pointer;
+    background-color: var(--color-button-back);
+    border: 0;
+    border-radius: 5px;
+    height: 35px;
+    transition: 0.3s ease all;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+.btn-excluir {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    cursor: pointer;
+    background-color: var(--color-button-excluir);
+    border: 0;
+    border-radius: 5px;
+    height: 35px;
+    transition: 0.3s ease all;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+.btn-back:hover {
+    background-color: var(--color-button-back-hover);
+}
+
+.btn-excluir:hover {
+    background-color: var(--color-button-excluir-hover);
+}
+
+.btn-submit:disabled {
+    background-color: var(--color-button-submit-disabled);
+}
+
+.btn-text {
+    background: transparent;
+    border: 0;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: 0.3s all ease;
+}
+
+.btn-text:hover {
+    color: var(--hover);
+}
+
+button.edit {
+    color: var(--color-button-edit);
+}
+
+button.trash {
+    color: var(--color-button-trash);
+}
+
+.modal-panel {
+    background-color: white;
+    border-radius: 8px;
+    padding: 24px;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 54px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: var(--color-receita);
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px var(--color-receita);
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.paga-sim {
+    color: var(--color-receita);
+}
+.paga-nao {
+    color: #ccc;
+}
+
+.select-conta {
+    height: 35px;
+    border-radius: 5px;
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+    padding-left: 10px;
+    border: 1px solid var(--input-border);
+}

@@ -25,7 +25,7 @@ export class ReceitaListComponent implements OnInit {
 
         this.usuario = this.authService.getUsuario();
 
-        this.service.getByIdContaAsync(this.usuario.id).subscribe({
+        this.service.getByContaIdAsync(this.usuario.id).subscribe({
             next: (res) => {
 
                 this.items.next(res);

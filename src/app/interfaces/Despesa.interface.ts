@@ -1,7 +1,7 @@
 export interface Despesa {
     
     id: number;
-    idConta: number;
+    ContaId: number;
     titulo: string;
     descricao: string;
     valor: number;

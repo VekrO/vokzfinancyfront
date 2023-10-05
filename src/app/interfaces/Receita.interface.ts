@@ -1,7 +1,7 @@
 export interface Receita {
     
     id: number;
-    idUsuario: number;
+    ContaId: number;
     titulo: string;
     descricao: string;
     valor: number;

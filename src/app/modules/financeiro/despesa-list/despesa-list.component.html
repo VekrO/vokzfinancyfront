@@ -2,10 +2,15 @@
 
     <div class="table-header">
         <p>Despesas</p>
-        <select class="select-filtro" [(ngModel)]="filtro" (change)="getDespesasAsync()">
-            <option value="todas">Todas</option>
-            <option value="vencidos">Vencidas</option>
-        </select>
+        <form class="flex align-items-center justify-content-center gap-1" [formGroup]="formularioFiltro">
+            <select class="select-filtro" formControlName="ContaId" (change)="getDespesasAsync()">
+                <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
+            </select>
+            <select class="select-filtro" formControlName="status" (change)="getDespesasAsync()">
+                <option value="todas">Todas</option>
+                <option value="vencidos">Vencidas</option>
+            </select>
+        </form>
     </div>
     <div *ngFor="let item of (items | async)" class="item" (click)="editar(item, $event)">
         <p class="title">

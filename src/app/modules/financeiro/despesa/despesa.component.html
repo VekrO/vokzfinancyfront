@@ -13,7 +13,7 @@
     </div>
     <div *ngIf="(contas | async)?.length" class="form-group">
         <label for="vencimento">Conta</label>
-        <select class="select-conta" formControlName="idConta">
+        <select class="select-conta" formControlName="ContaId">
             <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
         </select>
     </div>

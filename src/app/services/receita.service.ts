@@ -15,12 +15,12 @@ export class ReceitaService {
         return this._http.get<Receita>(APP.api + 'receita/' + id);
     }
 
-    getByIdContaAsync(idConta: number): Observable<Receita[]> {
-        return this._http.get<Receita[]>(APP.api + 'receita/conta/' + idConta);
+    getByContaIdAsync(ContaId: number): Observable<Receita[]> {
+        return this._http.get<Receita[]>(APP.api + 'receita/conta/' + ContaId);
     }
 
-    getValorByIdContaAsync(idConta: number): Observable<number> {
-        return this._http.get<number>(APP.api + 'receita/conta/' + idConta + '/receitas/valor');
+    getValorByContaIdAsync(ContaId: number): Observable<number> {
+        return this._http.get<number>(APP.api + 'receita/conta/' + ContaId + '/receitas/valor');
     }
 
     post(receita: Receita): Observable<Receita> {

@@ -62,7 +62,7 @@ export class ReceitaComponent implements OnInit {
         
         this.formulario = new FormGroup({
             id: new FormControl(0),
-            idConta: new FormControl(0, [Validators.required]),
+            ContaId: new FormControl(0, [Validators.required]),
             titulo: new FormControl('', [Validators.required]),
             descricao: new FormControl(''),
             valor: new FormControl(0, [Validators.required]),
@@ -108,7 +108,7 @@ export class ReceitaComponent implements OnInit {
             next: (contas) => {
                 console.log('CONTAS: ', contas);
                 this.contas.next(contas);
-                this.formulario.controls['idConta'].setValue(contas[0].id);
+                this.formulario.controls['ContaId'].setValue(contas[0].id);
             },
             error: (err) => {
                 console.log('ERRO: ', err);

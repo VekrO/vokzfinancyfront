@@ -15,16 +15,16 @@ export class DespesaService {
         return this._http.get<Despesa>(APP.api + 'despesa/' + id);
     }
 
-    getByIdContaAsync(idConta: number): Observable<Despesa[]> {
-        return this._http.get<Despesa[]>(APP.api + 'despesa/conta/' + idConta);
+    getByContaIdAsync(ContaId: number): Observable<Despesa[]> {
+        return this._http.get<Despesa[]>(APP.api + 'despesa/conta/' + ContaId);
     }
 
-    getVencidoByIdContaAsync(idConta: number): Observable<Despesa[]> {
-        return this._http.get<Despesa[]>(APP.api + 'despesa/conta/' + idConta + '/vencido');
+    getVencidoByContaIdAsync(ContaId: number): Observable<Despesa[]> {
+        return this._http.get<Despesa[]>(APP.api + 'despesa/conta/' + ContaId + '/vencido');
     }
 
-    getValorByIdContaAsync(idConta: number): Observable<number> {
-        return this._http.get<number>(APP.api + 'despesa/conta/' + idConta + '/despesas/valor');
+    getValorByContaIdAsync(ContaId: number): Observable<number> {
+        return this._http.get<number>(APP.api + 'despesa/conta/' + ContaId + '/despesas/valor');
     }
 
     post(despesa: Despesa): Observable<Despesa> {
@@ -35,8 +35,8 @@ export class DespesaService {
         return this._http.put<Despesa>(APP.api+ 'despesa/' + despesa.id, despesa);
     }
 
-    delete(id: number, idConta: number): Observable<any> {
-        return this._http.delete(APP.api+ 'despesa/' + id + '/conta/' + idConta);
+    delete(id: number, ContaId: number): Observable<any> {
+        return this._http.delete(APP.api+ 'despesa/' + id + '/conta/' + ContaId);
     }
 
 }

@@ -26,6 +26,8 @@
             ],
             "styles": [
               "src/styles.css",
+              "src/assets/content.css",
+              "src/assets/flex.css",
               "node_modules/angular-notifier/styles.css"
             ],
             "scripts": []
