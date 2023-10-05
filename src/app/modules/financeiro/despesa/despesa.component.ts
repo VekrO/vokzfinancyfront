@@ -4,11 +4,14 @@ import { FormGroup, FormControl, Validators, FormControlStatus } from "@angular/
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { NotifierService } from "angular-notifier";
 import * as moment from "moment";
+import { BehaviorSubject } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
 import { ModalComponent } from "src/app/components/modal/modal.component";
+import { Conta } from "src/app/interfaces/Conta.interface";
 import { Despesa } from "src/app/interfaces/Despesa.interface";
 import { Usuario } from "src/app/interfaces/Usuario.interface";
 import { AuthenticationService } from "src/app/services/authentication.service";
+import { ContaService } from "src/app/services/conta.service";
 import { DespesaService } from "src/app/services/despesa.service";
 import { DynamicDialogConfig } from "src/app/services/dynamicDialog.service";
 import { ModalService } from "src/app/services/modal.service";
@@ -25,6 +28,7 @@ export class DespesaComponent implements OnInit {
     public formulario!: FormGroup;
     public registro!: Despesa;
     public processando: boolean = false;
+    public contas: BehaviorSubject<Conta[]> = new BehaviorSubject<Conta[]>([]);
 
     private usuario!: Usuario;
 
@@ -36,13 +40,15 @@ export class DespesaComponent implements OnInit {
         private authService: AuthenticationService,
         private notifierService: NotifierService,
         private modalService: ModalService,
+        private contaService: ContaService,
         private config: DynamicDialogConfig
     ) {}
 
     ngOnInit(): void {
 
         this.usuario = this.authService.getUsuario();
-        console.log('usuario: ', this.usuario);
+        
+        this.getContasByUsuario();
 
         this.configurarFormulario();
         
@@ -60,7 +66,7 @@ export class DespesaComponent implements OnInit {
         
         this.formulario = new FormGroup({
             id: new FormControl(0),
-            usuarioId: new FormControl(this.usuario.id, [Validators.required]),
+            idConta: new FormControl(this.usuario.id, [Validators.required]),
             titulo: new FormControl('', [Validators.required]),
             descricao: new FormControl(''),
             valor: new FormControl(0, [Validators.required]),
@@ -78,6 +84,20 @@ export class DespesaComponent implements OnInit {
             }
             this.formulario.patchValue(data);
         }
+    }
+
+    getContasByUsuario() {
+
+        this.contaService.getAllByIdUsuario(this.usuario.id).subscribe({
+            next: (contas) => {
+                console.log('CONTAS: ', contas);
+                this.contas.next(contas);
+            },
+            error: (err) => {
+                console.log('ERRO: ', err);
+            }
+        });
+
     }
 
     getDespesa(id: number) {
@@ -106,13 +126,13 @@ export class DespesaComponent implements OnInit {
     onSubmit() {
         this.registro = Object.assign({}, this.formulario.value as Despesa);
         if(!this.registro.id) {
-            this.insert();
+            this.post();
         } else {
-            this.update();
+            this.put();
         }
     }
 
-    insert() {
+    post() {
 
         if(this.processando) {
             return;
@@ -120,7 +140,10 @@ export class DespesaComponent implements OnInit {
 
         this.processando = true;
 
-        this.service.insert(this.registro).subscribe({
+        console.log('registro: ', this.registro);
+        this.registro.idConta = Number(this.registro.idConta);
+        
+        this.service.post(this.registro).subscribe({
             next: (despesa: Despesa) => {
                 console.log('DESPESA: ', despesa);
                 this.popularFormulario(despesa);
@@ -136,7 +159,7 @@ export class DespesaComponent implements OnInit {
 
     }
 
-    update() {
+    put() {
 
         if(this.processando) {
             return;
@@ -144,7 +167,7 @@ export class DespesaComponent implements OnInit {
 
         this.processando = true;
 
-        this.service.update(this.registro).subscribe({
+        this.service.put(this.registro).subscribe({
             next: (despesa: Despesa) => {
                 console.log('DESPESA: ', despesa);
                 this.popularFormulario(despesa);

@@ -41,7 +41,7 @@ export class DespesaListComponent implements OnInit {
 
     getDespesasAsync() {
         if(this.filtro == 'todas') {
-            this.service.getByIdUsuarioAsync(this.usuario.id).subscribe({
+            this.service.getByIdContaAsync(this.usuario.id).subscribe({
                 next: (res) => {
                     this.items.next(res);
                     this.valorTotal = this.items.value.reduce((acumulador, item) => {
@@ -54,7 +54,7 @@ export class DespesaListComponent implements OnInit {
                 }
             });
         } else if(this.filtro == 'vencidos') {
-            this.service.getVencidoByIdUsuarioAsync(this.usuario.id).subscribe({
+            this.service.getVencidoByIdContaAsync(this.usuario.id).subscribe({
                 next: (res) => {
                     this.items.next(res);
                     this.valorTotal = this.items.value.reduce((acumulador, item) => {
@@ -87,7 +87,7 @@ export class DespesaListComponent implements OnInit {
         
         event.stopPropagation();
         item.paga = !item.paga;
-        this.service.update(item).subscribe({
+        this.service.put(item).subscribe({
             next: (despesa: Despesa) => {
                 console.log('item alterado: ', despesa);
                 if(this.dashboardComponent) {

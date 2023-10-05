@@ -27,15 +27,14 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     
     this.usuario = this.authService.getUsuario();
+    console.log('USUARIO: ', this.usuario);
+
     this.getCumprimento();
-    this.getValorReceita(this.usuario.id)
-    this.getValorDespesa(this.usuario.id);
-    this.getSaldoAtual(this.usuario.id);
 
   }
 
-  getValorReceita(idUsuario: number) {
-    this.receitaService.getValorByIdUsuarioAsync(idUsuario).subscribe({
+  getValorReceita(idConta: number) {
+    this.receitaService.getValorByIdContaAsync(idConta).subscribe({
       next: (valor: number) => {
         this.receitaAtual = valor;
       },
@@ -45,8 +44,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getValorDespesa(idUsuario: number) {
-    this.despesaService.getValorByIdUsuarioAsync(idUsuario).subscribe({
+  getValorDespesa(idConta: number) {
+    this.despesaService.getValorByIdContaAsync(idConta).subscribe({
       next: (valor: number) => {
         this.despesaAtual = valor;
       },
@@ -57,8 +56,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getSaldoAtual(idUsuario: number) {
-    this.usuarioService.getSaldoAtual(idUsuario).subscribe({
+  getSaldoAtual(idConta: number) {
+    this.usuarioService.getSaldoAtual(idConta).subscribe({
       next: (valor: number) => {
         console.log('saldo atual : ', valor);
         this.saldoAtual.next(valor);

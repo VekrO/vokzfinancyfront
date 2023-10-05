@@ -39,7 +39,6 @@ export class ReceitaComponent implements OnInit {
     ngOnInit(): void {
 
         this.usuario = this.authService.getUsuario();
-        console.log('usuario: ', this.usuario);
 
         this.configurarFormulario();
         
@@ -57,7 +56,7 @@ export class ReceitaComponent implements OnInit {
         
         this.formulario = new FormGroup({
             id: new FormControl(0),
-            usuarioId: new FormControl(this.usuario.id, [Validators.required]),
+            idConta: new FormControl(this.usuario.id, [Validators.required]),
             titulo: new FormControl('', [Validators.required]),
             descricao: new FormControl(''),
             valor: new FormControl(0, [Validators.required]),
@@ -101,13 +100,13 @@ export class ReceitaComponent implements OnInit {
     onSubmit() {
         this.registro = Object.assign({}, this.formulario.value as Receita);
         if(!this.registro.id) {
-            this.insert();
+            this.post();
         } else {
-            this.update();
+            this.put();
         }
     }
 
-    insert() {
+    post() {
 
         if(this.processando) {
             return;
@@ -115,7 +114,9 @@ export class ReceitaComponent implements OnInit {
 
         this.processando = true;
 
-        this.service.insert(this.registro).subscribe({
+        console.log('registro: ', this.registro);
+
+        this.service.post(this.registro).subscribe({
             next: (receita: Receita) => {
                 this.notifierService.notify('success', 'Receita criada com sucesso!');
                 this.popularFormulario(receita);
@@ -130,7 +131,7 @@ export class ReceitaComponent implements OnInit {
         
     }
     
-    update() {
+    put() {
 
         if(this.processando) {
             return;
@@ -138,7 +139,7 @@ export class ReceitaComponent implements OnInit {
 
         this.processando = true;
         
-        this.service.update(this.registro).subscribe({
+        this.service.put(this.registro).subscribe({
             next: (Receita: Receita) => {
                 this.notifierService.notify('success', 'Receita atualizada com sucesso!');
                 this.popularFormulario(Receita);

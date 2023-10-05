@@ -15,24 +15,24 @@ export class ReceitaService {
         return this._http.get<Receita>(APP.api + 'receita/' + id);
     }
 
-    getByIdUsuarioAsync(idUsuario: number): Observable<Receita[]> {
-        return this._http.get<Receita[]>(APP.api + 'receita/usuario/' + idUsuario);
+    getByIdContaAsync(idConta: number): Observable<Receita[]> {
+        return this._http.get<Receita[]>(APP.api + 'receita/conta/' + idConta);
     }
 
-    getValorByIdUsuarioAsync(idUsuario: number): Observable<number> {
-        return this._http.get<number>(APP.api + 'receita/usuario/' + idUsuario + '/valor');
+    getValorByIdContaAsync(idConta: number): Observable<number> {
+        return this._http.get<number>(APP.api + 'receita/conta/' + idConta + '/valor');
     }
 
-    insert(receita: Receita): Observable<Receita> {
+    post(receita: Receita): Observable<Receita> {
         return this._http.post<Receita>(APP.api + 'receita/', receita);
     }
 
-    update(receita: Receita): Observable<Receita> {
+    put(receita: Receita): Observable<Receita> {
         return this._http.put<Receita>(APP.api+ 'receita/' + receita.id, receita);
     }
 
     delete(id: number, idUsuario: number): Observable<any> {
-        return this._http.delete(APP.api+ 'receita/' + id + '/usuario/' + idUsuario);
+        return this._http.delete(APP.api+ 'receita/' + id + '/conta/' + idUsuario);
     }
 
 }
