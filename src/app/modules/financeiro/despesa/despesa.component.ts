@@ -16,6 +16,7 @@ import { DespesaService } from "src/app/services/despesa.service";
 import { DynamicDialogConfig } from "src/app/services/dynamicDialog.service";
 import { ModalService } from "src/app/services/modal.service";
 import { UtilService } from "src/app/util.service";
+import { FinanceiroFacade } from "../financeiro.facade";
 
 @Component({
     selector: 'app-despesa',
@@ -41,6 +42,7 @@ export class DespesaComponent implements OnInit {
         private notifierService: NotifierService,
         private modalService: ModalService,
         private contaService: ContaService,
+        private facade: FinanceiroFacade,
         private config: DynamicDialogConfig
     ) {}
 
@@ -59,6 +61,15 @@ export class DespesaComponent implements OnInit {
             }
         });
 
+    }
+
+    getContasByIdUsuario() {
+        this.facade.getContasByUsuario(this.usuario.id).then((contas) => {
+            this.contas.next(contas);
+            this.formulario.controls['ContaId'].setValue(contas[0].id);
+        }).catch((err) => {
+            console.log('error: ', err);
+        });
     }
 
     configurarFormulario() {
@@ -151,29 +162,31 @@ export class DespesaComponent implements OnInit {
             },
             error: (err) => {
                 console.log('erro: ', err);
-                this.processando = false;
                 this.notifierService.notify('error', err.error);
+                this.processando = false;
             }
         });
 
     }
-
+    
     put() {
 
         if(this.processando) {
             return;
         }
-
+        
         this.processando = true;
 
         this.service.put(this.registro).subscribe({
             next: (despesa: Despesa) => {
                 console.log('DESPESA: ', despesa);
                 this.popularFormulario(despesa);
+                this.notifierService.notify('success', 'Despesa atualizada criada!');
                 this.processando = false;
             },
             error: (err) => {
                 console.log('erro: ', err);
+                this.notifierService.notify('error', err.error);
                 this.processando = false;
             }
         });

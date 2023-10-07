@@ -1,10 +1,13 @@
 import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
+import { Conta } from "src/app/interfaces/Conta.interface";
 import { Receita } from "src/app/interfaces/Receita.interface";
 import { Usuario } from "src/app/interfaces/Usuario.interface";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ReceitaService } from "src/app/services/receita.service";
+import { FinanceiroFacade } from "../financeiro.facade";
 
 @Component({
     selector: 'app-receita-list',
@@ -16,29 +19,56 @@ export class ReceitaListComponent implements OnInit {
 
     private usuario!: Usuario;
     public items: BehaviorSubject<Receita[]> = new BehaviorSubject<Receita[]>([]);
+    public contas: BehaviorSubject<Conta[]> = new BehaviorSubject<Conta[]>([]);
     public valorTotal: number = 0;
     public visible: boolean = false;
 
-    constructor(public service: ReceitaService, private authService: AuthenticationService, private router: Router) {}
+    public formularioFiltro!: FormGroup;
+
+    constructor(
+        public service: ReceitaService, 
+        private authService: AuthenticationService, 
+        private facade: FinanceiroFacade,
+        private router: Router) {}
     
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
 
         this.usuario = this.authService.getUsuario();
+        this.configurarFormulario();
+        await this.getContasByUsuario();        
+        this.getByIdContaAsync();
 
-        this.service.getByContaIdAsync(this.usuario.id).subscribe({
+    }
+
+    getByIdContaAsync() {
+        this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId).subscribe({
             next: (res) => {
-
                 this.items.next(res);
                 this.valorTotal = this.items.value.reduce((acumulador, item) => {
                     return acumulador + item.valor;
-                }, 0); 
-                
+                }, 0);
             },
             error: (err) => {
                 console.log('ERRO: ', err); 
             }
         });
+    }
 
+    async getContasByUsuario() {
+
+        await this.facade.getContasByUsuario(this.usuario.id).then((contas) => {
+            this.contas.next(contas);
+            this.formularioFiltro.controls['ContaId'].setValue(contas[0].id);
+        }).catch((err) => {
+            console.log('error: ', err);
+        });
+
+    }
+
+    configurarFormulario() {
+        this.formularioFiltro = new FormGroup({
+            ContaId: new FormControl(0),
+        });
     }
 
     editar(item: Receita) {

@@ -4,6 +4,12 @@
     padding: 20px;
 }
 
+.table .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .table .table-header, .table .table-footer {
     padding: 10px;
 }

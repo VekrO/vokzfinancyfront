@@ -14,6 +14,7 @@ import { ContaService } from "src/app/services/conta.service";
 import { ModalService } from "src/app/services/modal.service";
 import { ReceitaService } from "src/app/services/receita.service";
 import { UtilService } from "src/app/util.service";
+import { FinanceiroFacade } from "../financeiro.facade";
 
 @Component({
     selector: 'app-receita',
@@ -35,6 +36,7 @@ export class ReceitaComponent implements OnInit {
         private service: ReceitaService, 
         private location: Location, 
         private contaService: ContaService,
+        private facade: FinanceiroFacade,
         private route: ActivatedRoute, 
         private authService: AuthenticationService,
         private modalService: ModalService,
@@ -104,15 +106,11 @@ export class ReceitaComponent implements OnInit {
 
     getContasByUsuario() {
 
-        this.contaService.getAllByIdUsuario(this.usuario.id).subscribe({
-            next: (contas) => {
-                console.log('CONTAS: ', contas);
-                this.contas.next(contas);
-                this.formulario.controls['ContaId'].setValue(contas[0].id);
-            },
-            error: (err) => {
-                console.log('ERRO: ', err);
-            }
+        this.facade.getContasByUsuario(this.usuario.id).then((contas) => {
+            this.contas.next(contas);
+            this.formulario.controls['ContaId'].setValue(contas[0].id);
+        }).catch((err) => {
+            console.log('error: ', err);
         });
 
     }

@@ -188,3 +188,13 @@ input:checked+.slider:before {
     padding-left: 10px;
     border: 1px solid var(--input-border);
 }
+
+.select-filtro {
+    width: 150px;
+    height: 35px;
+    border-radius: 5px;
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+    padding-left: 10px;
+}

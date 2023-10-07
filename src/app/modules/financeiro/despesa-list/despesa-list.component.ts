@@ -10,6 +10,7 @@ import { DashboardComponent } from "../../dashboard/dashboard.component";
 import { Conta } from "src/app/interfaces/Conta.interface";
 import { ContaService } from "src/app/services/conta.service";
 import { FormControl, FormGroup } from "@angular/forms";
+import { FinanceiroFacade } from "../financeiro.facade";
 
 @Component({
     selector: 'app-despesa-list',
@@ -33,7 +34,7 @@ export class DespesaListComponent implements OnInit {
         private authService: AuthenticationService, 
         private router: Router,
         private notifierService: NotifierService,
-        private contaService: ContaService,
+        private facade: FinanceiroFacade,
         @Optional() private dashboardComponent: DashboardComponent
     ) {}
     
@@ -91,12 +92,11 @@ export class DespesaListComponent implements OnInit {
 
     async getContasByUsuario() {
 
-        const contas$ = this.contaService.getAllByIdUsuario(this.usuario.id);
-        await lastValueFrom(contas$).then((contas) => {
+        await this.facade.getContasByUsuario(this.usuario.id).then((contas) => {
             this.contas.next(contas);
             this.formularioFiltro.controls['ContaId'].setValue(contas[0].id);
         }).catch((err) => {
-            console.log('ERRO: ', err);
+            console.log('error: ', err);
         });
 
     }

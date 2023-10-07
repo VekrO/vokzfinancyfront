@@ -2,6 +2,11 @@
 
     <div class="table-header">
         <p>Receitas</p>
+        <form class="flex align-items-center justify-content-center gap-1" [formGroup]="formularioFiltro">
+            <select class="select-filtro" formControlName="ContaId">
+                <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
+            </select>
+        </form>
     </div>
     <div *ngFor="let item of (items | async)" class="item" (click)="editar(item)">
         <p class="title">{{ item.titulo }}</p>
