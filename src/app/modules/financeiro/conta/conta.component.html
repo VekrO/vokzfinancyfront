@@ -1,0 +1,17 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+        <label for="nome">Nome da Conta</label>
+        <input id="nome" type="text" autofocus formControlName="nome" />
+    </div>
+    <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" type="text" formControlName="descricao" rows="5"></textarea>
+    </div>
+    <div class="button-group">
+        <button *ngIf="registro?.id" type="button" class="btn-excluir" (click)="excluir(formulario.value.id)">Excluir</button>
+        <button type="button" class="btn-back" (click)="voltar()">Voltar</button>
+        <button type="submit" class="btn-submit" [disabled]="formulario.invalid || processando">Salvar</button>
+    </div>
+    
+</form>

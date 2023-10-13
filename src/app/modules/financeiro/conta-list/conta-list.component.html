@@ -1,0 +1,12 @@
+<div class="table">
+
+    <div class="table-header">
+        <p>Despesas</p>
+    </div>
+    <div *ngFor="let item of (items | async)" class="item" (click)="editar(item, $event)">
+        <p class="title">
+            {{ item.nome }}
+        </p>
+    </div>
+
+</div>

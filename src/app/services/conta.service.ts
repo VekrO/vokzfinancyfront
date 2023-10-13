@@ -19,5 +19,17 @@ export class ContaService {
         return this._http.get<Conta[]>(APP.api + 'conta/usuario/' + idUsuario);
     }
 
+    post(conta: Conta): Observable<Conta> {
+        return this._http.post<Conta>(APP.api + 'conta/', conta);
+    }
+
+    put(conta: Conta): Observable<Conta> {
+        return this._http.put<Conta>(APP.api+ 'conta/' + conta.id, conta);
+    }
+
+    delete(id: number, idUsuario: number): Observable<any> {
+        return this._http.delete(APP.api+ 'conta/' + id + '/usuario/' + idUsuario);
+    }
+
 
 }

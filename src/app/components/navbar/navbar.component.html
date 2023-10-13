@@ -14,6 +14,9 @@
             <div class="nav-item {{ '/despesas' == activeRoute ? 'active' : 'inative' }}">
                 <a routerLink="despesas">Despesas</a>
             </div>
+            <div class="nav-item {{ '/contas' == activeRoute ? 'active' : 'inative' }}">
+                <a routerLink="contas">Contas</a>
+            </div>
         </div>
         <div class="option-wrapper" *ngIf="!isAuthenticated">
             <div class="nav-item login">

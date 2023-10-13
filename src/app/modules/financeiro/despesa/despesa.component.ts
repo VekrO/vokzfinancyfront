@@ -181,7 +181,7 @@ export class DespesaComponent implements OnInit {
             next: (despesa: Despesa) => {
                 console.log('DESPESA: ', despesa);
                 this.popularFormulario(despesa);
-                this.notifierService.notify('success', 'Despesa atualizada criada!');
+                this.notifierService.notify('success', 'Despesa atualizada com sucesso!');
                 this.processando = false;
             },
             error: (err) => {

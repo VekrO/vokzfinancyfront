@@ -6,6 +6,8 @@ import { ReceitaComponent } from './receita/receita.component';
 import { AuthGuard } from 'src/app/guards/Auth.guard';
 import { ReceitaListComponent } from './receita-list/receita-list.component';
 import { DespesaListComponent } from './despesa-list/despesa-list.component';
+import { ContaListComponent } from './conta-list/conta-list.component';
+import { ContaComponent } from './conta/conta.component';
 
 const routes: Routes = [
     {
@@ -15,10 +17,16 @@ const routes: Routes = [
         path: 'receita', component: ReceitaComponent, canActivate: [AuthGuard]
     },
     {
+        path: 'conta', component: ContaComponent, canActivate: [AuthGuard]
+    },
+    {
         path: 'despesas', component: DespesaListComponent, canActivate: [AuthGuard]
     },
     {
         path: 'receitas', component: ReceitaListComponent, canActivate: [AuthGuard]
+    },
+    {
+        path: 'contas', component: ContaListComponent, canActivate: [AuthGuard]
     }
 ];
 
