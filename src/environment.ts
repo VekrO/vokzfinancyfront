@@ -1,5 +1,4 @@
 export const APP = {
-    /* api: 'http://vokzfinancy.somee.com/api/v1/', */
-    api: 'http://localhost:5241/api/v1/',
+    api: 'http://vokzfinancy.somee.com/api/v1/',
     /* api: 'https://localhost:7130/api/v1/', */
 }

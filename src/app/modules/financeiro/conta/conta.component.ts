@@ -73,7 +73,8 @@ export class ContaComponent implements OnInit {
             id: new FormControl(0),
             nome: new FormControl('', [Validators.required]),
             UsuarioId: new FormControl(this.usuario.id),
-            descricao: new FormControl(0, [Validators.required])
+            padrao: new FormControl(false),
+            descricao: new FormControl('', [Validators.required])
         });
 
     }
@@ -86,12 +87,15 @@ export class ContaComponent implements OnInit {
     }   
 
     onSubmit() {
+
         this.registro = Object.assign({}, this.formulario.value as Conta);
+
         if(!this.registro.id) {
             this.post();
         } else {
             this.put();
         }
+        
     }
 
     post() {
@@ -102,6 +106,8 @@ export class ContaComponent implements OnInit {
 
         this.processando = true;
 
+        console.log('registro: ', this.registro);
+        
         this.service.post(this.registro).subscribe({
             next: (conta: Conta) => {
                 console.log('CONTA: ', conta);

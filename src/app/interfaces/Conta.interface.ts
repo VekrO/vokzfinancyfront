@@ -1,6 +1,7 @@
 export interface Conta {
     id: number;
     nome: string;
-    idUsuario: string;
+    UsuarioId: string;
+    padrao: boolean;
     descricao: string;
 }

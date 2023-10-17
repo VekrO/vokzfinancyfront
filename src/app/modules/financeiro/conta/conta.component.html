@@ -8,8 +8,17 @@
         <label for="descricao">Descrição</label>
         <textarea id="descricao" type="text" formControlName="descricao" rows="5"></textarea>
     </div>
+    <div class="form-checkbox">
+        <label for="padrao">Padrão</label>
+        <label class="switch">
+            <input id="padrao" type="checkbox" formControlName="padrao" />
+            <span class="slider round"></span>
+        </label>
+    </div>
     <div class="button-group">
-        <button *ngIf="registro?.id" type="button" class="btn-excluir" (click)="excluir(formulario.value.id)">Excluir</button>
+        <ng-container *ngIf="registro">
+            <button *ngIf="registro.id && !registro.padrao" type="button" class="btn-excluir" (click)="excluir(formulario.value.id)">Excluir</button>
+        </ng-container>
         <button type="button" class="btn-back" (click)="voltar()">Voltar</button>
         <button type="submit" class="btn-submit" [disabled]="formulario.invalid || processando">Salvar</button>
     </div>

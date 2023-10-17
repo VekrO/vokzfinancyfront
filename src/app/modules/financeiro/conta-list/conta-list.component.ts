@@ -48,4 +48,8 @@ export class ContaListComponent implements OnInit {
         this.router.navigate(['conta', { id: item.id }])
     }
 
+    adicionar() {
+        this.router.navigate(['conta']) 
+    }
+
 }
