@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { NotifierService } from "angular-notifier";
+import { forkJoin } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
 import { Conta } from "src/app/interfaces/Conta.interface";
 import { Usuario } from "src/app/interfaces/Usuario.interface";
@@ -21,6 +22,8 @@ export class ContaComponent implements OnInit {
     public processando: boolean = false;
     public registro!: Conta;
     private usuario!: Usuario;
+    
+    public temContaPadrao: boolean = false;
 
     constructor(
         private authService: AuthenticationService,
@@ -39,8 +42,27 @@ export class ContaComponent implements OnInit {
         this.route.paramMap.subscribe({
             next: (params: ParamMap) => {
                 if(params && params.get("id")) {
+                    this.getContaPadrao(this.usuario.id);
                     this.getConta(Number(params.get("id")));
+                } else {
+                    this.getContaPadrao(this.usuario.id);
                 }
+            }
+        });
+
+    }
+
+    // Verifica se o usuário tem alguma conta padrão.
+    getContaPadrao(idUsuario: number) {
+
+        this.service.getContaPadraoByIdUsuario(idUsuario).subscribe({
+            next: (conta: Conta) => {
+                console.log('CONTA PADRÃO: ', conta);
+                this.temContaPadrao = conta ? true : false;
+            },
+            error: (err) => {
+                console.log('ERRO: ', err);
+                this.temContaPadrao = false;
             }
         });
 
@@ -80,10 +102,12 @@ export class ContaComponent implements OnInit {
     }
 
     popularFormulario(data: Conta) {
+
         if(data) {
             this.registro = data;
             this.formulario.patchValue(data);
         }
+
     }   
 
     onSubmit() {
@@ -106,8 +130,6 @@ export class ContaComponent implements OnInit {
 
         this.processando = true;
 
-        console.log('registro: ', this.registro);
-        
         this.service.post(this.registro).subscribe({
             next: (conta: Conta) => {
                 console.log('CONTA: ', conta);
@@ -136,6 +158,7 @@ export class ContaComponent implements OnInit {
             next: (conta: Conta) => {
                 console.log('CONTA: ', conta);
                 this.popularFormulario(conta);
+                this.temContaPadrao = conta.padrao;
                 this.notifierService.notify('success', 'Conta atualizada com sucesso!');
                 this.processando = false;
             },
@@ -149,8 +172,6 @@ export class ContaComponent implements OnInit {
     }
 
     excluir(id: number) {
-
-        console.log('vai excluir: ', this.registro);
 
         this.modalService.open(ConfirmacaoComponent, {data: {
             id: id,

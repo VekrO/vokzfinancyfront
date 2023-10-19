@@ -19,6 +19,10 @@ export class ContaService {
         return this._http.get<Conta[]>(APP.api + 'conta/usuario/' + idUsuario);
     }
 
+    getContaPadraoByIdUsuario(idUsuario: number): Observable<Conta> {
+        return this._http.get<Conta>(APP.api + 'conta/usuario/' + idUsuario + '/padrao');
+    }
+
     post(conta: Conta): Observable<Conta> {
         return this._http.post<Conta>(APP.api + 'conta/', conta);
     }
