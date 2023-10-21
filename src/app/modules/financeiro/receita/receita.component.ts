@@ -1,7 +1,7 @@
 import { CurrencyPipe, Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { NotifierService } from "angular-notifier";
 import * as moment from "moment";
 import { BehaviorSubject } from "rxjs";
@@ -35,12 +35,12 @@ export class ReceitaComponent implements OnInit {
         public utilService: UtilService, 
         private service: ReceitaService, 
         private location: Location, 
-        private contaService: ContaService,
         private facade: FinanceiroFacade,
         private route: ActivatedRoute, 
         private authService: AuthenticationService,
         private modalService: ModalService,
-        private notifierService: NotifierService
+        private notifierService: NotifierService,
+        private router: Router
         ) {}
 
     ngOnInit(): void {
@@ -91,7 +91,7 @@ export class ReceitaComponent implements OnInit {
 
         this.processando = true;
 
-        this.service.getByIdAsync(id).subscribe({
+        this.service.getByIdAsync(id, this.usuario.id).subscribe({
             next: (receita: Receita) => {
                 this.popularFormulario(receita);
                 this.processando = false;
@@ -99,6 +99,8 @@ export class ReceitaComponent implements OnInit {
             error: (err) => {
                 console.log('ERRO: ', err);
                 this.processando = false;
+                this.notifierService.notify('error', err.error);
+                this.router.navigate(['receitas']);
             }
         });
 

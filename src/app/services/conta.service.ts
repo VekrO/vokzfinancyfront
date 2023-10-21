@@ -11,8 +11,8 @@ export class ContaService {
 
     constructor(private _http: HttpClient){}
 
-    get(id: number): Observable<Conta> {
-        return this._http.get<Conta>(APP.api + 'conta/' + id);
+    get(id: number, idUsuario: number): Observable<Conta> {
+        return this._http.get<Conta>(APP.api + 'conta/' + id + '/usuario/' + idUsuario);
     }
     
     getAllByIdUsuario(idUsuario: number): Observable<Conta[]> {

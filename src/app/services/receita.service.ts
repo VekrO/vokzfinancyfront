@@ -11,8 +11,8 @@ export class ReceitaService {
 
     constructor(private _http: HttpClient) {}
     
-    getByIdAsync(id: number): Observable<Receita> {
-        return this._http.get<Receita>(APP.api + 'receita/' + id);
+    getByIdAsync(id: number, idUsuario: number): Observable<Receita> {
+        return this._http.get<Receita>(APP.api + 'receita/' + id + '/usuario/' + idUsuario);
     }
 
     getByContaIdAsync(ContaId: number): Observable<Receita[]> {

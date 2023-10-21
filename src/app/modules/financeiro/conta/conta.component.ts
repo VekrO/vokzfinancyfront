@@ -1,7 +1,7 @@
 import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { NotifierService } from "angular-notifier";
 import { forkJoin } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
@@ -34,8 +34,9 @@ export class ContaComponent implements OnInit {
         private route: ActivatedRoute, 
         private location: Location,
         private notifierService: NotifierService,
-        private modalService: ModalService
-        ) {}
+        private modalService: ModalService,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
 
@@ -60,7 +61,7 @@ export class ContaComponent implements OnInit {
 
         this.processando = true;
 
-        this.service.get(id).subscribe({
+        this.service.get(id, this.usuario.id).subscribe({
             next: (conta: Conta) => {
                 this.registro = conta;
                 this.registroOriginal = this.registro;
@@ -70,6 +71,8 @@ export class ContaComponent implements OnInit {
             error: (err) => {
                 console.log('ERRO: ', err);
                 this.processando = false;
+                this.notifierService.notify('error', err.error);
+                this.router.navigate(['contas']);
             }
         });
 

@@ -1,7 +1,7 @@
 import { CurrencyPipe, Location } from "@angular/common";
 import { ChangeDetectorRef, Component, Inject, Injectable, Input, OnInit, Optional } from "@angular/core";
 import { FormGroup, FormControl, Validators, FormControlStatus } from "@angular/forms";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { NotifierService } from "angular-notifier";
 import * as moment from "moment";
 import { BehaviorSubject } from "rxjs";
@@ -43,7 +43,8 @@ export class DespesaComponent implements OnInit {
         private modalService: ModalService,
         private contaService: ContaService,
         private facade: FinanceiroFacade,
-        private config: DynamicDialogConfig
+        private config: DynamicDialogConfig,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -122,7 +123,7 @@ export class DespesaComponent implements OnInit {
 
         this.processando = true;
 
-        this.service.getByIdAsync(id).subscribe({
+        this.service.getByIdAsync(id, this.usuario.id).subscribe({
             next: (despesa: Despesa) => {
                 this.registro = despesa;
                 this.popularFormulario(despesa);
@@ -131,6 +132,8 @@ export class DespesaComponent implements OnInit {
             error: (err) => {
                 console.log('ERRO: ', err);
                 this.processando = false;
+                this.notifierService.notify('error', err.error);
+                this.router.navigate(['despesas']);
             }
         });
 

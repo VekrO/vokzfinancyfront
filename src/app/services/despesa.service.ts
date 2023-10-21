@@ -11,8 +11,8 @@ export class DespesaService {
 
     constructor(private _http: HttpClient) {}
     
-    getByIdAsync(id: number): Observable<Despesa> {
-        return this._http.get<Despesa>(APP.api + 'despesa/' + id);
+    getByIdAsync(id: number, idUsuario: number): Observable<Despesa> {
+        return this._http.get<Despesa>(APP.api + 'despesa/' + id + '/usuario/' + idUsuario);
     }
 
     getByContaIdAsync(ContaId: number): Observable<Despesa[]> {
