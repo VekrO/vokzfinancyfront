@@ -5,7 +5,15 @@
         <div class="account">
 
             <div class="account-header">
-                {{ cumprimento }}, <label><br> <b>{{ usuario.name }}</b> </label>
+                <div>
+                    {{ cumprimento }}, <label><br> <b>{{ usuario.name }}</b> </label>
+                </div>
+                <form class="flex align-items-center justify-content-center gap-1" *ngIf="formularioFiltro" [formGroup]="formularioFiltro">
+                    <select class="select-filtro" formControlName="ContaId" (change)="updateUI()">
+                        <option [value]="0">Todas</option>
+                        <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
+                    </select>
+                </form>
             </div>
             
             <div class="account-content">
@@ -13,7 +21,7 @@
                 <div class="account-card saldo">
                     <div class="card-info">
                         <label>Saldo</label>
-                        <p>{{ (saldoAtual | async) | currency: 'BRL' }}</p>
+                        <p>{{ saldoAtual | currency: 'BRL' }}</p>
                     </div>
                     <div class="card-icon">
                         <i class='bx bxs-bank' ></i>

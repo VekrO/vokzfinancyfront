@@ -23,8 +23,12 @@ export class UsuarioService {
         return this._http.patch<Usuario>(APP.api + 'usuario/' + dados.id + '/perfil', dados);
     }
 
-    getSaldo(idUsuario: number): Observable<number> {
+    getSaldoByIdUsuarioAsync(idUsuario: number): Observable<number> {
         return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/saldo');
+    }
+
+    getSaldoByIdUsuarioAndIdContaAsync(idUsuario: number, idConta: number): Observable<number> {
+        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/conta/' + idConta + '/saldo');
     }
 
     getValorReceitasByIdUsuarioAsync(idUsuario: number): Observable<number> {
@@ -33,6 +37,14 @@ export class UsuarioService {
 
     getValorDespesasByIdUsuarioAsync(idUsuario: number): Observable<number> {
         return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/despesas/valor');
+    }
+
+    getValorReceitasByIdUsuarioAndIdContaAsync(idUsuario: number, idConta: number): Observable<number> {
+        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/conta/' + idConta + '/receitas/valor');
+    }
+
+    getValorDespesasByIdUsuarioAndIdContaAsync(idUsuario: number, idConta: number): Observable<number> {
+        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/conta/' + idConta +'/despesas/valor');
     }
 
 

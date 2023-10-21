@@ -108,7 +108,10 @@ export class ReceitaComponent implements OnInit {
 
         this.facade.getContasByUsuario(this.usuario.id).then((contas) => {
             this.contas.next(contas);
-            this.formulario.controls['ContaId'].setValue(contas[0].id);
+            const contaPadrao = contas.find((conta) => conta.padrao);
+            if(contaPadrao) {
+            this.formulario.controls['ContaId'].setValue(contaPadrao.id);
+            }
         }).catch((err) => {
             console.log('error: ', err);
         });

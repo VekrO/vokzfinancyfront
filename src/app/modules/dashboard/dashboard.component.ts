@@ -7,6 +7,9 @@ import { BehaviorSubject } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { NotifierService } from 'angular-notifier';
 import * as moment from 'moment';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Conta } from 'src/app/interfaces/Conta.interface';
+import { FinanceiroFacade } from '../financeiro/financeiro.facade';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,21 +22,67 @@ export class DashboardComponent implements OnInit {
 
   public receitaAtual: number = 0;
   public despesaAtual: number = 0;
-  public saldoAtual: BehaviorSubject<number> = new BehaviorSubject(0);
+  public saldoAtual: number = 0;
   public cumprimento: string = '';
 
-  constructor(private authService: AuthenticationService, private usuarioService: UsuarioService, private receitaService: ReceitaService, private despesaService: DespesaService, private notifierService: NotifierService) {}
+  public formularioFiltro!: FormGroup;
 
-  ngOnInit(): void {
+  public contas: BehaviorSubject<Conta[]> = new BehaviorSubject<Conta[]>([]);
+
+  constructor(private authService: AuthenticationService, private usuarioService: UsuarioService, private financeiroFacade: FinanceiroFacade, private notifierService: NotifierService) {}
+
+  async ngOnInit(): Promise<void> {
     
     this.usuario = this.authService.getUsuario();
-    console.log('USUARIO: ', this.usuario);
 
+    this.configurarFormulario();
     this.getCumprimento();
-    this.getValorReceitasByIdUsuarioAsync();
-    this.getValorDespesasByIdUsuarioAsync();
-    this.getSaldo(this.usuario.id);
+    await this.getContasByUsuario();
+    this.updateUI();
+    
+  }
 
+  updateUI() {
+
+    if(this.formularioFiltro.value.ContaId == 0) {
+      
+      // Pega todas as informações das contas reunidas apenas pelo id do usuário.
+      this.getValorReceitasByIdUsuarioAsync();
+      this.getValorDespesasByIdUsuarioAsync();
+      this.getSaldoByIdUsuarioAsync();
+
+    } else {
+
+      // Pega todas as informações da conta selecionada.
+      this.getValorReceitasByIdUsuarioAndIdContaAsync();
+      this.getValorDespesasByIdUsuarioAndIdContaAsync();
+      this.getSaldoByIdUsuarioAndIdContaAsync();
+
+    }
+
+  }
+
+  async getContasByUsuario() {
+
+    await this.financeiroFacade.getContasByUsuario(this.usuario.id).then((contas) => {
+        
+        this.contas.next(contas);
+        const contaPadrao = contas.find((conta) => conta.padrao);
+        if(contaPadrao) {
+          this.formularioFiltro.controls['ContaId'].setValue(contaPadrao.id);
+        }
+
+    }).catch((err) => {
+        console.log('error: ', err);
+    });
+
+  }
+
+  configurarFormulario() {
+    this.formularioFiltro = new FormGroup({
+        status: new FormControl('todas'),
+        ContaId: new FormControl(0),
+    });
   }
 
   getValorReceitasByIdUsuarioAsync() {
@@ -59,11 +108,45 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getSaldo(idUsuario: number) {
-    this.usuarioService.getSaldo(idUsuario).subscribe({
+  getValorReceitasByIdUsuarioAndIdContaAsync() {
+    this.usuarioService.getValorReceitasByIdUsuarioAndIdContaAsync(this.usuario.id, this.formularioFiltro.value.ContaId).subscribe({
       next: (valor: number) => {
-        console.log('saldo atual : ', valor);
-        this.saldoAtual.next(valor);
+        this.receitaAtual = valor;
+      },
+      error: (err) => {
+        console.log('ERRO: ', err);
+      }
+    });
+  }
+
+  getValorDespesasByIdUsuarioAndIdContaAsync() {
+    this.usuarioService.getValorDespesasByIdUsuarioAndIdContaAsync(this.usuario.id, this.formularioFiltro.value.ContaId).subscribe({
+      next: (valor: number) => {
+        this.despesaAtual = valor;
+      },
+      error: (err) => {
+        console.log('ERRO: ', err);
+        this.notifierService.notify('error', err.error);
+      }
+    });
+  }
+
+  getSaldoByIdUsuarioAsync() {
+    this.usuarioService.getSaldoByIdUsuarioAsync(this.usuario.id).subscribe({
+      next: (valor: number) => {
+        this.saldoAtual = valor;
+      },
+      error: (err) => {
+        console.log('ERRO: ', err);
+        this.notifierService.notify('error', err.error);
+      }
+    });
+  }
+
+  getSaldoByIdUsuarioAndIdContaAsync() {
+    this.usuarioService.getSaldoByIdUsuarioAndIdContaAsync(this.usuario.id, this.formularioFiltro.value.ContaId).subscribe({
+      next: (valor: number) => {
+        this.saldoAtual = valor;
       },
       error: (err) => {
         console.log('ERRO: ', err);

@@ -1,13 +1,12 @@
 .dashboard .dashboard-header {
-    
     display: flex;
     padding: 15px;
     background-color: white;
     box-shadow: var(--card-shadow);
-
 }
 
 .dashboard .dashboard-header .account {
+    width: 100%;
     gap: 25px;
     display: flex;
     flex-direction: column;
@@ -15,7 +14,9 @@
 
 .dashboard .dashboard-header .account .account-header {
     width: 100%;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .dashboard .dashboard-header .account .account-header label {
     font-size: 20px;

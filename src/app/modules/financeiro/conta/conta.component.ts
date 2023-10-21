@@ -20,7 +20,10 @@ export class ContaComponent implements OnInit {
 
     public formulario!: FormGroup;
     public processando: boolean = false;
+
     public registro!: Conta;
+    public registroOriginal!: Conta;
+
     private usuario!: Usuario;
     
     public temContaPadrao: boolean = false;
@@ -42,27 +45,8 @@ export class ContaComponent implements OnInit {
         this.route.paramMap.subscribe({
             next: (params: ParamMap) => {
                 if(params && params.get("id")) {
-                    this.getContaPadrao(this.usuario.id);
                     this.getConta(Number(params.get("id")));
-                } else {
-                    this.getContaPadrao(this.usuario.id);
                 }
-            }
-        });
-
-    }
-
-    // Verifica se o usuário tem alguma conta padrão.
-    getContaPadrao(idUsuario: number) {
-
-        this.service.getContaPadraoByIdUsuario(idUsuario).subscribe({
-            next: (conta: Conta) => {
-                console.log('CONTA PADRÃO: ', conta);
-                this.temContaPadrao = conta ? true : false;
-            },
-            error: (err) => {
-                console.log('ERRO: ', err);
-                this.temContaPadrao = false;
             }
         });
 
@@ -79,6 +63,7 @@ export class ContaComponent implements OnInit {
         this.service.get(id).subscribe({
             next: (conta: Conta) => {
                 this.registro = conta;
+                this.registroOriginal = this.registro;
                 this.popularFormulario(conta);
                 this.processando = false;
             },
@@ -87,6 +72,7 @@ export class ContaComponent implements OnInit {
                 this.processando = false;
             }
         });
+
     }
 
     configurarFormulario() {
@@ -164,6 +150,7 @@ export class ContaComponent implements OnInit {
             },
             error: (err) => {
                 console.log('erro: ', err);
+                this.popularFormulario(this.registroOriginal)
                 this.notifierService.notify('error', err.error);
                 this.processando = false;
             }

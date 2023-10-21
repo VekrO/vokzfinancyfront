@@ -10,6 +10,7 @@
     <div *ngFor="let item of (items | async)" class="item" (click)="editar(item, $event)">
         <p class="title">
             {{ item.nome }}
+            <i class='bx bxs-star' *ngIf="item.padrao" title="Conta Padrão"></i>
         </p>
     </div>
 

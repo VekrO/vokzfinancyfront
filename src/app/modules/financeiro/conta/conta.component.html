@@ -8,7 +8,7 @@
         <label for="descricao">Descrição</label>
         <textarea id="descricao" type="text" formControlName="descricao" rows="5"></textarea>
     </div>
-    <div class="form-checkbox" *ngIf="temContaPadrao && registro?.padrao ? true : !temContaPadrao && !registro?.padrao ? true : false">
+    <div class="form-checkbox">
         <label for="padrao">Padrão</label>
         <label class="switch">
             <input id="padrao" type="checkbox" formControlName="padrao" />

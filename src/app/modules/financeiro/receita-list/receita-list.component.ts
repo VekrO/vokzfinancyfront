@@ -58,7 +58,10 @@ export class ReceitaListComponent implements OnInit {
 
         await this.facade.getContasByUsuario(this.usuario.id).then((contas) => {
             this.contas.next(contas);
-            this.formularioFiltro.controls['ContaId'].setValue(contas[0].id);
+            const contaPadrao = contas.find((conta) => conta.padrao);
+            if(contaPadrao) {
+            this.formularioFiltro.controls['ContaId'].setValue(contaPadrao.id);
+            }
         }).catch((err) => {
             console.log('error: ', err);
         });
@@ -73,6 +76,10 @@ export class ReceitaListComponent implements OnInit {
 
     editar(item: Receita) {
         this.router.navigate(['receita', { id: item.id }])
+    }
+    
+    adicionar() {
+        this.router.navigate(['receita']);
     }
 
 }

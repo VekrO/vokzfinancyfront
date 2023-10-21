@@ -94,7 +94,10 @@ export class DespesaListComponent implements OnInit {
 
         await this.facade.getContasByUsuario(this.usuario.id).then((contas) => {
             this.contas.next(contas);
-            this.formularioFiltro.controls['ContaId'].setValue(contas[0].id);
+            const contaPadrao = contas.find((conta) => conta.padrao);
+            if(contaPadrao) {
+            this.formularioFiltro.controls['ContaId'].setValue(contaPadrao.id);
+            }
         }).catch((err) => {
             console.log('error: ', err);
         });
@@ -105,6 +108,10 @@ export class DespesaListComponent implements OnInit {
     {   
         event.stopPropagation();
         this.router.navigate(['despesa', { id: item.id }])
+    }
+
+    adicionar() {
+        this.router.navigate(['despesa']);
     }
 
     marcarPago(item: Despesa, event: MouseEvent) 
@@ -119,13 +126,12 @@ export class DespesaListComponent implements OnInit {
         this.processando = true;
         
         event.stopPropagation();
+        
         item.paga = !item.paga;
+
         this.service.put(item).subscribe({
             next: (despesa: Despesa) => {
                 console.log('item alterado: ', despesa);
-                if(this.dashboardComponent) {
-                    this.dashboardComponent.getSaldo(this.usuario.id);
-                }
                 item = despesa;
                 this.processando = false;
             }, 

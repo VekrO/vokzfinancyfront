@@ -10,6 +10,10 @@
                 <option value="todas">Todas</option>
                 <option value="vencidos">Vencidas</option>
             </select>
+            <button class="table-header-button" type="button" (click)="adicionar()">
+                <i class='bx bx-plus-circle' ></i>
+                Adicionar
+            </button>
         </form>
     </div>
     <div *ngFor="let item of (items | async)" class="item" (click)="editar(item, $event)">

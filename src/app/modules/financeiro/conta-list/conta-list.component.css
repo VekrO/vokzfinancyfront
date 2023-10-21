@@ -69,3 +69,7 @@
     gap: 5px;
     align-items: center;
 }
+
+.table .item p.title i {
+    color: #F7D000;
+}
