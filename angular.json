@@ -92,6 +92,9 @@
             "production": {
               "browserTarget": "vokzfinancyfront:build:production"
             },
+            "staging": {
+              "browserTarget": "vokzfinancyfront:build:staging"
+            },
             "development": {
               "browserTarget": "vokzfinancyfront:build:development"
             }
