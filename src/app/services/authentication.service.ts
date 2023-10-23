@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { UsuarioLogin } from "../interfaces/UsuarioLogin.interface";
-import { APP } from "src/environment";
+import { APP } from "src/environments/environment";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 import { Router } from "@angular/router";
 import { Usuario } from "../interfaces/Usuario.interface";

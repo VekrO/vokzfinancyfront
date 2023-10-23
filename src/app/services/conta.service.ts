@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Conta } from "../interfaces/Conta.interface";
-import { APP } from "src/environment";
+import { APP } from "src/environments/environment";
 
 @Injectable({
     providedIn: 'root'

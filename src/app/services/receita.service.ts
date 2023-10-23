@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from '@angular/common/http';
-import { APP } from "src/environment";
+import { APP } from "src/environments/environment";
 import { Receita } from "../interfaces/Receita.interface";
 
 @Injectable({
