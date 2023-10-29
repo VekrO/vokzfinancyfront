@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { Despesa } from "../interfaces/Despesa.interface";
 import { HttpClient } from '@angular/common/http';
 import { APP } from "src/environments/environment";
+import { DespesaGrafico } from "../interfaces/DespesaGrafico.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,10 @@ export class DespesaService {
 
     getByContaIdAsync(ContaId: number): Observable<Despesa[]> {
         return this._http.get<Despesa[]>(APP.api + 'despesa/conta/' + ContaId);
+    }
+
+    getGraficoByContaIdAsync(ContaId: number): Observable<DespesaGrafico[]> {
+        return this._http.get<DespesaGrafico[]>(APP.api + 'despesa/conta/' + ContaId + '/grafico');
     }
 
     getVencidoByContaIdAsync(ContaId: number): Observable<Despesa[]> {

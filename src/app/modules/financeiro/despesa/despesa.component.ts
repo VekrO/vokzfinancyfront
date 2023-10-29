@@ -125,7 +125,6 @@ export class DespesaComponent implements OnInit {
 
         this.service.getByIdAsync(id, this.usuario.id).subscribe({
             next: (despesa: Despesa) => {
-                this.registro = despesa;
                 this.popularFormulario(despesa);
                 this.processando = false;
             },
@@ -207,7 +206,7 @@ export class DespesaComponent implements OnInit {
         }, title: 'Excluir Registro', width: '50%' }).subscribe({
             next: (res) => {
                 if(res && res == 'OK') {
-                    this.service.delete(id, this.usuario.id).subscribe({
+                    this.service.delete(id, this.registro.contaId).subscribe({
                         next: () => {
                             this.notifierService.notify('success', 'Registro excluído com sucesso!');
                             this.voltar();
