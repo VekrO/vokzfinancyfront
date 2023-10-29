@@ -9,9 +9,12 @@ import { Subject } from "rxjs";
 export class ModalComponent implements OnInit {
     
     public closeEvent: Subject<void> = new Subject();
+
     @Input() public title?: string = '';
+    @Input() public message?: string = '';
     @Input() public width?: string = '';
     @Input() public height?: string = '';
+    @Input() public data?: {} = {};
 
     constructor(private el: ElementRef) {}
 

@@ -2,9 +2,9 @@ import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NotifierService } from "angular-notifier";
-import { Usuario } from "src/app/interfaces/Usuario.interface";
-import { UsuarioRegistro } from "src/app/interfaces/UsuarioRegistro.interface";
-import { UsuarioToken } from "src/app/interfaces/UsuarioToken.interface";
+import { Usuario } from "src/app/interfaces/Usuario.model";
+import { UsuarioRegistro } from "src/app/interfaces/UsuarioRegistro.model";
+import { UsuarioToken } from "src/app/interfaces/UsuarioToken.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 
 @Component({

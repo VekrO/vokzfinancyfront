@@ -2,12 +2,12 @@ import { Component, OnInit, Optional } from "@angular/core";
 import { Router } from "@angular/router";
 import { NotifierService } from "angular-notifier";
 import { BehaviorSubject, lastValueFrom } from "rxjs";
-import { Despesa } from "src/app/interfaces/Despesa.interface";
-import { Usuario } from "src/app/interfaces/Usuario.interface";
+import { Despesa } from "src/app/interfaces/Despesa.model";
+import { Usuario } from "src/app/interfaces/Usuario.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { DespesaService } from "src/app/services/despesa.service";
 import { DashboardComponent } from "../../dashboard/dashboard.component";
-import { Conta } from "src/app/interfaces/Conta.interface";
+import { Conta } from "src/app/interfaces/Conta.model";
 import { ContaService } from "src/app/services/conta.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { FinanceiroFacade } from "../financeiro.facade";
@@ -34,8 +34,7 @@ export class DespesaListComponent implements OnInit {
         private authService: AuthenticationService, 
         private router: Router,
         private notifierService: NotifierService,
-        private facade: FinanceiroFacade,
-        @Optional() private dashboardComponent: DashboardComponent
+        private facade: FinanceiroFacade
     ) {}
     
     async ngOnInit(): Promise<void> {
@@ -74,6 +73,7 @@ export class DespesaListComponent implements OnInit {
                 }
             });
         } else if(this.formularioFiltro.value.status == 'vencidos') {
+
             this.service.getVencidoByContaIdAsync(this.formularioFiltro.value.ContaId).subscribe({
                 next: (res) => {
                     this.items.next(res);
@@ -96,7 +96,7 @@ export class DespesaListComponent implements OnInit {
             this.contas.next(contas);
             const contaPadrao = contas.find((conta) => conta.padrao);
             if(contaPadrao) {
-            this.formularioFiltro.controls['ContaId'].setValue(contaPadrao.id);
+                this.formularioFiltro.controls['ContaId'].setValue(contaPadrao.id);
             }
         }).catch((err) => {
             console.log('error: ', err);

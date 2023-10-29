@@ -7,9 +7,9 @@ import * as moment from "moment";
 import { BehaviorSubject } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
 import { ModalComponent } from "src/app/components/modal/modal.component";
-import { Conta } from "src/app/interfaces/Conta.interface";
-import { Despesa } from "src/app/interfaces/Despesa.interface";
-import { Usuario } from "src/app/interfaces/Usuario.interface";
+import { Conta } from "src/app/interfaces/Conta.model";
+import { Despesa } from "src/app/interfaces/Despesa.model";
+import { Usuario } from "src/app/interfaces/Usuario.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ContaService } from "src/app/services/conta.service";
 import { DespesaService } from "src/app/services/despesa.service";
@@ -203,7 +203,7 @@ export class DespesaComponent implements OnInit {
         this.modalService.open(ConfirmacaoComponent, {data: {
             id: id,
             message: 'Deseja excluir esse registro de ID: ' + id
-        }, title: 'Excluir Registro', width: '50%' }).subscribe({
+        }, title: 'Excluir Registro', width: this.utilService.isMobile() ? '95%' : '50%' }).subscribe({
             next: (res) => {
                 if(res && res == 'OK') {
                     this.service.delete(id, this.registro.contaId).subscribe({

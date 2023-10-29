@@ -202,12 +202,20 @@ input:checked+.slider:before {
 .table {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     background-color: white;
-    padding: 20px;
+    padding: 5px;
 }
 .table .table-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+}
+.table .table-header .form-filtro {
+    margin-top: 5px;
+}
+.table .table-header .form-filtro .select-filtro-group {
+    display: flex;
+    gap: 5px;
 }
 
 .table .table-header p {
@@ -294,4 +302,45 @@ input:checked+.slider:before {
     background-color: white;
     border-radius: 10px;
     gap: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .table .table-header {
+        flex-direction: column;
+    }
+
+    .table-header-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .table .table-header .form-filtro {
+        width: 100%;
+    }
+
+    .table .table-header .form-filtro .select-filtro-group {
+        width: 100%;
+    }
+    
+    .select-filtro {
+        width: 100%;
+    }
+
+    .table .table-header .table-header-button {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .table .table-header .table-header-button > span {
+        display: none;
+    }
+
+    .table .table-header .table-header-button i {
+        font-size: 35px;
+    }
+
 }

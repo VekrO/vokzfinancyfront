@@ -11,7 +11,7 @@ import { ConfirmacaoComponent } from '../components/confirmacao/confirmacao.comp
     ConfirmacaoComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     CommonModule,

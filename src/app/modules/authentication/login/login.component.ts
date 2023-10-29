@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NotifierService } from "angular-notifier";
-import { UsuarioLogin } from "src/app/interfaces/UsuarioLogin.interface";
-import { UsuarioToken } from "src/app/interfaces/UsuarioToken.interface";
+import { UsuarioLogin } from "src/app/interfaces/UsuarioLogin.model";
+import { UsuarioToken } from "src/app/interfaces/UsuarioToken.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 
 @Component({

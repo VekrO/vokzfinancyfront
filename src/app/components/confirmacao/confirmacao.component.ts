@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { DynamicDialogRef } from "src/app/services/dynamicDialogRef.service";
 
 @Component({
@@ -6,15 +6,11 @@ import { DynamicDialogRef } from "src/app/services/dynamicDialogRef.service";
     templateUrl: './confirmacao.component.html',
     styleUrls: ['./confirmacao.component.css']
 })
-export class ConfirmacaoComponent {
-
-    public header: string = '';
-    public message: string = '';
-
+export class ConfirmacaoComponent  {
+    
     constructor(private dynamicDialogRef: DynamicDialogRef) {}
 
     voltar() {
-        console.log('VOLTOU');
         this.dynamicDialogRef.destroy();
     }
     

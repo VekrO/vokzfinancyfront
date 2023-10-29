@@ -4,7 +4,7 @@
         <p>Contas</p>
         <button class="table-header-button" type="button" (click)="adicionar()">
             <i class='bx bx-plus-circle' ></i>
-            Adicionar
+            <span>Adicionar</span>
         </button>
     </div>
     <div *ngFor="let item of (items | async)" class="item" (click)="editar(item, $event)">

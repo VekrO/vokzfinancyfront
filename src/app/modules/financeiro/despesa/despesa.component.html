@@ -1,5 +1,7 @@
 <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
+    <h3>Nova Despesa</h3>
+
     <div class="form-group">
         <label for="titulo">Título</label>
         <input id="titulo" type="text" autofocus formControlName="titulo" />
@@ -32,7 +34,7 @@
     <div class="button-group">
         <button *ngIf="registro?.id" type="button" class="btn-excluir" (click)="excluir(formulario.value.id)">Excluir</button>
         <button type="button" class="btn-back" (click)="voltar()">Voltar</button>
-        <button type="submit" class="btn-submit" [disabled]="formulario.invalid || processando">Enviar</button>
+        <button type="submit" class="btn-submit" [disabled]="formulario.invalid || processando">Salvar</button>
     </div>
 
 </form>
