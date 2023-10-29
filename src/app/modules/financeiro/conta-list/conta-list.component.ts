@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
-import { Conta } from "src/app/interfaces/Conta.model";
-import { Usuario } from "src/app/interfaces/Usuario.model";
+import { Conta } from "src/app/models/Conta.model";
+import { Usuario } from "src/app/models/Usuario.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ContaService } from "src/app/services/conta.service";
 

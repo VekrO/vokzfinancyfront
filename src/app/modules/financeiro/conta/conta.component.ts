@@ -5,8 +5,8 @@ import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 
 import { forkJoin } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
-import { Conta } from "src/app/interfaces/Conta.model";
-import { Usuario } from "src/app/interfaces/Usuario.model";
+import { Conta } from "src/app/models/Conta.model";
+import { Usuario } from "src/app/models/Usuario.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ContaService } from "src/app/services/conta.service";
 import { MessageService } from "src/app/services/message.service";

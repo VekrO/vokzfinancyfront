@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-
-import { UsuarioPasswordForgot } from "src/app/interfaces/UsuarioPasswordForgot.model";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { UsuarioPasswordForgot } from "src/app/models/UsuarioPasswordForgot.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { MessageService } from "src/app/services/message.service";
 

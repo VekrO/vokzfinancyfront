@@ -2,12 +2,12 @@ import { Component, OnInit, Optional } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { BehaviorSubject, lastValueFrom } from "rxjs";
-import { Despesa } from "src/app/interfaces/Despesa.model";
-import { Usuario } from "src/app/interfaces/Usuario.model";
+import { Despesa } from "src/app/models/Despesa.model";
+import { Usuario } from "src/app/models/Usuario.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { DespesaService } from "src/app/services/despesa.service";
 import { DashboardComponent } from "../../dashboard/dashboard.component";
-import { Conta } from "src/app/interfaces/Conta.model";
+import { Conta } from "src/app/models/Conta.model";
 import { ContaService } from "src/app/services/conta.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { FinanceiroFacade } from "../financeiro.facade";

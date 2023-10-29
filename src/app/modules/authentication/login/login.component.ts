@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-
-import { UsuarioLogin } from "src/app/interfaces/UsuarioLogin.model";
-import { UsuarioToken } from "src/app/interfaces/UsuarioToken.model";
+import { UsuarioLogin } from "src/app/models/UsuarioLogin.model";
+import { UsuarioToken } from "src/app/models/UsuarioToken.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { MessageService } from "src/app/services/message.service";
 
