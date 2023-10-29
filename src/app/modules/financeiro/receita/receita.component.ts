@@ -185,7 +185,7 @@ export class ReceitaComponent implements OnInit {
         }, title: 'Excluir Registro', width: '50%' }).subscribe({
             next: (res) => {
                 if(res && res == 'OK') {
-                    this.service.delete(id, this.usuario.id).subscribe({
+                    this.service.delete(id, this.registro.contaId).subscribe({
                         next: () => {
                             this.notifierService.notify('success', 'Registro excluído com sucesso!');
                             this.voltar();

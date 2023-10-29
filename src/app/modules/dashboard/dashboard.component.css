@@ -3,6 +3,8 @@
     padding: 15px;
     background-color: white;
     box-shadow: var(--card-shadow);
+    margin: 5px 0;
+    border-radius: 10px;
 }
 
 .dashboard .dashboard-header .account {
@@ -26,6 +28,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    flex-wrap: wrap;
 }
     
 .dashboard .dashboard-header .account .account-content .account-card {
@@ -99,4 +102,10 @@
 
 .card-icon i.bx-minus-circle {
     color: var(--color-despesa);
+}
+
+@media screen and (max-width: 1024px) {
+    .dashboard .dashboard-header .account .account-content .account-card {
+        width: 100%;
+    }
 }

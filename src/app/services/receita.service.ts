@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { HttpClient } from '@angular/common/http';
 import { APP } from "src/environments/environment";
 import { Receita } from "../interfaces/Receita.interface";
+import { ReceitaGrafico } from "../interfaces/ReceitaGrafico.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,10 @@ export class ReceitaService {
 
     getByContaIdAsync(ContaId: number): Observable<Receita[]> {
         return this._http.get<Receita[]>(APP.api + 'receita/conta/' + ContaId);
+    }
+
+    getGraficoByContaIdAsync(ContaId: number): Observable<ReceitaGrafico[]> {
+        return this._http.get<ReceitaGrafico[]>(APP.api + 'receita/conta/' + ContaId + '/grafico');
     }
 
     getValorByContaIdAsync(ContaId: number): Observable<number> {

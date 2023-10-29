@@ -286,3 +286,12 @@ input:checked+.slider:before {
     font-weight: bold;
     font-size: 18px;
 }
+
+.card {
+    box-shadow: var(--card-shadow);
+    padding: 15px;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+    gap: 5px;
+}

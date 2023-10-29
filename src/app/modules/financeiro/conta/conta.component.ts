@@ -85,7 +85,7 @@ export class ContaComponent implements OnInit {
             nome: new FormControl('', [Validators.required]),
             UsuarioId: new FormControl(this.usuario.id),
             padrao: new FormControl(false),
-            descricao: new FormControl('', [Validators.required])
+            descricao: new FormControl('')
         });
 
     }
