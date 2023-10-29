@@ -10,6 +10,7 @@ import { Conta } from 'src/app/models/Conta.model';
 import { FinanceiroFacade } from '../financeiro/financeiro.facade';
 import Chart from 'chart.js/auto';
 import { ReceitaDespesa } from 'src/app/models/ReceitaDespesa.model';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,7 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public valorDespesas: number[] = [];
   public valorReceitas: number[] = [];
 
-  constructor(private authService: AuthenticationService, private usuarioService: UsuarioService, private financeiroFacade: FinanceiroFacade, private notifierService: NotifierService) {}
+  constructor(private authService: AuthenticationService, private usuarioService: UsuarioService, private financeiroFacade: FinanceiroFacade, private messageService: MessageService) {}
 
   async ngOnInit(): Promise<void> {
     
@@ -215,7 +216,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log('ERRO: ', err);
-          this.notifierService.notify('error', err.error);
+          this.messageService.notify('error', err.error);
           reject();
         }
       });
@@ -246,7 +247,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log('ERRO: ', err);
-          this.notifierService.notify('error', err.error);
+          this.messageService.notify('error', err.error);
           reject();
         }
       });
@@ -262,7 +263,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log('ERRO: ', err);
-          this.notifierService.notify('error', err.error);
+          this.messageService.notify('error', err.error);
           reject();
         }
       });
@@ -278,7 +279,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log('ERRO: ', err);
-          this.notifierService.notify('error', err.error);
+          this.messageService.notify('error', err.error);
           reject();
         }
       });

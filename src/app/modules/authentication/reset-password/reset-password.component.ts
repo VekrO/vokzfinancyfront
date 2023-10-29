@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
 import { UsuarioPasswordReset } from "src/app/models/UsuarioPasswordReset.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
+import { MessageService } from "src/app/services/message.service";
 
 @Component({
     selector: 'app-reset-password',
@@ -16,13 +16,13 @@ export class ResetPasswordComponent implements OnInit {
     public processando: boolean = false;
     private reg!: UsuarioPasswordReset;
 
-    constructor(private service: AuthenticationService, private router: Router, private route: ActivatedRoute, private notifierService: NotifierService) {}
+    constructor(private service: AuthenticationService, private router: Router, private route: ActivatedRoute, private messageService: MessageService) {}
 
     ngOnInit(): void {
 
         if(!this.route.snapshot.queryParamMap.get("token")) {
             this.router.navigate(['']);
-            this.notifierService.notify('error', 'Por favor, informe um token para alteração de senha!');
+            this.messageService.notify('error', 'Por favor, informe um token para alteração de senha!');
             return;
         }
 
@@ -72,12 +72,12 @@ export class ResetPasswordComponent implements OnInit {
             next: (res) => {
                 console.log('RESETOU A SENHA COM SUCESSO: ', res);
                 this.router.navigate(['']);
-                this.notifierService.notify('success', 'Senha alterada com sucesso, faça login novamente!');
+                this.messageService.notify('success', 'Senha alterada com sucesso, faça login novamente!');
                 this.processando = false;
             },
             error: (err) => {
                 console.log('ERRO: ', err);
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.processando = false;
             }
         });

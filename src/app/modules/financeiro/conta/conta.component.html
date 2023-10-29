@@ -1,6 +1,6 @@
 <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
-    <h3>Nova Conta</h3>
+    <h3>{{ registro ? 'Editar Conta' : 'Nova Conta'}}</h3>
 
     <div class="form-group">
         <label for="nome">Nome da Conta</label>

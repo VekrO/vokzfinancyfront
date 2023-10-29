@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { UsuarioPasswordForgot } from "src/app/models/UsuarioPasswordForgot.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
+import { MessageService } from "src/app/services/message.service";
 
 @Component({
     selector: 'app-forgot-password',
@@ -16,7 +16,7 @@ export class ForgotPasswordComponent implements OnInit {
     public processando: boolean = false;
     private reg!: UsuarioPasswordForgot;
 
-    constructor(private service: AuthenticationService, private notifierService: NotifierService, private router: Router) {}
+    constructor(private service: AuthenticationService, private messageService: MessageService, private router: Router) {}
 
     ngOnInit(): void {
         this.configurarFormulario();
@@ -46,11 +46,11 @@ export class ForgotPasswordComponent implements OnInit {
             next: () => {
                 this.processando = false;
                 this.router.navigate(['']);
-                this.notifierService.notify('success', 'Uma mensagem com as informações da troca de senha foi enviada para: ' + this.reg.email);
+                this.messageService.notify('success', 'Uma mensagem com as informações da troca de senha foi enviada para: ' + this.reg.email);
             },
             error: (err) => {
                 console.log('ERRO: ', err);
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.processando = false;
             }
         });

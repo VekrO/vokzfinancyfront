@@ -6,6 +6,7 @@ import { Usuario } from "src/app/models/Usuario.model";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
     selector: 'app-perfil',
@@ -19,7 +20,7 @@ export class PerfilComponent implements OnInit {
     public processando: boolean = false;
     private reg!: Usuario;
 
-    constructor(private authService: AuthenticationService, private dynamicDialogRef: DynamicDialogRef, private usuarioService: UsuarioService, private router: Router, private notifierService: NotifierService) {}
+    constructor(private authService: AuthenticationService, private dynamicDialogRef: DynamicDialogRef, private usuarioService: UsuarioService, private router: Router, private messageService: MessageService) {}
 
     ngOnInit(): void {
         this.usuario = this.authService.getUsuario();
@@ -68,12 +69,12 @@ export class PerfilComponent implements OnInit {
                 this.voltar();
                 this.popularFormulario(res);
                 this.authService.clearToken();
-                this.notifierService.notify('success', 'Sucesso! entre novamente para atualizar os dados!');
+                this.messageService.notify('success', 'Sucesso! entre novamente para atualizar os dados!');
                 this.router.navigate(['']);
             },
             error: (err) => {
                 console.log('ERR: ', err);
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
             }
         });
     }

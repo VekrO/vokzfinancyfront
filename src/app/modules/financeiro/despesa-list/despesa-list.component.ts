@@ -1,6 +1,6 @@
 import { Component, OnInit, Optional } from "@angular/core";
 import { Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
+
 import { BehaviorSubject, lastValueFrom } from "rxjs";
 import { Despesa } from "src/app/models/Despesa.model";
 import { Usuario } from "src/app/models/Usuario.model";
@@ -11,6 +11,7 @@ import { Conta } from "src/app/models/Conta.model";
 import { ContaService } from "src/app/services/conta.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { FinanceiroFacade } from "../financeiro.facade";
+import { MessageService } from "src/app/services/message.service";
 
 @Component({
     selector: 'app-despesa-list',
@@ -33,7 +34,7 @@ export class DespesaListComponent implements OnInit {
         public service: DespesaService, 
         private authService: AuthenticationService, 
         private router: Router,
-        private notifierService: NotifierService,
+        private messageService: MessageService,
         private facade: FinanceiroFacade
     ) {}
     
@@ -69,7 +70,7 @@ export class DespesaListComponent implements OnInit {
                 },
                 error: (err) => {
                     console.log('ERRO: ', err);
-                    this.notifierService.notify('error', err.error);
+                    this.messageService.notify('error', err.error);
                 }
             });
         } else if(this.formularioFiltro.value.status == 'vencidos') {
@@ -83,7 +84,7 @@ export class DespesaListComponent implements OnInit {
                 },
                 error: (err) => {
                     console.log('ERRO: ', err); 
-                    this.notifierService.notify('error', err.error);
+                    this.messageService.notify('error', err.error);
                 }
             });
         }
@@ -136,7 +137,7 @@ export class DespesaListComponent implements OnInit {
                 this.processando = false;
             }, 
             error: (err) => {
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 item.paga = !item.paga;
                 this.processando = false;
             }

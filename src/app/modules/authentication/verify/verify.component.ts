@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
+
 import { AuthenticationService } from "src/app/services/authentication.service";
+import { MessageService } from "src/app/services/message.service";
 
 @Component({
     selector: 'app-verify',
@@ -13,7 +14,7 @@ export class VerifyComponent implements OnInit {
     public token: string = '';
     public processando: boolean = false;
 
-    constructor(private route: ActivatedRoute, private router: Router, private notifierService: NotifierService, private authService: AuthenticationService) {}
+    constructor(private route: ActivatedRoute, private router: Router, private messageService: MessageService, private authService: AuthenticationService) {}
 
     ngOnInit(): void {
 
@@ -21,7 +22,7 @@ export class VerifyComponent implements OnInit {
 
         if(!this.token) {
             this.router.navigate(['']);
-            this.notifierService.notify('warning', 'Por favor, você deve informar um token!');
+            this.messageService.notify('warning', 'Por favor, você deve informar um token!');
         }
 
     }
@@ -36,13 +37,13 @@ export class VerifyComponent implements OnInit {
 
         this.authService.verify(this.token).subscribe({
             next: () => {
-                this.notifierService.notify('success', 'Parabéns, sua conta foi confirmada com sucesso!');
+                this.messageService.notify('success', 'Parabéns, sua conta foi confirmada com sucesso!');
                 this.processando = false;
                 this.router.navigate(['']);
             },
             error: (err) => {
                 console.log('ERRO: ', err);
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.processando = false;
             }
         });

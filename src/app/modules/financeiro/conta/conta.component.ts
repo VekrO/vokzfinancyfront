@@ -2,13 +2,14 @@ import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
+
 import { forkJoin } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
 import { Conta } from "src/app/models/Conta.model";
 import { Usuario } from "src/app/models/Usuario.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ContaService } from "src/app/services/conta.service";
+import { MessageService } from "src/app/services/message.service";
 import { ModalService } from "src/app/services/modal.service";
 import { UtilService } from "src/app/util.service";
 
@@ -34,7 +35,7 @@ export class ContaComponent implements OnInit {
         private service: ContaService, 
         private route: ActivatedRoute, 
         private location: Location,
-        private notifierService: NotifierService,
+        private messageService: MessageService,
         private modalService: ModalService,
         private router: Router,
         private utilService: UtilService
@@ -73,7 +74,7 @@ export class ContaComponent implements OnInit {
             error: (err) => {
                 console.log('ERRO: ', err);
                 this.processando = false;
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.router.navigate(['contas']);
             }
         });
@@ -126,11 +127,11 @@ export class ContaComponent implements OnInit {
                 console.log('CONTA: ', conta);
                 this.popularFormulario(conta);
                 this.processando = false;
-                this.notifierService.notify('success', 'Nova conta criada!');
+                this.messageService.notify('success', 'Nova conta criada!');
             },
             error: (err) => {
                 console.log('erro: ', err);
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.processando = false;
             }
         });
@@ -150,13 +151,13 @@ export class ContaComponent implements OnInit {
                 console.log('CONTA: ', conta);
                 this.popularFormulario(conta);
                 this.temContaPadrao = conta.padrao;
-                this.notifierService.notify('success', 'Conta atualizada com sucesso!');
+                this.messageService.notify('success', 'Conta atualizada com sucesso!');
                 this.processando = false;
             },
             error: (err) => {
                 console.log('erro: ', err);
                 this.popularFormulario(this.registroOriginal)
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.processando = false;
             }
         });
@@ -177,12 +178,12 @@ export class ContaComponent implements OnInit {
                     this.service.delete(id, this.usuario.id).subscribe({
                         next: (res) => {
                             console.log('resposta cnta: ', res);
-                            this.notifierService.notify('success', 'Registro excluído com sucesso!');
+                            this.messageService.notify('success', 'Registro excluído com sucesso!');
                             this.voltar();
                         },
                         error: (err) => {
                             console.log('erro : ', err);
-                            this.notifierService.notify('error', err.error);
+                            this.messageService.notify('error', err.error);
                         }
                     });
                 }

@@ -18,14 +18,6 @@
                 <a routerLink="contas">Contas</a>
             </div>
         </div>
-        <div class="option-wrapper" *ngIf="!isAuthenticated">
-            <div class="nav-item login">
-                <a routerLink="">Login</a>
-            </div>
-            <div class="nav-item register button">
-                <a routerLink="register">Criar Conta</a>
-            </div>
-        </div>
         <div class="nav-option" *ngIf="isAuthenticated">
             <button (click)="perfil()">
                 <i class='bx bxs-user-circle'></i>
@@ -33,6 +25,14 @@
             <button (click)="desconectar()">
                 <i title="Desconectar" class='bx bx-log-out-circle' ></i>
             </button>
+        </div>
+        <div class="option-wrapper" [ngClass]="{'option-wrapper-offline': !isAuthenticated}" *ngIf="!isAuthenticated">
+            <div class="nav-item login">
+                <a routerLink="">Login</a>
+            </div>
+            <div class="nav-item register button">
+                <a routerLink="register">Criar Conta</a>
+            </div>
         </div>
     </div>
 
