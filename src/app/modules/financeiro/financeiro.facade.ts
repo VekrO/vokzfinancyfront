@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { lastValueFrom } from "rxjs";
-import { Conta } from "src/app/interfaces/Conta.model";
-import { ReceitaDespesa } from "src/app/interfaces/ReceitaDespesa.model";
+import { Conta } from "src/app/models/Conta.model";
+import { ReceitaDespesa } from "src/app/models/ReceitaDespesa.model";
 import { ContaService } from "src/app/services/conta.service";
 
 @Injectable({

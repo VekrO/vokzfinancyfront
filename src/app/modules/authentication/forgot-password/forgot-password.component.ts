@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NotifierService } from "angular-notifier";
-import { UsuarioPasswordForgot } from "src/app/interfaces/UsuarioPasswordForgot.model";
+import { UsuarioPasswordForgot } from "src/app/models/UsuarioPasswordForgot.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 
 @Component({

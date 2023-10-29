@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Despesa } from "../interfaces/Despesa.model";
+import { Despesa } from "../models/Despesa.model";
 import { HttpClient } from '@angular/common/http';
 import { APP } from "src/environments/environment";
-import { DespesaGrafico } from "../interfaces/DespesaGrafico.model";
+import { DespesaGrafico } from "../models/DespesaGrafico.model";
 
 @Injectable({
     providedIn: 'root'

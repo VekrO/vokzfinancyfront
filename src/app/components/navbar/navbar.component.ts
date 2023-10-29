@@ -5,7 +5,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ConfirmacaoComponent } from '../confirmacao/confirmacao.component';
 import { ModalService } from 'src/app/services/modal.service';
 import { NotifierService } from 'angular-notifier';
-import { Usuario } from 'src/app/interfaces/Usuario.model';
+import { Usuario } from 'src/app/models/Usuario.model';
 import { PerfilComponent } from 'src/app/modules/authentication/perfil/perfil.component';
 import { UtilService } from 'src/app/util.service';
 

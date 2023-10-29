@@ -1,14 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import { UsuarioLogin } from "../interfaces/UsuarioLogin.model";
+import { UsuarioLogin } from "../models/UsuarioLogin.model";
 import { APP } from "src/environments/environment";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 import { Router } from "@angular/router";
-import { Usuario } from "../interfaces/Usuario.model";
-import { UsuarioRegistro } from "../interfaces/UsuarioRegistro.model";
-import { UsuarioPasswordReset } from "../interfaces/UsuarioPasswordReset.model";
-import { UsuarioPasswordForgot } from "../interfaces/UsuarioPasswordForgot.model";
+import { Usuario } from "../models/Usuario.model";
+import { UsuarioRegistro } from "../models/UsuarioRegistro.model";
+import { UsuarioPasswordReset } from "../models/UsuarioPasswordReset.model";
+import { UsuarioPasswordForgot } from "../models/UsuarioPasswordForgot.model";
 
 @Injectable({
     providedIn: 'root'
