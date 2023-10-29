@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Conta } from "../interfaces/Conta.model";
+import { Conta } from "../models/Conta.model";
 import { APP } from "src/environments/environment";
-import { ReceitaDespesa } from "../interfaces/ReceitaDespesa.model";
+import { ReceitaDespesa } from "../models/ReceitaDespesa.model";
 
 @Injectable({
     providedIn: 'root'

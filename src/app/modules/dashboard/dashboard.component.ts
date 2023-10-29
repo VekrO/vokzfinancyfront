@@ -1,15 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/interfaces/Usuario.model';
+import { Usuario } from 'src/app/models/Usuario.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BehaviorSubject } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { NotifierService } from 'angular-notifier';
 import * as moment from 'moment';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Conta } from 'src/app/interfaces/Conta.model';
+import { Conta } from 'src/app/models/Conta.model';
 import { FinanceiroFacade } from '../financeiro/financeiro.facade';
 import Chart from 'chart.js/auto';
-import { ReceitaDespesa } from 'src/app/interfaces/ReceitaDespesa.model';
+import { ReceitaDespesa } from 'src/app/models/ReceitaDespesa.model';
 
 @Component({
   selector: 'app-dashboard',

@@ -2,7 +2,7 @@ import { UsuarioService } from './../../../services/usuario.service';
 import { DynamicDialogRef } from 'src/app/services/dynamicDialogRef.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Component, OnInit } from "@angular/core";
-import { Usuario } from "src/app/interfaces/Usuario.model";
+import { Usuario } from "src/app/models/Usuario.model";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
