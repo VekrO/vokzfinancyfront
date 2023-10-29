@@ -2,7 +2,7 @@ import { CurrencyPipe, Location } from "@angular/common";
 import { ChangeDetectorRef, Component, Inject, Injectable, Input, OnInit, Optional } from "@angular/core";
 import { FormGroup, FormControl, Validators, FormControlStatus } from "@angular/forms";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
+
 import * as moment from "moment";
 import { BehaviorSubject } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
@@ -17,6 +17,7 @@ import { DynamicDialogConfig } from "src/app/services/dynamicDialog.service";
 import { ModalService } from "src/app/services/modal.service";
 import { UtilService } from "src/app/util.service";
 import { FinanceiroFacade } from "../financeiro.facade";
+import { MessageService } from "src/app/services/message.service";
 
 @Component({
     selector: 'app-despesa',
@@ -39,7 +40,7 @@ export class DespesaComponent implements OnInit {
         private location: Location, 
         private route: ActivatedRoute, 
         private authService: AuthenticationService,
-        private notifierService: NotifierService,
+        private messageService: MessageService,
         private modalService: ModalService,
         private contaService: ContaService,
         private facade: FinanceiroFacade,
@@ -131,7 +132,7 @@ export class DespesaComponent implements OnInit {
             error: (err) => {
                 console.log('ERRO: ', err);
                 this.processando = false;
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.router.navigate(['despesas']);
             }
         });
@@ -163,11 +164,11 @@ export class DespesaComponent implements OnInit {
                 console.log('DESPESA: ', despesa);
                 this.popularFormulario(despesa);
                 this.processando = false;
-                this.notifierService.notify('success', 'Nova despesa criada!');
+                this.messageService.notify('success', 'Nova despesa criada!');
             },
             error: (err) => {
                 console.log('erro: ', err);
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.processando = false;
             }
         });
@@ -186,12 +187,12 @@ export class DespesaComponent implements OnInit {
             next: (despesa: Despesa) => {
                 console.log('DESPESA: ', despesa);
                 this.popularFormulario(despesa);
-                this.notifierService.notify('success', 'Despesa atualizada com sucesso!');
+                this.messageService.notify('success', 'Despesa atualizada com sucesso!');
                 this.processando = false;
             },
             error: (err) => {
                 console.log('erro: ', err);
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.processando = false;
             }
         });
@@ -208,12 +209,12 @@ export class DespesaComponent implements OnInit {
                 if(res && res == 'OK') {
                     this.service.delete(id, this.registro.contaId).subscribe({
                         next: () => {
-                            this.notifierService.notify('success', 'Registro excluído com sucesso!');
+                            this.messageService.notify('success', 'Registro excluído com sucesso!');
                             this.voltar();
                         },
                         error: (err) => {
                             console.log('erro : ', err);
-                            this.notifierService.notify('error', err.error);
+                            this.messageService.notify('error', err.error);
                         }
                     });
                 }

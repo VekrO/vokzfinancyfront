@@ -75,6 +75,11 @@
     transition: all 0.4s ease;
 }
 
+.option-wrapper-offline {
+    width: 100%;
+    justify-content: end;
+}
+
 @media screen and (max-width: 768px) {
     .nav-logo {
         display: none;

@@ -37,7 +37,7 @@ registerLocaleData(localePt);
            * Defines the horizontal position on the screen
            * @type {'left' | 'middle' | 'right'}
            */
-          position: 'right',
+          position: window.innerWidth > 768 ? 'right' : 'left',
       
           /**
            * Defines the horizontal distance to the screen edge (in px)

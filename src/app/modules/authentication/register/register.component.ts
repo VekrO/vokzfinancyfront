@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
+
 import { Usuario } from "src/app/interfaces/Usuario.model";
 import { UsuarioRegistro } from "src/app/interfaces/UsuarioRegistro.model";
 import { UsuarioToken } from "src/app/interfaces/UsuarioToken.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
+import { MessageService } from "src/app/services/message.service";
 
 @Component({
     selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterComponent {
     public formulario!: FormGroup;
     public processando: boolean = false;
 
-    constructor(private service: AuthenticationService, private router: Router, private notifierService: NotifierService) {}
+    constructor(private service: AuthenticationService, private router: Router, private messageService: MessageService) {}
 
     ngOnInit(): void {
 
@@ -48,12 +49,12 @@ export class RegisterComponent {
         this.service.register(registro).subscribe({
             next: () => {
                 this.router.navigate(['']);
-                this.notifierService.notify('success', 'Sucesso, você foi redirecionado o login!');
+                this.messageService.notify('success', 'Sucesso, você foi redirecionado o login!');
                 this.processando = false;
             },
             error: (err) => {
                 console.log('Erro: ', err);
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.processando = false;
             }
         });

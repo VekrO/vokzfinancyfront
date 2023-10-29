@@ -2,7 +2,7 @@ import { CurrencyPipe, Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { NotifierService } from "angular-notifier";
+
 import * as moment from "moment";
 import { BehaviorSubject } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
@@ -15,6 +15,7 @@ import { ModalService } from "src/app/services/modal.service";
 import { ReceitaService } from "src/app/services/receita.service";
 import { UtilService } from "src/app/util.service";
 import { FinanceiroFacade } from "../financeiro.facade";
+import { MessageService } from "src/app/services/message.service";
 
 @Component({
     selector: 'app-receita',
@@ -39,7 +40,7 @@ export class ReceitaComponent implements OnInit {
         private route: ActivatedRoute, 
         private authService: AuthenticationService,
         private modalService: ModalService,
-        private notifierService: NotifierService,
+        private messageService: MessageService,
         private router: Router
         ) {}
 
@@ -99,7 +100,7 @@ export class ReceitaComponent implements OnInit {
             error: (err) => {
                 console.log('ERRO: ', err);
                 this.processando = false;
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.router.navigate(['receitas']);
             }
         });
@@ -141,13 +142,13 @@ export class ReceitaComponent implements OnInit {
 
         this.service.post(this.registro).subscribe({
             next: (receita: Receita) => {
-                this.notifierService.notify('success', 'Receita criada com sucesso!');
+                this.messageService.notify('success', 'Receita criada com sucesso!');
                 this.popularFormulario(receita);
                 this.processando = false;
             },
             error: (err) => {
                 console.log('erro: ', err);
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.processando = false;
             }
         });
@@ -164,13 +165,13 @@ export class ReceitaComponent implements OnInit {
         
         this.service.put(this.registro).subscribe({
             next: (Receita: Receita) => {
-                this.notifierService.notify('success', 'Receita atualizada com sucesso!');
+                this.messageService.notify('success', 'Receita atualizada com sucesso!');
                 this.popularFormulario(Receita);
                 this.processando = false;
             },
             error: (err) => {
                 console.log('erro: ', err);
-                this.notifierService.notify('error', err.error);
+                this.messageService.notify('error', err.error);
                 this.processando = false;
             }
         });
@@ -187,12 +188,12 @@ export class ReceitaComponent implements OnInit {
                 if(res && res == 'OK') {
                     this.service.delete(id, this.registro.contaId).subscribe({
                         next: () => {
-                            this.notifierService.notify('success', 'Registro excluído com sucesso!');
+                            this.messageService.notify('success', 'Registro excluído com sucesso!');
                             this.voltar();
                         },
                         error: (err) => {
                             console.log('erro : ', err);
-                            this.notifierService.notify('error', err.error);
+                            this.messageService.notify('error', err.error);
                         }
                     });
                 }
