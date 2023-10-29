@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .dashboard .dashboard-header .account .account-header label {
     font-size: 20px;
@@ -104,8 +105,58 @@
     color: var(--color-despesa);
 }
 
+.charts {
+    padding: 15px;
+    background-color: white;
+    box-shadow: var(--card-shadow);
+    margin: 5px 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.wrapper {
+    width: 50%;
+    height: 300px;
+    margin: 0 auto;
+}
+
 @media screen and (max-width: 1024px) {
+    
+    .dashboard {
+        padding: 0 5px;
+    }
+
     .dashboard .dashboard-header .account .account-content .account-card {
+        width: 100%;
+    }
+    .wrapper {
+        width: 75%;
+    }
+    
+}
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        width: 85%;
+    }
+    .dashboard .dashboard-header .account .account-header .form-filtro .select-filtro-group .select-filtro {
+        width: 150px;
+    }
+}
+
+@media screen and (max-width:468px) {
+    .dashboard .dashboard-header .account .account-header .form-filtro {
+        width: 100%;
+    }
+    .dashboard .dashboard-header .account .account-header .form-filtro .select-filtro-group {
+        width: 100%;
+    }
+    .dashboard .dashboard-header .account .account-header .form-filtro .select-filtro-group .select-filtro {
+        width: 100%;
+    }
+    .wrapper {
         width: 100%;
     }
 }

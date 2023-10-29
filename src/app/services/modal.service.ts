@@ -16,7 +16,7 @@ export class ModalService {
 
     constructor(private appRef: ApplicationRef, private injector: EnvironmentInjector, private dynamicDialogConfig: DynamicDialogConfig, private dynamicDialogRef: DynamicDialogRef) { }
 
-    open(component: Type<any>, options: { data: {}, title?: string, width?: string, height?: string }): Observable<any> {
+    open(component: Type<any>, options: { data: {}, title?: string, message?: string, width?: string, height?: string }): Observable<any> {
 
         this.dynamicDialogConfig.data = options.data;
 
@@ -37,8 +37,10 @@ export class ModalService {
         this.dynamicDialogRef.onDestroy.pipe(takeUntil(this.unsub$)).subscribe((message) => this.close(message));
 
         this.dialogRef.instance.title = options?.title;
+        this.dialogRef.instance.message = options?.message;
         this.dialogRef.instance.width = options?.width;
         this.dialogRef.instance.height = options?.height;
+        this.dialogRef.instance.data = options?.data;
         
         document.body.appendChild(this.dialogRef.location.nativeElement);
 

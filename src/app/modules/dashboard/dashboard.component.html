@@ -8,11 +8,13 @@
                 <div>
                     {{ cumprimento }}, <label><br> <b>{{ usuario.name }}</b> </label>
                 </div>
-                <form class="flex align-items-center justify-content-center gap-1" *ngIf="formularioFiltro" [formGroup]="formularioFiltro">
-                    <select class="select-filtro" formControlName="ContaId" (change)="updateUI()">
-                        <option [value]="0">Todas</option>
-                        <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
-                    </select>
+                <form class="form-filtro flex align-items-center justify-content-center gap-1" *ngIf="formularioFiltro" [formGroup]="formularioFiltro">
+                    <div class="select-filtro-group">
+                        <select class="select-filtro" formControlName="ContaId" (change)="updateUI()">
+                            <option [value]="0">Todas</option>
+                            <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
+                        </select>
+                    </div>
                 </form>
             </div>
             
@@ -52,6 +54,12 @@
     
         </div>
 
+    </div>
+
+    <div class="charts">
+        <div class="wrapper">
+            <canvas id="canvas">{{chart}}</canvas>
+        </div>
     </div>
     
     <!-- <div class="dashboard-content">

@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Conta } from "../interfaces/Conta.interface";
+import { Conta } from "../interfaces/Conta.model";
 import { APP } from "src/environments/environment";
+import { ReceitaDespesa } from "../interfaces/ReceitaDespesa.model";
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,14 @@ export class ContaService {
     
     getAllByIdUsuario(idUsuario: number): Observable<Conta[]> {
         return this._http.get<Conta[]>(APP.api + 'conta/usuario/' + idUsuario);
+    }
+
+    getReceitaDespesaByIdConta(idConta: number): Observable<ReceitaDespesa> {
+        return this._http.get<ReceitaDespesa>(APP.api + 'conta/' + idConta + '/valores');
+    }
+
+    getReceitaDespesaByIdUsuario(idUsuario: number): Observable<ReceitaDespesa> {
+        return this._http.get<ReceitaDespesa>(APP.api + 'conta/usuario/' + idUsuario + '/valores');
     }
 
     getContaPadraoByIdUsuario(idUsuario: number): Observable<Conta> {

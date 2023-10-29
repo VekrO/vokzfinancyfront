@@ -2,13 +2,15 @@
 
     <div class="table-header">
         <p>Receitas</p>
-        <form class="flex align-items-center justify-content-center gap-1" [formGroup]="formularioFiltro">
-            <select class="select-filtro" formControlName="ContaId" (change)="getByIdContaAsync()">
-                <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
-            </select>
+        <form class="form-filtro flex align-items-center justify-content-center gap-1" [formGroup]="formularioFiltro">
+            <div class="select-filtro-group">
+                <select class="select-filtro" formControlName="ContaId" (change)="getByIdContaAsync()">
+                    <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
+                </select>
+            </div>
             <button class="table-header-button" type="button" (click)="adicionar()">
                 <i class='bx bx-plus-circle' ></i>
-                Adicionar
+                <span>Adicionar</span>
             </button>
         </form>
     </div>

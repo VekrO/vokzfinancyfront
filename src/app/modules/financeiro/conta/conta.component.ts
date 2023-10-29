@@ -5,11 +5,12 @@ import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { NotifierService } from "angular-notifier";
 import { forkJoin } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
-import { Conta } from "src/app/interfaces/Conta.interface";
-import { Usuario } from "src/app/interfaces/Usuario.interface";
+import { Conta } from "src/app/interfaces/Conta.model";
+import { Usuario } from "src/app/interfaces/Usuario.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ContaService } from "src/app/services/conta.service";
 import { ModalService } from "src/app/services/modal.service";
+import { UtilService } from "src/app/util.service";
 
 @Component({
     selector: 'app-conta',
@@ -35,7 +36,8 @@ export class ContaComponent implements OnInit {
         private location: Location,
         private notifierService: NotifierService,
         private modalService: ModalService,
-        private router: Router
+        private router: Router,
+        private utilService: UtilService
     ) {}
 
     ngOnInit(): void {
@@ -165,8 +167,11 @@ export class ContaComponent implements OnInit {
 
         this.modalService.open(ConfirmacaoComponent, {data: {
             id: id,
-            message: 'Deseja excluir esse registro de ID: ' + id
-        }, title: 'Excluir Registro', width: '50%' }).subscribe({
+        }, 
+        title: 'Excluir Conta', 
+        message: 'Ao confirmar, você vai excluir todas as despesas e receitas vinculadas a mesma!',
+        width: this.utilService.isMobile() ? '95%' : '50%' 
+        }).subscribe({
             next: (res) => {
                 if(res && res == 'OK') {
                     this.service.delete(id, this.usuario.id).subscribe({

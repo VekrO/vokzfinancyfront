@@ -35,3 +35,14 @@ form .button-group {
 form .button-group button {
     flex: 1;
 }
+
+@media screen and (max-width: 768px) {
+    form {
+        width: 100%;
+        padding: 0 5px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

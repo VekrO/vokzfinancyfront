@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from '@angular/common/http';
 import { APP } from "src/environments/environment";
-import { Receita } from "../interfaces/Receita.interface";
-import { ReceitaGrafico } from "../interfaces/ReceitaGrafico.interface";
+import { Receita } from "../interfaces/Receita.model";
+import { ReceitaGrafico } from "../interfaces/ReceitaGrafico.model";
 
 @Injectable({
     providedIn: 'root'

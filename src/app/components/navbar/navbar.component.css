@@ -72,4 +72,20 @@
     align-items: center;
     justify-content: center;
     box-shadow: inset 0 -3px 0 #fff;
+    transition: all 0.4s ease;
+}
+
+@media screen and (max-width: 768px) {
+    .nav-logo {
+        display: none;
+    }
+    .navbar .wrapper .nav-item a {
+        font-size: 15px;
+    }
+    .navbar .wrapper .option-wrapper {
+        gap: 10px;
+    }
+    .navbar .wrapper .nav-option button i {
+        font-size: 30px;
+    }
 }

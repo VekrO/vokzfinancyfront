@@ -6,9 +6,9 @@ import { NotifierService } from "angular-notifier";
 import * as moment from "moment";
 import { BehaviorSubject } from "rxjs";
 import { ConfirmacaoComponent } from "src/app/components/confirmacao/confirmacao.component";
-import { Conta } from "src/app/interfaces/Conta.interface";
-import { Receita } from "src/app/interfaces/Receita.interface";
-import { Usuario } from "src/app/interfaces/Usuario.interface";
+import { Conta } from "src/app/interfaces/Conta.model";
+import { Receita } from "src/app/interfaces/Receita.model";
+import { Usuario } from "src/app/interfaces/Usuario.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ContaService } from "src/app/services/conta.service";
 import { ModalService } from "src/app/services/modal.service";
@@ -182,7 +182,7 @@ export class ReceitaComponent implements OnInit {
         this.modalService.open(ConfirmacaoComponent, {data: {
             id: id,
             message: 'Deseja excluir esse registro de ID: ' + id
-        }, title: 'Excluir Registro', width: '50%' }).subscribe({
+        }, title: 'Excluir Registro', width: this.utilService.isMobile() ? '95%' : '50%' }).subscribe({
             next: (res) => {
                 if(res && res == 'OK') {
                     this.service.delete(id, this.registro.contaId).subscribe({
