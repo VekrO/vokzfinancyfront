@@ -72,13 +72,13 @@
     flex: 1;
 }
 
-.card-icon {
+.cursor-pointer {
     cursor: pointer;
 }
 
-.card-icon > i.bxs-bank:hover {
+/* .card-icon > i.bxs-bank:hover {
     color: var(--color-saldo-hover);
-}
+} */
 
 .card-icon > i.bx-plus-circle:hover {
     color: var(--color-receita-hover);
