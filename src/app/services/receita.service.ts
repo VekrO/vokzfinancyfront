@@ -16,8 +16,8 @@ export class ReceitaService {
         return this._http.get<Receita>(APP.api + 'receita/' + id + '/usuario/' + idUsuario);
     }
 
-    getByContaIdAsync(ContaId: number): Observable<Receita[]> {
-        return this._http.get<Receita[]>(APP.api + 'receita/conta/' + ContaId);
+    getByContaIdAsync(ContaId: number, dtIni: string, dtFim: string): Observable<Receita[]> {
+        return this._http.get<Receita[]>(APP.api + 'receita/conta/' + ContaId + '/dtIni/' + dtIni + '/dtFim/' + dtFim);
     }
 
     getGraficoByContaIdAsync(ContaId: number): Observable<ReceitaGrafico[]> {

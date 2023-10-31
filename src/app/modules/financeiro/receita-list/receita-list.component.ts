@@ -36,12 +36,12 @@ export class ReceitaListComponent implements OnInit {
         this.usuario = this.authService.getUsuario();
         this.configurarFormulario();
         await this.getContasByUsuario();        
-        this.getByIdContaAsync();
+        this.updateUI();
 
     }
 
     getByIdContaAsync() {
-        this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId).subscribe({
+        this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
             next: (res) => {
                 this.items.next(res);
                 this.valorTotal = this.items.value.reduce((acumulador, item) => {
@@ -52,6 +52,10 @@ export class ReceitaListComponent implements OnInit {
                 console.log('ERRO: ', err); 
             }
         });
+    }
+
+    updateUI() {
+        this.getByIdContaAsync();
     }
 
     async getContasByUsuario() {

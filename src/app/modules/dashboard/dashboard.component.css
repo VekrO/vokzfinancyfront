@@ -141,19 +141,20 @@
     .wrapper {
         width: 85%;
     }
-    .dashboard .dashboard-header .account .account-header .form-filtro .select-filtro-group .select-filtro {
+    .dashboard .dashboard-header .account .account-header .form-filtro .form-group .select-filtro {
         width: 150px;
     }
 }
 
-@media screen and (max-width:468px) {
+@media screen and (max-width: 468px) {
     .dashboard .dashboard-header .account .account-header .form-filtro {
         width: 100%;
+        flex-direction: column;
     }
-    .dashboard .dashboard-header .account .account-header .form-filtro .select-filtro-group {
+    .dashboard .dashboard-header .account .account-header .form-filtro .form-group {
         width: 100%;
     }
-    .dashboard .dashboard-header .account .account-header .form-filtro .select-filtro-group .select-filtro {
+    .dashboard .dashboard-header .account .account-header .form-filtro .form-group .select-filtro {
         width: 100%;
     }
     .wrapper {

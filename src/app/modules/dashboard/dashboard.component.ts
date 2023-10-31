@@ -30,8 +30,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public contas: BehaviorSubject<Conta[]> = new BehaviorSubject<Conta[]>([]);
 
-  public chart!: Chart;
-
   public contaGrafico: string[] = [];
   public valorDespesas: number[] = [];
   public valorReceitas: number[] = [];
@@ -44,7 +42,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.configurarFormulario();
     this.getCumprimento();
-    this.initGrafico();
     await this.getContasByUsuario();
     await this.updateUI();
 
@@ -55,58 +52,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if(this.formularioFiltro.value.ContaId == 0) {
       
       // Pega todas as informações das contas reunidas apenas pelo id do usuário.
-      await this.getValorReceitasByIdUsuarioAsync(),
-      await this.getValorDespesasByIdUsuarioAsync(),
-      await this.getSaldoByIdUsuarioAsync(),
-      await this.getReceitaDespesaByIdUsuario()
+      this.getValorReceitasByIdUsuarioAsync();
+      this.getValorDespesasByIdUsuarioAsync();
 
       
     } else {
 
       // Pega todas as informações da conta selecionada.
-      await this.getValorReceitasByIdUsuarioAndIdContaAsync(),
-      await this.getValorDespesasByIdUsuarioAndIdContaAsync(),
-      await this.getSaldoByIdUsuarioAndIdContaAsync(),
-      await this.getReceitaDespesaByIdConta()
+      this.getValorReceitasByIdUsuarioAndIdContaAsync();
+      this.getValorDespesasByIdUsuarioAndIdContaAsync();
 
     }
 
-  }
-
-  initGrafico() {
-
-    this.chart = new Chart('canvas', {
-      type: 'bar',
-      data: {
-        labels: this.contaGrafico,
-        datasets: [
-          {
-            label: 'Despesas',
-            data: this.valorDespesas,
-            borderWidth: 1,
-            backgroundColor: 'rgba(255, 0, 0, 0.5)', // Cor das barras de despesas
-          },
-          {
-            label: 'Receitas',
-            data: this.valorReceitas,
-            borderWidth: 1,
-            backgroundColor: 'rgba(75, 192, 192, 0.5)', // Cor das barras de receitas
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        scales: {
-          y: {
-            display: true,
-            beginAtZero: true,
-            max: 5000
-          },
-        },
-      },
-    });
-    
   }
 
   async getContasByUsuario() {
@@ -125,165 +82,57 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   }
 
-  async getReceitaDespesaByIdConta() {
-    await this.financeiroFacade.getReceitaDespesaByIdConta(this.formularioFiltro.value.ContaId).then((valores: ReceitaDespesa) => {
-      console.log('valores: ', valores);
-      
-      if(this.chart) {
-        this.chart.data.labels = [valores.conta.nome];
-        this.chart.data.datasets = [
-          {
-            label: 'Despesas',
-            data: [valores.valorDespesa],
-            borderWidth: 1,
-            backgroundColor: 'rgba(255, 0, 0, 0.5)', // Cor das barras de despesas
-          },
-          {
-            label: 'Receitas',
-            data: [valores.valorReceita],
-            borderWidth: 1,
-            backgroundColor: 'rgba(75, 192, 192, 0.5)', // Cor das barras de receitas
-          },
-        ]
-        
-        this.chart.update();
-
-      }
-
-    }).catch((err) => {
-      console.log('error: ', err);
-    });
-  }
-
-  async getReceitaDespesaByIdUsuario() {
-    await this.financeiroFacade.getReceitaDespesaByUsuario(this.usuario.id).then((valores: ReceitaDespesa) => {
-      console.log('valores: ', valores);
-      
-      if(this.chart) {
-        this.chart.data.labels = [valores.conta.nome];
-        this.chart.data.datasets = [
-          {
-            label: 'Despesas',
-            data: [valores.valorDespesa],
-            borderWidth: 1,
-            backgroundColor: 'rgba(255, 0, 0, 0.5)', // Cor das barras de despesas
-          },
-          {
-            label: 'Receitas',
-            data: [valores.valorReceita],
-            borderWidth: 1,
-            backgroundColor: 'rgba(75, 192, 192, 0.5)', // Cor das barras de receitas
-          },
-        ]
-        
-        this.chart.update();
-
-      }
-
-    }).catch((err) => {
-      console.log('error: ', err);
-    });
-  }
-
   configurarFormulario() {
     this.formularioFiltro = new FormGroup({
         status: new FormControl('todas'),
-        ContaId: new FormControl(0),
+        ContaId: new FormControl(0)
     });
   }
 
-  getValorReceitasByIdUsuarioAsync(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.usuarioService.getValorReceitasByIdUsuarioAsync(this.usuario.id).subscribe({
-        next: (valor: number) => {
-          this.receitaAtual = valor;
-          resolve();
-        },
-        error: (err) => {
-          console.log('ERRO: ', err);
-          reject();
-        }
-      });
-    })
-  }
-
-  getValorDespesasByIdUsuarioAsync(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.usuarioService.getValorDespesasByIdUsuarioAsync(this.usuario.id).subscribe({
-        next: (valor: number) => {
-          this.despesaAtual = valor;
-          resolve();
-        },
-        error: (err) => {
-          console.log('ERRO: ', err);
-          this.messageService.notify('error', err.error);
-          reject();
-        }
-      });
-    })
-  }
-
-  getValorReceitasByIdUsuarioAndIdContaAsync(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.usuarioService.getValorReceitasByIdUsuarioAndIdContaAsync(this.usuario.id, this.formularioFiltro.value.ContaId).subscribe({
-        next: (valor: number) => {
-          this.receitaAtual = valor;
-          resolve();
-        },
-        error: (err) => {
-          console.log('ERRO: ', err);
-          reject();
-        }
-      });
-    })
-  }
-
-  getValorDespesasByIdUsuarioAndIdContaAsync(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.usuarioService.getValorDespesasByIdUsuarioAndIdContaAsync(this.usuario.id, this.formularioFiltro.value.ContaId).subscribe({
-        next: (valor: number) => {
-          this.despesaAtual = valor;
-          resolve();
-        },
-        error: (err) => {
-          console.log('ERRO: ', err);
-          this.messageService.notify('error', err.error);
-          reject();
-        }
-      });
-    })
-  }
-
-  getSaldoByIdUsuarioAsync(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.usuarioService.getSaldoByIdUsuarioAsync(this.usuario.id).subscribe({
-        next: (valor: number) => {
-          this.saldoAtual = valor;
-          resolve();
-        },
-        error: (err) => {
-          console.log('ERRO: ', err);
-          this.messageService.notify('error', err.error);
-          reject();
-        }
-      });
+  getValorReceitasByIdUsuarioAsync() {
+    this.usuarioService.getValorReceitasByIdUsuarioAsync(this.usuario.id, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+      next: (valor: number) => {
+        this.receitaAtual = valor;
+      },
+      error: (err) => {
+        console.log('ERRO: ', err);
+      }
     });
   }
 
-  getSaldoByIdUsuarioAndIdContaAsync(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.usuarioService.getSaldoByIdUsuarioAndIdContaAsync(this.usuario.id, this.formularioFiltro.value.ContaId).subscribe({
-        next: (valor: number) => {
-          this.saldoAtual = valor;
-          resolve();
-        },
-        error: (err) => {
-          console.log('ERRO: ', err);
-          this.messageService.notify('error', err.error);
-          reject();
-        }
-      });
-    })
+  getValorDespesasByIdUsuarioAsync() {
+    this.usuarioService.getValorDespesasByIdUsuarioAsync(this.usuario.id, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+      next: (valor: number) => {
+        this.despesaAtual = valor;
+      },
+      error: (err) => {
+        console.log('ERRO: ', err);
+        this.messageService.notify('error', err.error);
+      }
+    });
+  }
+
+  getValorReceitasByIdUsuarioAndIdContaAsync() {
+    this.usuarioService.getValorReceitasByIdUsuarioAndIdContaAsync(this.usuario.id, this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+      next: (valor: number) => {
+        this.receitaAtual = valor;
+      },
+      error: (err) => {
+        console.log('ERRO: ', err);
+      }
+    });
+  }
+
+  getValorDespesasByIdUsuarioAndIdContaAsync() {
+    this.usuarioService.getValorDespesasByIdUsuarioAndIdContaAsync(this.usuario.id, this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+      next: (valor: number) => {
+        this.despesaAtual = valor;
+      },
+      error: (err) => {
+        console.log('ERRO: ', err);
+        this.messageService.notify('error', err.error);
+      }
+    });
   }
 
   getCumprimento() {
@@ -297,6 +146,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if(moment(horaAtual).isAfter(horaBoaTarde)) { this.cumprimento = 'Boa Tarde' }
     if(moment(horaAtual).isAfter(horaBoaNoite)) { this.cumprimento = 'Boa Noite'}
 
+  }
+
+  onDateEvent() {
+    this.updateUI();
   }
 
   ngOnDestroy(): void {

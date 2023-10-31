@@ -43,7 +43,7 @@ export class DespesaListComponent implements OnInit {
         this.usuario = this.authService.getUsuario();
         this.configurarFormulario();
         await this.getContasByUsuario();
-        this.getDespesasAsync();
+        this.updateUI();
 
     }
 
@@ -59,7 +59,7 @@ export class DespesaListComponent implements OnInit {
         console.log('FILTRO: ', this.formularioFiltro.value);
 
         if(this.formularioFiltro.value.status == 'todas') {
-            this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId).subscribe({
+            this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
                 next: (res) => {
                     console.log('res: ', res);
                     
@@ -75,7 +75,7 @@ export class DespesaListComponent implements OnInit {
             });
         } else if(this.formularioFiltro.value.status == 'vencidos') {
 
-            this.service.getVencidoByContaIdAsync(this.formularioFiltro.value.ContaId).subscribe({
+            this.service.getVencidoByContaIdAsync(this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
                 next: (res) => {
                     this.items.next(res);
                     this.valorTotal = this.items.value.reduce((acumulador, item) => {
@@ -91,6 +91,10 @@ export class DespesaListComponent implements OnInit {
         
     }
 
+    updateUI() {
+        this.getDespesasAsync();
+    }
+ 
     async getContasByUsuario() {
 
         await this.facade.getContasByUsuario(this.usuario.id).then((contas) => {
