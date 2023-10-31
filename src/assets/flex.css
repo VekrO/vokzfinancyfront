@@ -4,19 +4,19 @@
 }
 
 /* Propriedades para flex container */
-.flex-direction-row {
+.flex-row {
     flex-direction: row;
 }
 
-.flex-direction-column {
+.flex-column {
     flex-direction: column;
 }
 
-.flex-wrap-nowrap {
+.flex-nowrap {
     flex-wrap: nowrap;
 }
 
-.flex-wrap-wrap {
+.flex-wrap {
     flex-wrap: wrap;
 }
 
@@ -98,4 +98,8 @@
 
 .gap-2 {
     gap: 10px;
+}
+
+.w-full {
+    width: 100%;
 }

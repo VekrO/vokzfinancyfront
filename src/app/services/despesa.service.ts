@@ -16,16 +16,16 @@ export class DespesaService {
         return this._http.get<Despesa>(APP.api + 'despesa/' + id + '/usuario/' + idUsuario);
     }
 
-    getByContaIdAsync(ContaId: number): Observable<Despesa[]> {
-        return this._http.get<Despesa[]>(APP.api + 'despesa/conta/' + ContaId);
+    getByContaIdAsync(ContaId: number, dtIni: string, dtFim: string): Observable<Despesa[]> {
+        return this._http.get<Despesa[]>(APP.api + 'despesa/conta/' + ContaId + '/dtIni/' + dtIni + '/dtFim/' + dtFim);
     }
 
     getGraficoByContaIdAsync(ContaId: number): Observable<DespesaGrafico[]> {
         return this._http.get<DespesaGrafico[]>(APP.api + 'despesa/conta/' + ContaId + '/grafico');
     }
 
-    getVencidoByContaIdAsync(ContaId: number): Observable<Despesa[]> {
-        return this._http.get<Despesa[]>(APP.api + 'despesa/conta/' + ContaId + '/vencido');
+    getVencidoByContaIdAsync(ContaId: number, dtIni: string, dtFim: string): Observable<Despesa[]> {
+        return this._http.get<Despesa[]>(APP.api + 'despesa/conta/' + ContaId + '/vencido' + '/dtIni/' + dtIni + '/dtFim/' + dtFim);
     }
 
     getValorByContaIdAsync(ContaId: number): Observable<number> {

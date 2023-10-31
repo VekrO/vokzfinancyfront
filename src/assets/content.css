@@ -197,6 +197,18 @@ input:checked+.slider:before {
     -webkit-appearance:none; /* Safari and Chrome */
     appearance:none;
     padding-left: 10px;
+    border: 1px solid var(--input-border);
+}
+
+.form-control-date {
+    width: 150px;
+    height: 35px;
+    border-radius: 5px;
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+    padding-left: 10px;
+    border: 1px solid var(--input-border);
 }
 
 .table {
@@ -213,7 +225,7 @@ input:checked+.slider:before {
 .table .table-header .form-filtro {
     margin-top: 5px;
 }
-.table .table-header .form-filtro .select-filtro-group {
+.table .table-header .form-filtro .form-group {
     display: flex;
     gap: 5px;
 }
@@ -319,11 +331,16 @@ input:checked+.slider:before {
         width: 100%;
     }
 
-    .table .table-header .form-filtro .select-filtro-group {
+    .table .table-header .form-filtro .form-group {
         width: 100%;
+        flex-direction: column;
     }
     
     .select-filtro {
+        width: 100%;
+    }
+
+    .form-control-date {
         width: 100%;
     }
 

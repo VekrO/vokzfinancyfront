@@ -3,11 +3,12 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APP } from "src/environments/environment";
 import { Usuario } from "../models/Usuario.model";
+import { IUsuarioService } from "./interfaces/IUsuarioService";
 
 @Injectable({
     providedIn: 'root'
 })
-export class UsuarioService {
+export class UsuarioService implements IUsuarioService {
 
     constructor(private _http: HttpClient) {}
 
@@ -31,20 +32,20 @@ export class UsuarioService {
         return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/conta/' + idConta + '/saldo');
     }
 
-    getValorReceitasByIdUsuarioAsync(idUsuario: number): Observable<number> {
-        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/receitas/valor');
+    getValorReceitasByIdUsuarioAsync(idUsuario: number, dtIni: string, dtFim: string): Observable<number> {
+        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/receitas/valor' + '/dtIni/' + dtIni + '/dtFim/' + dtFim);
     }
 
-    getValorDespesasByIdUsuarioAsync(idUsuario: number): Observable<number> {
-        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/despesas/valor');
+    getValorDespesasByIdUsuarioAsync(idUsuario: number, dtIni: string, dtFim: string): Observable<number> {
+        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/despesas/valor' + '/dtIni/' + dtIni + '/dtFim/' + dtFim);
     }
 
-    getValorReceitasByIdUsuarioAndIdContaAsync(idUsuario: number, idConta: number): Observable<number> {
-        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/conta/' + idConta + '/receitas/valor');
+    getValorReceitasByIdUsuarioAndIdContaAsync(idUsuario: number, idConta: number, dtIni: string, dtFim: string): Observable<number> {
+        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/conta/' + idConta + '/receitas/valor' + '/dtIni/' + dtIni + '/dtFim/' + dtFim);
     }
 
-    getValorDespesasByIdUsuarioAndIdContaAsync(idUsuario: number, idConta: number): Observable<number> {
-        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/conta/' + idConta +'/despesas/valor');
+    getValorDespesasByIdUsuarioAndIdContaAsync(idUsuario: number, idConta: number, dtIni: string, dtFim: string): Observable<number> {
+        return this._http.get<number>(APP.api + 'usuario/' + idUsuario + '/conta/' + idConta +'/despesas/valor' + '/dtIni/' + dtIni + '/dtFim/' + dtFim);
     }
 
 
