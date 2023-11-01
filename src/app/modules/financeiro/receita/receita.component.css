@@ -27,6 +27,29 @@ form .form-group input {
     outline: 0;
 }
 
+form .form-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 5px;
+}
+
+form .form-checkbox label {
+    font-size: 15px;
+    font-weight: bold;  
+    color: var(--label-color);  
+}
+
+form .form-checkbox input[type=checkbox] {
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #808080;
+    content: "";
+    background: #FFF;
+}
+
 form .button-group {
     display: flex;
     gap: 5px;

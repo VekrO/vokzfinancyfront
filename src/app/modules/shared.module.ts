@@ -5,12 +5,14 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ModalComponent } from '../components/modal/modal.component';
 import { ConfirmacaoComponent } from '../components/confirmacao/confirmacao.component';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
+import { SidebarComponent } from '../components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     ModalComponent,
     ConfirmacaoComponent,
-    DateFilterComponent
+    DateFilterComponent,
+    SidebarComponent
   ],
   imports: [
     FormsModule,
@@ -22,7 +24,8 @@ import { DateFilterComponent } from '../components/date-filter/date-filter.compo
     FormsModule,
     ReactiveFormsModule,
     CurrencyMaskModule,
-    DateFilterComponent
+    DateFilterComponent,
+    SidebarComponent
   ]
 })
 export class SharedModule { }

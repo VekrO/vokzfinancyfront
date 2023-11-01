@@ -1,8 +1,13 @@
+<app-sidebar [active]="sidebarActive" [route]="activeRoute" (onClose)="onCloseSidebar($event)"></app-sidebar>
+
 <div class="navbar">
     
     <div class="wrapper">
         <div class="nav-logo">
             <h3>Vokz Financy</h3>
+        </div>
+        <div class="nav-mobile">
+            <button type="button" class="nav-mobile-button" (click)="menuMobile()"><i class='bx bx-menu'></i></button>
         </div>
         <div class="option-wrapper" *ngIf="isAuthenticated">
             <div class="nav-item {{ '/dashboard' == activeRoute ? 'active' : 'inative' }}">
@@ -26,7 +31,7 @@
                 <i title="Desconectar" class='bx bx-log-out-circle' ></i>
             </button>
         </div>
-        <div class="option-wrapper" [ngClass]="{'option-wrapper-offline': !isAuthenticated}" *ngIf="!isAuthenticated">
+        <div class="nav-option" [ngClass]="{'option-wrapper-offline': !isAuthenticated}" *ngIf="!isAuthenticated">
             <div class="nav-item login">
                 <a routerLink="">Login</a>
             </div>

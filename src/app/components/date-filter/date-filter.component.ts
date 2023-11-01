@@ -21,7 +21,7 @@ export class DateFilterComponent implements OnInit {
   configurarFormulario() {
 
     const dtIniControl: FormControl = new FormControl(moment().startOf('month').format('YYYY-MM-DD'));
-    const dtFimControl: FormControl = new FormControl(moment().endOf('month').format('YYYY-MM-DD'));
+    const dtFimControl: FormControl = new FormControl(moment().endOf('year').format('YYYY-MM-DD'));
     
     this.formulario.addControl('dtIni', dtIniControl);
     this.formulario.addControl('dtFim', dtFimControl);

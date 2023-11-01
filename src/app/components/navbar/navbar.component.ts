@@ -19,6 +19,8 @@ export class NavbarComponent implements OnInit {
   public isAuthenticated: boolean = false;
   public activeRoute: string = '';
   private usuario!: Usuario;
+  
+  public sidebarActive: boolean = false;
 
   constructor(
     private authService: AuthenticationService, 
@@ -58,6 +60,14 @@ export class NavbarComponent implements OnInit {
       }
     })
 
+  }
+
+  onCloseSidebar(active: boolean) {
+    this.sidebarActive = active;
+  }
+
+  menuMobile() {
+    this.sidebarActive = !this.sidebarActive;
   }
 
   desconectar() {

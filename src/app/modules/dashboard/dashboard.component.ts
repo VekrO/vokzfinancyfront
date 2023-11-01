@@ -69,13 +69,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   async getContasByUsuario() {
 
     await this.financeiroFacade.getContasByUsuario(this.usuario.id).then((contas) => {
-        
         this.contas.next(contas);
-        const contaPadrao = contas.find((conta) => conta.padrao);
-        if(contaPadrao) {
-          this.formularioFiltro.controls['ContaId'].setValue(contaPadrao.id);
-        }
-
+        this.formularioFiltro.controls['ContaId'].setValue(0); // Deixa por padrão todas.
     }).catch((err) => {
         console.log('error: ', err);
     });
