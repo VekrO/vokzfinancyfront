@@ -1,3 +1,4 @@
+import { ComponentFactory } from './../../utils/componentFactory';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
@@ -8,6 +9,7 @@ import { NotifierService } from 'angular-notifier';
 import { Usuario } from 'src/app/models/Usuario.model';
 import { PerfilComponent } from 'src/app/modules/authentication/perfil/perfil.component';
 import { UtilService } from 'src/app/util.service';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-navbar',
@@ -19,13 +21,14 @@ export class NavbarComponent implements OnInit {
   public isAuthenticated: boolean = false;
   public activeRoute: string = '';
   private usuario!: Usuario;
-
+  
   constructor(
     private authService: AuthenticationService, 
     private router: Router, 
     private modalService: ModalService, 
     private notiferService: NotifierService,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private ComponentFactory: ComponentFactory
   ) {}
 
   ngOnInit(): void {
@@ -54,9 +57,14 @@ export class NavbarComponent implements OnInit {
     }).subscribe({
       next: (res) => {
         console.log('resposta: ', res);
-        
       }
     })
+
+  }
+
+  abrirMenuLateral() {
+
+    this.ComponentFactory.create(SidebarComponent);
 
   }
 

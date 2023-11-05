@@ -4,6 +4,9 @@
         <div class="nav-logo">
             <h3>Vokz Financy</h3>
         </div>
+        <div class="nav-mobile" *ngIf="isAuthenticated">
+            <button type="button" class="nav-mobile-button" (click)="abrirMenuLateral()"><i class='bx bx-menu'></i></button>
+        </div>
         <div class="option-wrapper" *ngIf="isAuthenticated">
             <div class="nav-item {{ '/dashboard' == activeRoute ? 'active' : 'inative' }}">
                 <a routerLink="dashboard">Painel</a>
@@ -26,7 +29,7 @@
                 <i title="Desconectar" class='bx bx-log-out-circle' ></i>
             </button>
         </div>
-        <div class="option-wrapper" [ngClass]="{'option-wrapper-offline': !isAuthenticated}" *ngIf="!isAuthenticated">
+        <div class="nav-option" [ngClass]="{'option-wrapper-offline': !isAuthenticated}" *ngIf="!isAuthenticated">
             <div class="nav-item login">
                 <a routerLink="">Login</a>
             </div>

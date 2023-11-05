@@ -1,28 +1,44 @@
-<div class="table">
+<div class="table" [ngClass]="{'no-margin': !showFilter}">
 
-    <div class="table-header">
-        <p>Receitas</p>
-        <form class="form-filtro flex align-items-center justify-content-center gap-1" [formGroup]="formularioFiltro">
-            <app-date-filter class="w-full" (dateEvent)="updateUI()" [formulario]="formularioFiltro"></app-date-filter>
-            <div class="form-group">
-                <select class="select-filtro" formControlName="ContaId" (change)="getByIdContaAsync()">
-                    <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
-                </select>
+    <ng-container *ngIf="!processando">
+        <div class="table-header" [ngClass]="{'no-box-shadow': !showFilter}">
+            <div class="w-full">
+                <p>Contas a Receber</p>
             </div>
-            <button class="table-header-button" type="button" (click)="adicionar()">
-                <i class='bx bx-plus-circle' ></i>
-                <span>Adicionar</span>
-            </button>
-        </form>
-    </div>
-    <div *ngFor="let item of (items | async)" class="item" (click)="editar(item)">
-        <p class="title">{{ item.titulo }}</p>
-        <p class="valor">{{ item.valor | currency: 'BRL' }}</p>
-    </div>
-    
-    <div class="table-footer">
-        <p><b>Total</b></p>
-        <p>{{ valorTotal | currency: 'BRL' }}</p>
-    </div>
+            <form class="form-filtro gap-1" *ngIf="showFilter" [formGroup]="formularioFiltro">
+                <app-date-filter class="w-full" (dateEvent)="updateUI()" [formulario]="formularioFiltro"></app-date-filter>
+                <div class="form-group">
+                    <select class="select-filtro" formControlName="ContaId" (change)="getByIdContaAsync()">
+                        <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
+                    </select>
+                </div>
+                <button class="table-header-button" type="button" (click)="adicionar()">
+                    <i class='bx bx-plus-circle' ></i>
+                    <span>Adicionar</span>
+                </button>
+            </form>
+            <div class="w-full text-right surface-400" *ngIf="!showFilter">
+                {{ formularioFiltro.value.dtIni | date: 'dd/MM/yyyy' }} - {{ formularioFiltro.value.dtFim | date: 'dd/MM/yyyy' }}
+            </div>
+        </div>
+        
+        <div *ngFor="let item of (items | async)" class="item" (click)="editar(item)">
+            <!-- <p class="title">{{ item.titulo }}</p> -->
+            <p class="title">
+                <i [title]="item.paga ? 'A despesa já foi paga!' : 'A despesa ainda não foi paga!'" class="bx bxs-{{ item.paga ? 'like' : 'dislike' }} {{ item.paga ? 'paga-sim' : 'paga-nao' }}"></i>
+                {{ item.titulo }}
+            </p>
+            <p class="valor">{{ item.valor | currency: 'BRL' }}</p>
+        </div>
+        
+        <div class="table-footer">
+            <p><b>Total</b></p>
+            <p>{{ valorTotal | currency: 'BRL' }}</p>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="processando">
+        <app-loading></app-loading>
+    </ng-container>
 
 </div>

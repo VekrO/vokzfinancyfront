@@ -9,7 +9,7 @@
 
 .dashboard .dashboard-header .account {
     width: 100%;
-    gap: 25px;
+    gap: 5px;
     display: flex;
     flex-direction: column;
 }
@@ -44,8 +44,16 @@
     justify-content: space-between;
     gap: 5px;
 }
+
 .dashboard .dashboard-header .account .account-content .account-card .card-info {
-    text-align: start;
+    text-align: center;
+}
+
+.dashboard .dashboard-header .account .account-content .account-card .card-info label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
 }
 
 .dashboard .dashboard-header .account .account-content .account-card p {
@@ -131,9 +139,15 @@
     .dashboard .dashboard-header .account .account-content .account-card {
         width: 100%;
     }
+    
     .wrapper {
         width: 75%;
     }
+
+    .dashboard .dashboard-content {
+        flex-direction: column;
+    }
+    
     
 }
 

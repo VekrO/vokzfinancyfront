@@ -13,6 +13,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { Interceptor } from './interceptors/http.interceptor';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { NotifierModule } from 'angular-notifier';
+import { SharedModule } from './modules/shared.module';
 
 registerLocaleData(localePt);
 
@@ -23,6 +24,7 @@ registerLocaleData(localePt);
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    SharedModule,
     DashboardModule,
     FinanceiroModule,
     AuthenticationModule,

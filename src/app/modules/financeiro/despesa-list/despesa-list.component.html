@@ -1,36 +1,49 @@
-<div class="table">
+<div class="table" [ngClass]="{'no-margin': !showFilter}">
 
-    <div class="table-header">
-        <p>Despesas</p>
-        <form class="form-filtro flex align-items-center justify-content-center gap-1" [formGroup]="formularioFiltro">
-            <app-date-filter class="w-full" (dateEvent)="updateUI()" [formulario]="formularioFiltro"></app-date-filter>
-            <div class="form-group">
-                <select class="select-filtro" formControlName="ContaId" (change)="updateUI()">
-                    <option [value]="0">Todas</option>
-                    <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
-                </select>
-                <select class="select-filtro" formControlName="status" (change)="updateUI()">
-                    <option value="todas">Todas</option>
-                    <option value="vencidos">Vencidas</option>
-                </select>
+    <ng-container *ngIf="!processando">
+        <div class="table-header" [ngClass]="{'no-box-shadow': !showFilter}">
+            <div class="w-full">
+                <p>Contas a Pagar</p>
+                <!-- <small>Contas a pagar são despesas agendadas e ainda não pagas.</small> -->
             </div>
-            <button class="table-header-button" type="button" (click)="adicionar()">
-                <i class='bx bx-plus-circle' ></i>
-                <span>Adicionar</span>
-            </button>
-        </form>
-    </div>
-    <div *ngFor="let item of (items | async)" class="item" (click)="editar(item, $event)">
-        <p class="title">
-            <i title="Marcar como {{ item.paga ? 'não pago' : 'pago'}}" (click)="marcarPago(item, $event)" class="bx bxs-{{ item.paga ? 'like' : 'dislike' }} {{ item.paga ? 'paga-sim' : 'paga-não' }}"></i>
-            {{ item.titulo }}
-        </p>
-        <p class="valor">{{ item.valor | currency: 'BRL' }}</p>
-    </div>
+            <form class="form-filtro flex align-items-center justify-content-center gap-1" *ngIf="showFilter" [formGroup]="formularioFiltro">
+                <app-date-filter class="w-full" (dateEvent)="updateUI()" [formulario]="formularioFiltro"></app-date-filter>
+                <div class="form-group">
+                    <select class="select-filtro" formControlName="ContaId" (change)="updateUI()">
+                        <option *ngFor="let conta of (contas | async); let i = index;" [value]="conta.id">{{ conta.nome }}</option>
+                    </select>
+                    <!-- <select class="select-filtro" formControlName="status" (change)="updateUI()">
+                        <option value="todas">Todas</option>
+                        <option value="vencidos">Vencidas</option>
+                    </select> -->
+                </div>
+                <button class="table-header-button" type="button" (click)="adicionar()">
+                    <i class='bx bx-plus-circle' ></i>
+                    <span>Adicionar</span>
+                </button>
+            </form>
+            <div class="w-full text-right surface-400" *ngIf="!showFilter">
+                {{ formularioFiltro.value.dtIni | date: 'dd/MM/yyyy' }} - {{ formularioFiltro.value.dtFim | date: 'dd/MM/yyyy' }}
+            </div>
+        </div>
     
-    <div class="table-footer">
-        <p><b>Total</b></p>
-        <p>{{ valorTotal | currency: 'BRL' }}</p>
-    </div>
+        <div *ngFor="let item of (items | async)" class="item" [title]="item.vencida ? 'Despesa Vencida' : ''" (click)="editar(item, $event)">
+            <p class="title">
+                <i *ngIf="item.vencida" [ngClass]="{'despesa-vencida': item.vencida}" class='bx bxs-bell-ring'></i>
+                <i *ngIf="!item.vencida" [title]="item.paga ? 'A despesa já foi paga!' : 'A despesa ainda não foi paga!'" class="bx bxs-{{ item.paga ? 'like' : 'dislike' }} {{ item.paga ? 'paga-sim' : 'paga-nao' }}"></i>
+                {{ item.titulo }}
+            </p>
+            <p class="valor">{{ item.valor | currency: 'BRL' }}</p>
+        </div>
+    
+        <div class="table-footer">
+            <p><b>Total</b></p>
+            <p>{{ valorTotal | currency: 'BRL' }}</p>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="processando">
+        <app-loading></app-loading>
+    </ng-container>
 
 </div>

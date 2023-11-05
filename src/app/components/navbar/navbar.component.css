@@ -28,6 +28,7 @@
 
 .navbar .wrapper .nav-option {
     display: flex;
+    align-items: center;
     gap: 5px;
 }
 
@@ -80,17 +81,40 @@
     justify-content: end;
 }
 
+.nav-mobile .nav-mobile-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    font-size: 35px;
+    border: 0;
+    cursor: pointer;
+}
+
+.nav-mobile .nav-mobile-button i {
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.nav-mobile .nav-mobile-button i:hover {
+    color: gray;
+}
+
+@media screen and (min-width: 769px) {
+    .nav-mobile {
+        display: none;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .nav-logo {
         display: none;
     }
-    .navbar .wrapper .nav-item a {
-        font-size: 15px;
+    .navbar .wrapper {
+        justify-content: space-between;
     }
     .navbar .wrapper .option-wrapper {
-        gap: 10px;
+        display: none;
     }
-    .navbar .wrapper .nav-option button i {
-        font-size: 30px;
-    }
+
 }

@@ -69,6 +69,7 @@ export class ReceitaComponent implements OnInit {
             titulo: new FormControl('', [Validators.required]),
             descricao: new FormControl(''),
             valor: new FormControl(0, [Validators.required]),
+            paga: new FormControl(false, [Validators.required]),
             data: new FormControl('', [Validators.required])
         });
 

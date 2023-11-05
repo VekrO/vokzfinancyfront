@@ -175,9 +175,11 @@ input:checked+.slider:before {
 .paga-sim {
     color: var(--color-receita);
 }
-.paga-nao {
-    color: #ccc;
+
+.title-vencida {
+    color: white !important;
 }
+
 
 .select-conta {
     height: 35px;
@@ -214,17 +216,33 @@ input:checked+.slider:before {
 .table {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     background-color: white;
-    padding: 5px;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
 }
+
+.table.no-margin {
+    margin: 0;
+}
+
 .table .table-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
+    /* margin-bottom: 35px; */
+    padding: 10px;
+    box-shadow: var(--card-shadow);
+    border-radius: 10px;
 }
+
+.table .table-header.no-box-shadow {
+    box-shadow: none;
+}
+
 .table .table-header .form-filtro {
-    margin-top: 5px;
+    display: flex;
 }
+
 .table .table-header .form-filtro .form-group {
     display: flex;
     gap: 5px;
@@ -256,7 +274,6 @@ input:checked+.slider:before {
 
 .table .item {
 
-    margin-top: 1px solid #ccc;
     padding: 10px;
     cursor: pointer;
     display: flex;
@@ -264,25 +281,25 @@ input:checked+.slider:before {
     justify-content: space-between;
     transition: 0.3s ease all;
     border-radius: 10px;
-    margin-bottom: 5px;
+    margin: 5px 0;
+    /* border-top: 1px solid whitesmoke; */
 
 }
 
-.table .item {
+/* .table .item-vencida {
+    background-color: crimson;
+}
 
-    padding: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: 0.3s ease all;
-    border-radius: 10px;
-    margin-bottom: 5px;
+.table .item-vencida:hover {
+    background-color: rgb(182, 29, 59) !important;
+} */
 
+.despesa-vencida {
+    color: red;
 }
 
 .table .item:hover {
-    background-color: #c7f3d6;
+    background-color: whitesmoke;
 }
 
 .table .item p.title {
@@ -291,7 +308,7 @@ input:checked+.slider:before {
     align-items: center;
 }
 
-.table .table-header, .table .table-footer {
+.table .table-footer {
     padding: 10px;
 }
 
@@ -299,12 +316,12 @@ input:checked+.slider:before {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #e3e3e3;
+    background-color: whitesmoke;
+    border-radius: 10px;
 }
 
 .table .table-header p, .table .table-footer p {
-    font-weight: bold;
-    font-size: 18px;
+    font-size: 15px;
 }
 
 .card {
@@ -328,7 +345,9 @@ input:checked+.slider:before {
     }
 
     .table .table-header .form-filtro {
+        flex-direction: column;
         width: 100%;
+        margin-top: 5px;
     }
 
     .table .table-header .form-filtro .form-group {

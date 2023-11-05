@@ -23,6 +23,13 @@
         <label for="data">Data</label>
         <input id="data" type="date" formControlName="data" />
     </div>
+    <div class="form-checkbox">
+        <label for="paga">Paga</label>
+        <label class="switch">
+            <input id="paga" type="checkbox" formControlName="paga" />
+            <span class="slider round"></span>
+        </label>
+    </div>
 
     <div class="button-group">
         <button *ngIf="registro?.id" type="button" class="btn-excluir" (click)="excluir(formulario.value.id)">Excluir</button>

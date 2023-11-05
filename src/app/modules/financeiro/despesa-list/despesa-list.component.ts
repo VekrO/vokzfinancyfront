@@ -1,17 +1,16 @@
-import { Component, OnInit, Optional } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { BehaviorSubject, lastValueFrom } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { Despesa } from "src/app/models/Despesa.model";
 import { Usuario } from "src/app/models/Usuario.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { DespesaService } from "src/app/services/despesa.service";
-import { DashboardComponent } from "../../dashboard/dashboard.component";
 import { Conta } from "src/app/models/Conta.model";
-import { ContaService } from "src/app/services/conta.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { FinanceiroFacade } from "../financeiro.facade";
 import { MessageService } from "src/app/services/message.service";
+import * as moment from "moment";
 
 @Component({
     selector: 'app-despesa-list',
@@ -28,7 +27,8 @@ export class DespesaListComponent implements OnInit {
     public visible: boolean = false;
     public processando: boolean = false;
 
-    public formularioFiltro!: FormGroup;
+    @Input() public formularioFiltro!: FormGroup;
+    @Input() public showFilter: boolean = true;
 
     constructor(
         public service: DespesaService, 
@@ -41,7 +41,11 @@ export class DespesaListComponent implements OnInit {
     async ngOnInit(): Promise<void> {
 
         this.usuario = this.authService.getUsuario();
-        this.configurarFormulario();
+
+        if(!this.formularioFiltro) {
+            this.configurarFormulario();
+        }
+
         await this.getContasByUsuario();
         this.updateUI();
 
@@ -50,7 +54,7 @@ export class DespesaListComponent implements OnInit {
     configurarFormulario() {
         this.formularioFiltro = new FormGroup({
             status: new FormControl('todas'),
-            ContaId: new FormControl(0),
+            ContaId: new FormControl(0)
         });
     }
 
@@ -58,41 +62,34 @@ export class DespesaListComponent implements OnInit {
 
         console.log('FILTRO: ', this.formularioFiltro.value);
 
-        if(this.formularioFiltro.value.status == 'todas') {
-            this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
-                next: (res) => {
-                    console.log('res: ', res);
-                    
-                    this.items.next(res);
-                    this.valorTotal = this.items.value.reduce((acumulador, item) => {
-                        return acumulador + item.valor;
-                    }, 0); 
-                },
-                error: (err) => {
-                    console.log('ERRO: ', err);
-                    this.messageService.notify('error', err.error);
-                }
-            });
-        } else if(this.formularioFiltro.value.status == 'vencidos') {
-
-            this.service.getVencidoByContaIdAsync(this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
-                next: (res) => {
-                    this.items.next(res);
-                    this.valorTotal = this.items.value.reduce((acumulador, item) => {
-                        return acumulador + item.valor;
-                    }, 0); 
-                },
-                error: (err) => {
-                    console.log('ERRO: ', err); 
-                    this.messageService.notify('error', err.error);
-                }
-            });
+        if(this.processando) {
+            return;
         }
         
+        this.processando = true;
+
+        this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+            next: (res) => {
+                console.log('DESPESAS: ', res);
+                this.processando = false;
+                this.items.next(res);
+                this.valorTotal = this.items.value.reduce((acumulador, item) => {
+                    return acumulador + item.valor;
+                }, 0); 
+            },
+            error: (err) => {
+                console.log('ERRO: ', err);
+                this.processando = false;
+                this.messageService.notify('error', err.error);
+            }
+        });
+
     }
 
     updateUI() {
+
         this.getDespesasAsync();
+
     }
  
     async getContasByUsuario() {
@@ -119,7 +116,7 @@ export class DespesaListComponent implements OnInit {
         this.router.navigate(['despesa']);
     }
 
-    marcarPago(item: Despesa, event: MouseEvent) 
+    /* marcarPago(item: Despesa, event: MouseEvent) 
     {       
 
         console.log('ITEM: ', item);
@@ -136,7 +133,6 @@ export class DespesaListComponent implements OnInit {
 
         this.service.put(item).subscribe({
             next: (despesa: Despesa) => {
-                console.log('item alterado: ', despesa);
                 item = despesa;
                 this.processando = false;
             }, 
@@ -147,6 +143,6 @@ export class DespesaListComponent implements OnInit {
             }
         });
         
-    }
+    } */
 
 }

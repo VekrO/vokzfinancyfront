@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Usuario } from 'src/app/models/Usuario.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BehaviorSubject } from 'rxjs';
@@ -11,6 +11,8 @@ import { FinanceiroFacade } from '../financeiro/financeiro.facade';
 import Chart from 'chart.js/auto';
 import { ReceitaDespesa } from 'src/app/models/ReceitaDespesa.model';
 import { MessageService } from 'src/app/services/message.service';
+import { DespesaListComponent } from '../financeiro/despesa-list/despesa-list.component';
+import { ReceitaListComponent } from '../financeiro/receita-list/receita-list.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,6 +35,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public contaGrafico: string[] = [];
   public valorDespesas: number[] = [];
   public valorReceitas: number[] = [];
+
+  @ViewChild('despesaList') despesaListComponent!: DespesaListComponent;
+  @ViewChild('receitaList') receitaListComponent!: ReceitaListComponent;
+
+  public processando: boolean = false;
 
   constructor(private authService: AuthenticationService, private usuarioService: UsuarioService, private financeiroFacade: FinanceiroFacade, private messageService: MessageService) {}
 
@@ -64,18 +71,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     }
 
+    if(this.receitaListComponent) {
+      this.receitaListComponent.updateUI();
+    }
+
+    if(this.despesaListComponent) {
+      this.despesaListComponent.updateUI();
+    }
+
   }
 
   async getContasByUsuario() {
 
     await this.financeiroFacade.getContasByUsuario(this.usuario.id).then((contas) => {
-        
         this.contas.next(contas);
-        const contaPadrao = contas.find((conta) => conta.padrao);
-        if(contaPadrao) {
-          this.formularioFiltro.controls['ContaId'].setValue(contaPadrao.id);
-        }
-
+        this.formularioFiltro.controls['ContaId'].setValue(0); // Deixa por padrão todas.
     }).catch((err) => {
         console.log('error: ', err);
     });
@@ -148,11 +158,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   }
 
-  onDateEvent() {
+  onDateEvent() { 
     this.updateUI();
   }
 
-  ngOnDestroy(): void {
+  onFormEvent(form: FormGroup) { 
+    this.formularioFiltro = form;
   }
+
+  ngOnDestroy(): void {}
 
 }

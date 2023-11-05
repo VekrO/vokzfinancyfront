@@ -1,4 +1,7 @@
 <form class="flex gap-1" [formGroup]="formulario">
-    <input type="date" class="form-control-date" formControlName="dtIni" (change)="onChange()" />
-    <input type="date" class="form-control-date" formControlName="dtFim" (change)="onChange()" />
+    <input type="date" class="form-control-date" formControlName="dtIni" />
+    <input type="date" class="form-control-date" formControlName="dtFim" />
+    <button type="button" (click)="onChange()">
+        <i class='bx bx-search' ></i>
+    </button>
 </form>
