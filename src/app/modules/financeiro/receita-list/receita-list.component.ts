@@ -24,7 +24,7 @@ export class ReceitaListComponent implements OnInit {
     public valorTotal: number = 0;
     public visible: boolean = false;
 
-    @Input() public formularioFiltro!: FormGroup;
+    public formularioFiltro!: FormGroup;
     @Input() public showFilter: boolean = true;
 
     public processando: boolean = false;
@@ -39,10 +39,7 @@ export class ReceitaListComponent implements OnInit {
 
         this.usuario = this.authService.getUsuario();
         
-        if(!this.formularioFiltro) {
-            this.configurarFormulario();
-        }
-
+        this.configurarFormulario();
         await this.getContasByUsuario();        
         this.updateUI();
 
@@ -94,6 +91,8 @@ export class ReceitaListComponent implements OnInit {
     configurarFormulario() {
         this.formularioFiltro = new FormGroup({
             ContaId: new FormControl(0),
+            dtIni: new FormControl(),
+            dtFim: new FormControl()
         });
     }
 

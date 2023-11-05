@@ -3,13 +3,10 @@ import { Usuario } from 'src/app/models/Usuario.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BehaviorSubject } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { NotifierService } from 'angular-notifier';
 import * as moment from 'moment';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Conta } from 'src/app/models/Conta.model';
 import { FinanceiroFacade } from '../financeiro/financeiro.facade';
-import Chart from 'chart.js/auto';
-import { ReceitaDespesa } from 'src/app/models/ReceitaDespesa.model';
 import { MessageService } from 'src/app/services/message.service';
 import { DespesaListComponent } from '../financeiro/despesa-list/despesa-list.component';
 import { ReceitaListComponent } from '../financeiro/receita-list/receita-list.component';
@@ -71,14 +68,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     }
 
+    this.setarDataNoViewChild();
+
+  }
+  
+  setarDataNoViewChild() {
     if(this.receitaListComponent) {
-      this.receitaListComponent.updateUI();
+      this.receitaListComponent.formularioFiltro.controls['dtIni'].setValue(this.formularioFiltro.value.dtIni);
+      this.receitaListComponent.formularioFiltro.controls['dtFim'].setValue(this.formularioFiltro.value.dtFim);
     }
-
     if(this.despesaListComponent) {
-      this.despesaListComponent.updateUI();
+      this.despesaListComponent.formularioFiltro.controls['dtIni'].setValue(this.formularioFiltro.value.dtIni);
+      this.despesaListComponent.formularioFiltro.controls['dtFim'].setValue(this.formularioFiltro.value.dtFim);
     }
-
   }
 
   async getContasByUsuario() {
@@ -93,10 +95,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   configurarFormulario() {
+    
     this.formularioFiltro = new FormGroup({
         status: new FormControl('todas'),
-        ContaId: new FormControl(0)
+        ContaId: new FormControl(0),
+        dtIni: new FormControl(),
+        dtFim: new FormControl()
     });
+
   }
 
   getValorReceitasByIdUsuarioAsync() {
@@ -158,8 +164,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   }
 
-  onDateEvent() { 
+  onDateEvent() {
+
+    console.log('FORMULARIO FILTRO: ', this.formularioFiltro.value);
+
     this.updateUI();
+
+    if (this.receitaListComponent) {
+      this.receitaListComponent.updateUI();
+    }
+    if (this.despesaListComponent) {
+      this.despesaListComponent.updateUI();
+    }
+
   }
 
   onFormEvent(form: FormGroup) { 

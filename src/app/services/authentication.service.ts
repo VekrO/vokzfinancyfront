@@ -47,7 +47,7 @@ export class AuthenticationService {
 
     clearToken() {
         this._isAuthenticated.next(false);
-        localStorage.removeItem('token');
+        localStorage.clear();
     }
 
     getToken(): string | null {
