@@ -27,7 +27,7 @@ export class DespesaListComponent implements OnInit {
     public visible: boolean = false;
     public processando: boolean = false;
 
-    @Input() public formularioFiltro!: FormGroup;
+    public formularioFiltro!: FormGroup;
     @Input() public showFilter: boolean = true;
 
     constructor(
@@ -41,11 +41,8 @@ export class DespesaListComponent implements OnInit {
     async ngOnInit(): Promise<void> {
 
         this.usuario = this.authService.getUsuario();
-
-        if(!this.formularioFiltro) {
-            this.configurarFormulario();
-        }
-
+        
+        this.configurarFormulario();
         await this.getContasByUsuario();
         this.updateUI();
 
@@ -54,21 +51,23 @@ export class DespesaListComponent implements OnInit {
     configurarFormulario() {
         this.formularioFiltro = new FormGroup({
             status: new FormControl('todas'),
-            ContaId: new FormControl(0)
+            ContaId: new FormControl(0),
+            dtIni: new FormControl(),
+            dtFim: new FormControl()
         });
     }
 
     getDespesasAsync() {
 
-        console.log('FILTRO: ', this.formularioFiltro.value);
-
+        console.log('BUSCAR: ', this.formularioFiltro.value);
+        
         if(this.processando) {
             return;
         }
         
         this.processando = true;
 
-        this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+        this.service.getByContaIdAsync(Number(this.formularioFiltro.value.ContaId), this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
             next: (res) => {
                 console.log('DESPESAS: ', res);
                 this.processando = false;
@@ -114,6 +113,11 @@ export class DespesaListComponent implements OnInit {
 
     adicionar() {
         this.router.navigate(['despesa']);
+    }
+
+    @Input() set setData(formulario: FormGroup) {
+        this.formularioFiltro.controls['dtIni'].setValue(formulario.value.dtIni);
+        this.formularioFiltro.controls['dtFim'].setValue(formulario.value.dtFim);
     }
 
     /* marcarPago(item: Despesa, event: MouseEvent) 

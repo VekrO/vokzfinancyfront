@@ -119,3 +119,19 @@
 .font-bold {
     font-weight: bold;
 }
+
+.mt-1 {
+    margin-top: 5px;
+}
+
+.mb-1 {
+    margin-bottom: 5px;
+}
+
+.mt-2 {
+    margin-top: 10px;
+}
+
+.mb-2 {
+    margin-bottom: 10px;
+}

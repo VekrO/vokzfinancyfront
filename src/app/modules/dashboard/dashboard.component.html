@@ -10,7 +10,7 @@
                 </div>
                 <ng-container *ngIf="formularioFiltro">
                     <form class="form-filtro flex align-items-center justify-content-center gap-1" [formGroup]="formularioFiltro">
-                        <app-date-filter class="w-full" (formEvent)="onFormEvent($event)" (dateEvent)="onDateEvent()" [formulario]="formularioFiltro"></app-date-filter>
+                        <app-date-filter class="w-full" (dateEvent)="onDateEvent()" [formulario]="formularioFiltro"></app-date-filter>
                         <div class="form-group">
                             <select class="select-filtro" formControlName="ContaId" (change)="updateUI()">
                                 <option [value]="0">Todas</option>
@@ -61,8 +61,8 @@
 
     <ng-container *ngIf="formularioFiltro">
         <div class="dashboard-content">
-            <app-despesa-list #despesaList class="content-item" [showFilter]="false" [formularioFiltro]="formularioFiltro"></app-despesa-list>
-            <app-receita-list #receitaList class="content-item" [showFilter]="false" [formularioFiltro]="formularioFiltro"></app-receita-list>
+            <app-despesa-list #despesaList class="content-item" [showFilter]="false"></app-despesa-list>
+            <app-receita-list #receitaList class="content-item" [showFilter]="false"></app-receita-list>
         </div>
     </ng-container>
 
