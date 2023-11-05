@@ -6,11 +6,13 @@ import { DashboardComponent } from './dashboard.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FinanceiroModule } from '../financeiro/financeiro.module';
 import { SharedModule } from '../shared.module';
+import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [  
     DashboardComponent, 
     NavbarComponent,
+    SidebarComponent
   ],
   imports: [
     SharedModule,

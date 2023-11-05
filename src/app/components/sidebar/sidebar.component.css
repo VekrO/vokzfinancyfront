@@ -1,0 +1,48 @@
+nav {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 15px;
+}
+
+nav .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+nav .header .botao-fechar {
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+}
+
+nav .header .botao-fechar i {
+    font-size: 50px;
+}
+
+nav .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+nav .content a {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    transition: 0.3s ease all;
+    border: 1px solid whitesmoke;
+    color: black;
+    text-decoration: none;
+}
+
+nav .content a:hover {
+    background-color: whitesmoke;
+}

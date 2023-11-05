@@ -1,0 +1,18 @@
+<nav [@slideInFromLeft]>
+    
+    
+    <div class="header">
+        <h3>Menu</h3>
+        <button class="botao-fechar" type="button" (click)="destroy()">
+            <i class='bx bx-x' ></i>
+        </button>
+    </div>
+
+    <div class="content">
+        <a (click)="destroy()" routerLink="receitas">RECEITAS</a>
+        <a (click)="destroy()" routerLink="despesas">DESPESAS</a>
+        <a (click)="destroy()" routerLink="contas">CONTAS</a>
+    </div>
+
+
+</nav>
