@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, Optional } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { BehaviorSubject } from "rxjs";
@@ -11,6 +11,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { FinanceiroFacade } from "../financeiro.facade";
 import { MessageService } from "src/app/services/message.service";
 import * as moment from "moment";
+import { DashboardComponent } from "../../dashboard/dashboard.component";
 
 @Component({
     selector: 'app-despesa-list',
@@ -35,7 +36,8 @@ export class DespesaListComponent implements OnInit {
         private authService: AuthenticationService, 
         private router: Router,
         private messageService: MessageService,
-        private facade: FinanceiroFacade
+        private facade: FinanceiroFacade,
+        @Optional() private dashboardComponent: DashboardComponent,
     ) {}
     
     async ngOnInit(): Promise<void> {
@@ -43,7 +45,9 @@ export class DespesaListComponent implements OnInit {
         this.usuario = this.authService.getUsuario();
         
         this.configurarFormulario();
-        await this.getContasByUsuario();
+        if(!this.dashboardComponent) {
+            await this.getContasByUsuario();
+        }
         this.updateUI();
 
     }
@@ -67,7 +71,33 @@ export class DespesaListComponent implements OnInit {
         
         this.processando = true;
 
-        this.service.getByContaIdAsync(Number(this.formularioFiltro.value.ContaId), this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+        if(this.formularioFiltro.value.ContaId == 0) {
+            console.log('CONTA ID = 0');
+
+            // Pega a data referente ao dashboard.
+            const dtIni: string = this.dashboardComponent.formularioFiltro.value.dtIni;
+            const dtFim: string = this.dashboardComponent.formularioFiltro.value.dtFim;
+
+            this.service.getAllByIdUsuarioAsync(this.usuario.id, dtIni, dtFim).subscribe({
+                next: (res) => {
+                    console.log('DESPESAS: ', res);
+                    this.processando = false;
+                    this.items.next(res);
+                    this.valorTotal = this.items.value.reduce((acumulador, item) => {
+                        return acumulador + item.valor;
+                    }, 0); 
+                }, 
+                error: (err) => {
+                    console.log('ERRO: ', err);
+                    this.processando = false;
+                    this.messageService.notify('error', err.error);
+                }
+            });
+
+            return;
+        }
+
+        this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
             next: (res) => {
                 console.log('DESPESAS: ', res);
                 this.processando = false;
@@ -113,11 +143,6 @@ export class DespesaListComponent implements OnInit {
 
     adicionar() {
         this.router.navigate(['despesa']);
-    }
-
-    @Input() set setData(formulario: FormGroup) {
-        this.formularioFiltro.controls['dtIni'].setValue(formulario.value.dtIni);
-        this.formularioFiltro.controls['dtFim'].setValue(formulario.value.dtFim);
     }
 
     /* marcarPago(item: Despesa, event: MouseEvent) 

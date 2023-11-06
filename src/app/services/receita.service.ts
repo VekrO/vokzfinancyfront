@@ -20,6 +20,10 @@ export class ReceitaService {
         return this._http.get<Receita[]>(APP.api + 'receita/conta/' + ContaId + '/dtIni/' + dtIni + '/dtFim/' + dtFim);
     }
 
+    getAllByIdUsuarioAsync(idUsuario: number, dtIni: string, dtFim: string): Observable<Receita[]> {
+        return this._http.get<Receita[]>(APP.api + 'receita/usuario/' + idUsuario + '/receitas/dtIni/' + dtIni + '/dtFim/' + dtFim);
+    }
+
     getGraficoByContaIdAsync(ContaId: number): Observable<ReceitaGrafico[]> {
         return this._http.get<ReceitaGrafico[]>(APP.api + 'receita/conta/' + ContaId + '/grafico');
     }
