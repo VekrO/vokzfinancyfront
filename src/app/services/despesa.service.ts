@@ -20,6 +20,10 @@ export class DespesaService {
         return this._http.get<Despesa[]>(APP.api + 'despesa/conta/' + ContaId + '/dtIni/' + dtIni + '/dtFim/' + dtFim);
     }
 
+    getAllByIdUsuarioAsync(idUsuario: number, dtIni: string, dtFim: string): Observable<Despesa[]> {
+        return this._http.get<Despesa[]>(APP.api + 'despesa/usuario/' + idUsuario + '/despesas/dtIni/' + dtIni + '/dtFim/' + dtFim);
+    }
+
     getGraficoByContaIdAsync(ContaId: number): Observable<DespesaGrafico[]> {
         return this._http.get<DespesaGrafico[]>(APP.api + 'despesa/conta/' + ContaId + '/grafico');
     }

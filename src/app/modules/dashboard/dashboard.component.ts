@@ -165,22 +165,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onDateEvent() {
-
-    console.log('FORMULARIO FILTRO: ', this.formularioFiltro.value);
-
     this.updateUI();
+    this.updateViewChild();
+  }
 
+  onTrocarConta() {
+    this.updateUI();
+    if (this.receitaListComponent) {
+      this.receitaListComponent.formularioFiltro.controls['ContaId'].setValue(this.formularioFiltro.value.ContaId);
+    }
+    if (this.despesaListComponent) {
+      this.despesaListComponent.formularioFiltro.controls['ContaId'].setValue(this.formularioFiltro.value.ContaId);
+    }
+    this.updateViewChild();
+  }
+
+
+  updateViewChild() {
     if (this.receitaListComponent) {
       this.receitaListComponent.updateUI();
     }
     if (this.despesaListComponent) {
       this.despesaListComponent.updateUI();
     }
-
-  }
-
-  onFormEvent(form: FormGroup) { 
-    this.formularioFiltro = form;
   }
 
   ngOnDestroy(): void {}

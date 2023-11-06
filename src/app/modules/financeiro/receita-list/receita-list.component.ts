@@ -53,6 +53,26 @@ export class ReceitaListComponent implements OnInit {
         
         this.processando = true;
 
+        if(this.formularioFiltro.value.ContaId == 0) {
+            console.log('CONTA ID = 0');
+            this.service.getAllByIdUsuarioAsync(this.usuario.id, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+                next: (res) => {
+                    console.log('DESPESAS: ', res);
+                    this.processando = false;
+                    this.items.next(res);
+                    this.valorTotal = this.items.value.reduce((acumulador, item) => {
+                        return acumulador + item.valor;
+                    }, 0); 
+                }, 
+                error: (err) => {
+                    console.log('ERRO: ', err);
+                    this.processando = false;
+                }
+            });
+
+            return;
+        }
+
         this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
             next: (res) => {
                 this.processando = false;

@@ -67,7 +67,28 @@ export class DespesaListComponent implements OnInit {
         
         this.processando = true;
 
-        this.service.getByContaIdAsync(Number(this.formularioFiltro.value.ContaId), this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+        if(this.formularioFiltro.value.ContaId == 0) {
+            console.log('CONTA ID = 0');
+            this.service.getAllByIdUsuarioAsync(this.usuario.id, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+                next: (res) => {
+                    console.log('DESPESAS: ', res);
+                    this.processando = false;
+                    this.items.next(res);
+                    this.valorTotal = this.items.value.reduce((acumulador, item) => {
+                        return acumulador + item.valor;
+                    }, 0); 
+                }, 
+                error: (err) => {
+                    console.log('ERRO: ', err);
+                    this.processando = false;
+                    this.messageService.notify('error', err.error);
+                }
+            });
+
+            return;
+        }
+
+        this.service.getByContaIdAsync(this.formularioFiltro.value.ContaId, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
             next: (res) => {
                 console.log('DESPESAS: ', res);
                 this.processando = false;
@@ -95,10 +116,10 @@ export class DespesaListComponent implements OnInit {
 
         await this.facade.getContasByUsuario(this.usuario.id).then((contas) => {
             this.contas.next(contas);
-            const contaPadrao = contas.find((conta) => conta.padrao);
+            /* const contaPadrao = contas.find((conta) => conta.padrao);
             if(contaPadrao) {
                 this.formularioFiltro.controls['ContaId'].setValue(contaPadrao.id);
-            }
+            } */
         }).catch((err) => {
             console.log('error: ', err);
         });
