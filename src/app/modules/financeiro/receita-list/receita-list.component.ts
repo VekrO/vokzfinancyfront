@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from "@angular/core";
+import { Component, Input, OnInit, Optional, Output } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
@@ -9,6 +9,7 @@ import { AuthenticationService } from "src/app/services/authentication.service";
 import { ReceitaService } from "src/app/services/receita.service";
 import { FinanceiroFacade } from "../financeiro.facade";
 import * as moment from "moment";
+import { DashboardComponent } from "../../dashboard/dashboard.component";
 
 @Component({
     selector: 'app-receita-list',
@@ -33,14 +34,18 @@ export class ReceitaListComponent implements OnInit {
         public service: ReceitaService, 
         private authService: AuthenticationService, 
         private facade: FinanceiroFacade,
-        private router: Router) {}
+        private router: Router,
+        @Optional() private dashboardComponent: DashboardComponent,
+        ) {}
     
     async ngOnInit(): Promise<void> {
 
         this.usuario = this.authService.getUsuario();
         
         this.configurarFormulario();
-        await this.getContasByUsuario();        
+        if(!this.dashboardComponent) {
+            await this.getContasByUsuario();        
+        }
         this.updateUI();
 
     }
@@ -55,7 +60,12 @@ export class ReceitaListComponent implements OnInit {
 
         if(this.formularioFiltro.value.ContaId == 0) {
             console.log('CONTA ID = 0');
-            this.service.getAllByIdUsuarioAsync(this.usuario.id, this.formularioFiltro.value.dtIni, this.formularioFiltro.value.dtFim).subscribe({
+
+            // Pega a data referente ao dashboard.
+            const dtIni: string = this.dashboardComponent.formularioFiltro.value.dtIni;
+            const dtFim: string = this.dashboardComponent.formularioFiltro.value.dtFim;
+
+            this.service.getAllByIdUsuarioAsync(this.usuario.id, dtIni, dtFim).subscribe({
                 next: (res) => {
                     console.log('DESPESAS: ', res);
                     this.processando = false;
@@ -89,9 +99,7 @@ export class ReceitaListComponent implements OnInit {
     }
 
     updateUI() {
-
         this.getByIdContaAsync();
-        
     }
 
     async getContasByUsuario() {
@@ -100,7 +108,7 @@ export class ReceitaListComponent implements OnInit {
             this.contas.next(contas);
             const contaPadrao = contas.find((conta) => conta.padrao);
             if(contaPadrao) {
-            this.formularioFiltro.controls['ContaId'].setValue(contaPadrao.id);
+                this.formularioFiltro.controls['ContaId'].setValue(contaPadrao.id);
             }
         }).catch((err) => {
             console.log('error: ', err);
