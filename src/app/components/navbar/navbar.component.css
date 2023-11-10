@@ -44,7 +44,12 @@
     cursor: pointer;
 }
 
-.navbar .wrapper .nav-logo {
+.navbar .wrapper .nav-logo h3 {
+    width: max-content;
+}
+
+.navbar .wrapper .nav-logo a {
+    text-decoration: none;
     color: white;
 }
 

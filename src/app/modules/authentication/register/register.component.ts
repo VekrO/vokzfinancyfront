@@ -2,9 +2,7 @@ import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
-import { Usuario } from "src/app/models/Usuario.model";
 import { UsuarioRegistro } from "src/app/models/UsuarioRegistro.model";
-import { UsuarioToken } from "src/app/models/UsuarioToken.model";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { MessageService } from "src/app/services/message.service";
 
@@ -20,7 +18,13 @@ export class RegisterComponent {
 
     constructor(private service: AuthenticationService, private router: Router, private messageService: MessageService) {}
 
-    ngOnInit(): void {
+    ngOnInit(): void {  
+
+        // Verifica se tem token.
+        if(this.service.isLoggedIn() && this.service.getRemember()) {
+            this.router.navigate(['dashboard']);
+            return;
+        }
 
         this.configurarFormulario();
 

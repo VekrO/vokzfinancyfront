@@ -25,7 +25,7 @@
 
                 <div class="account-card saldo">
                     <div class="card-info">
-                        <label>Saldo <i class='bx bx-help-circle' title="O saldo é baseado em (Contas a Receber - Contas a Pagar)"></i></label>
+                        <label>Saldo <i [tooltip]="'O saldo é baseado em (Contas a Receber - Contas a Pagar)'" class='bx bx-help-circle'></i></label>
                         <p>{{ (receitaAtual - despesaAtual) | currency: 'BRL' }}</p>
                     </div>
                     <div class="card-icon">
@@ -35,7 +35,7 @@
 
                 <div class="account-card receita">
                     <div class="card-info">
-                        <label>Receber <i class='bx bx-help-circle' title="Contas a receber são as contas que já foram recebidas ou estão para receber."></i></label>
+                        <label>Receber <i class='bx bx-help-circle' [tooltip]="'Contas a receber são as contas que já foram recebidas ou estão para receber.'"></i></label>
                         <p>{{ receitaAtual | currency: 'BRL' }}</p>
                     </div>
                     <div class="card-icon cursor-pointer" routerLink="/receita">
@@ -45,7 +45,7 @@
 
                 <div class="account-card despesa">
                     <div class="card-info">
-                        <label>Pagar <i class='bx bx-help-circle' title="Contas a pagar são as contas que já foram pagas ou ainda serão pagas."></i></label>
+                        <label>Pagar <i class='bx bx-help-circle' [tooltip]="'Contas a pagar são as contas que já foram pagas ou ainda serão pagas.'"></i></label>
                         <p>{{ despesaAtual | currency: 'BRL' }}</p>
                     </div>
                     <div class="card-icon cursor-pointer" routerLink="/despesa">

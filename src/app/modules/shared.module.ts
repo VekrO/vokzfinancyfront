@@ -6,13 +6,15 @@ import { ModalComponent } from '../components/modal/modal.component';
 import { ConfirmacaoComponent } from '../components/confirmacao/confirmacao.component';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
 import { LoadingComponent } from '../components/loading/loading.component';
+import { TooltipDirective } from '../directives/tooltip.directive';
 
 @NgModule({
   declarations: [
     ModalComponent,
     ConfirmacaoComponent,
     DateFilterComponent,
-    LoadingComponent
+    LoadingComponent,
+    TooltipDirective
   ],
   imports: [
     FormsModule,
@@ -25,7 +27,8 @@ import { LoadingComponent } from '../components/loading/loading.component';
     ReactiveFormsModule,
     CurrencyMaskModule,
     DateFilterComponent,
-    LoadingComponent
+    LoadingComponent,
+    TooltipDirective
   ]
 })
 export class SharedModule { }
