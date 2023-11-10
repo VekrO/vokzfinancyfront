@@ -25,4 +25,7 @@ button i {
     form {
         width: 100%;
     }
+    form button {
+        width: 85px;
+    }
 }

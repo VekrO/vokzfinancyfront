@@ -1,4 +1,4 @@
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+<form *ngIf="formulario" [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
     <h1>Crie uma Conta</h1>
 

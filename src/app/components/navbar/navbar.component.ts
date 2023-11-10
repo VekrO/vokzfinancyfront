@@ -63,15 +63,14 @@ export class NavbarComponent implements OnInit {
   }
 
   abrirMenuLateral() {
-
     this.ComponentFactory.create(SidebarComponent);
-
   }
 
   desconectar() {
     this.modalService.open(ConfirmacaoComponent, {data: {}, title: 'Deseja se desconectar do sistema ?', width: this.utilService.isMobile() ? '95%' : '50%' }).subscribe({
       next: (res) => {
           if(res && res == 'OK') {
+            this.authService.removeRemember();
             this.authService.clearToken();
             this.router.navigate(['']);
             this.notiferService.notify('success', 'Você foi desconectado com sucesso!');

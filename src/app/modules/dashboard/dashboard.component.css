@@ -1,3 +1,7 @@
+.dashboard {
+    margin-bottom: 5px;
+}
+
 .dashboard .dashboard-header {
     display: flex;
     padding: 15px;

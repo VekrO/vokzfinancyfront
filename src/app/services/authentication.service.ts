@@ -47,11 +47,24 @@ export class AuthenticationService {
 
     clearToken() {
         this._isAuthenticated.next(false);
-        localStorage.clear();
+        localStorage.removeItem("token"); // Remove todos os itens do localstorage.
     }
 
     getToken(): string | null {
         return localStorage.getItem('token');
+    }
+
+    setRemember(value: boolean) {
+        localStorage.setItem("remember", JSON.stringify(value));
+    }
+
+    getRemember(): boolean {
+        let remember = localStorage.getItem("remember");
+        return Boolean(remember);
+    }
+
+    removeRemember() {
+        localStorage.removeItem("remember");
     }
 
     getUsuario(): Usuario {
