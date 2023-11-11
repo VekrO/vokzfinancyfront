@@ -34,6 +34,7 @@
     <div class="button-group">
         <button *ngIf="registro?.id" type="button" class="btn-excluir" (click)="excluir(formulario.value.id)">Excluir</button>
         <button type="button" class="btn-back" (click)="voltar()">Voltar</button>
+        {{ formulario.invalid }}
         <button type="submit" class="btn-submit" [disabled]="formulario.invalid || processando">Salvar</button>
     </div>
 

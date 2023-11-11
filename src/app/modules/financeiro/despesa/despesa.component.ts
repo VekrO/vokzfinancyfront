@@ -177,11 +177,14 @@ export class DespesaComponent implements OnInit {
     
     put() {
 
+        console.log('FORMULARIO: ', this.formulario);
+        
         if(this.processando) {
             return;
         }
         
         this.processando = true;
+
 
         this.service.put(this.registro).subscribe({
             next: (despesa: Despesa) => {
